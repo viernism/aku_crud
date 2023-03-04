@@ -26,18 +26,38 @@ $(document).ready(function() {
 		$(this).parent().toggleClass('focused')
 	})
 
-	$('.sidebar-toggle').click(function() {
+    // Add 'active' class to clicked sidebar-menu-item
+  $('.sidebar-menu-item').click(function() {
+    // Check if the clicked sidebar-menu-item has the 'has-dropdown' class
+    if ($(this).hasClass('has-dropdown')) {
+      return; // Do nothing if the clicked sidebar-menu-item has the 'has-dropdown' class
+    }
+    // Remove 'active' class from all sidebar-menu-items
+    $('.sidebar-menu-item').removeClass('active');
+    // Add 'active' class to the clicked sidebar-menu-item
+    $(this).addClass('active');
+  });
 
-		$('.sidebar').toggleClass('collapsed')
+    // // Add active class to chosen sidebar-menu-item
+    // $('.sidebar-menu-item a').click(function() {
+    //     // Remove active class from all items
+    //     $('.sidebar-menu-item').removeClass('active');
+    //     // Add active class to the chosen item
+    //     $(this).parent().addClass('active');
+    // });
 
-		$('.sidebar.collapsed').mouseleave(function() {
-			// Hide dropdown menus
-			$('.sidebar-dropdown-menu').slideUp('fast')
+    // // Exclude items with class "has-dropdown"
+    // $('.sidebar-menu-item.has-dropdown a').click(function() {
+    //     $(this).parent().removeClass('active');
+    // });
 
-			// Remove focused class from menu items with dropdowns
-			$('.sidebar-menu-item.has-dropdown, .sidebar-dropdown-menu-item.has-dropdown').removeClass('focused')
-		})
-	})
+    // Add 'active' class to corresponding sidebar-menu-item
+  $(".sidebar-menu-item").each(function(){
+        if ($(this).attr("href") == window.location.pathname){
+            $(this).addClass("active");
+        }
+    });
+    // ah this code doesnt work ;(
 
 	$('.sidebar-toggle').click(function() {
 
