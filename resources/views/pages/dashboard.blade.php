@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['title' => 'Dashboard'])
 
 @section('content')
 <h1>

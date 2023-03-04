@@ -14,7 +14,19 @@ use App\Http\Controllers\CustomAuthController;
 */
 
 Route::get('/home', function () {
-    return view('home');
+    return view('pages.home');
+});
+
+Route::get('/user-profile', function() {
+    return view('pages.user-profile');
+});
+
+Route::get('/gedung', function() {
+    return view('pages.table-gedung');
+});
+
+Route::get('/dashboard', function () {
+    return view('pages.dashboard');
 });
 
 Route::get('/register', [CustomAuthController::class,'register']);
