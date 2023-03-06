@@ -49,7 +49,7 @@
                             <i class="ri-user-line sidebar-menu-item-icon"></i> User Profile </a>
                     </li>
                     <li class="sidebar-dropdown-menu-item">
-                        <a href="#">
+                        <a href="/admin-panel">
                             <i class="ri-settings-2-line sidebar-menu-item-icon"></i> User Management </a>
                     </li>
                 </ul>
