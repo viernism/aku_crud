@@ -7,11 +7,11 @@
                 <div class="table-title">
                     <div class="row">
                         <div class="col-6">
-                            <h2> Admin<b> Panel</b></h2>
+                            <h2>Admin <b> Panel</b></h2>
                         </div>
                         <div class="col-6">
                             <a href="#addEmployeeModal" class="btn btn-success" data-bs-toggle="modal"><i
-                                    class="bi bi-plus-circle"></i><span>Add New Employee</span></a>
+                                    class="bi bi-plus-circle"></i><span>Add New Users</span></a>
                             <a href="#deleteEmployeeModal" class="btn btn-danger" data-bs-toggle="modal"><i
                                     class="bi bi-trash"></i><span>Delete</span></a>
                         </div>
@@ -33,20 +33,19 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {{-- @foreach ($data as $row)  <!--  $data itu sesuai variable yang dilempar di controller--> --}}
+                    <tbody id="table-body">
+                         @foreach ($users as $user)
                         <tr>
                             <td>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="checkbox1" name="options[]"
-                                        value="1">
+                                    <input class="form-check-input" type="checkbox" id="selectAll" onchange="updateCheckboxes()">
                                     <label class="form-check-label" for="checkbox1"></label>
                                 </div>
-                            </td>{{--  cara display:  {{  $row -> namafield }} --}}
-                            <td>Thomas Hardy</td>
-                            <td>thomashardy@mail.com</td>
-                            <td>89 Chiaroscuro Rd, Portland, USA</td>
-                            <td>(171) 555-2222</td>
+                            </td>
+                            <td>{{ $user-> username }} </td>
+                            <td>{{ $user-> email}}</td>
+                            <td></td>
+                            <td></td>
                             <td>
                                 <a href="#" class="edit" data-bs-toggle="modal"
                                     data-bs-target="#editEmployeeModal"><i class="ri-pencil-line" data-bs-toggle="tooltip"
@@ -56,24 +55,32 @@
                                         data-bs-toggle="tooltip" title="Delete"></i></a>
                             </td>
                         </tr>
-                        {{-- @endforeach --}}
+                      @endforeach
                     </tbody>
                 </table>
                 <div class="clearfix">
-                    <div class="hint-text">Showing <b>1</b> out of <b>25</b> entries</div>
+                    <div class="hint-text">Showing <b>{{ $users->firstItem() }}</b> to <b>{{ $users->lastItem() }}</b> of <b>{{ $users->total() }}</b> entries</div>
                     <ul class="pagination">
-                        <li class="page-item disabled"><a href="#">Previous</a></li>
-                        <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link">4</a></li>
-                        <li class="page-item"><a href="#" class="page-link">5</a></li>
-                        <li class="page-item"><a href="#">Next</a></li>
+                        @if ($users->currentPage() > 1)
+                            <li class="page-item">
+                                <a href="{{ $users->previousPageUrl() }}" class="page-link">Previous</a>
+                            </li>
+                        @endif
+                        @for ($i = 1; $i <= $users->lastPage(); $i++)
+                            <li class="page-item{{ ($users->currentPage() == $i) ? ' active' : '' }}">
+                                <a href="{{ $users->url($i) }}" class="page-link">{{ $i }}</a>
+                            </li>
+                        @endfor
+                        @if ($users->currentPage() < $users->lastPage())
+                            <li class="page-item">
+                                <a href="{{ $users->nextPageUrl() }}" class="page-link">Next</a>
+                            </li>
+                        @endif
                     </ul>
                 </div>
             </div>
         </div>
-    </div>
+    </div>  
     <!-- Add Modal HTML -->
     <div class="modal fade" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel"
         aria-hidden="true">
