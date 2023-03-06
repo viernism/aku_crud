@@ -29,6 +29,10 @@ Route::get('/dashboard', function () {
     return view('pages.dashboard');
 });
 
+Route::get('/admin-panel', function () {
+    return view('pages.admin-panel');
+});
+
 Route::get('/register', [CustomAuthController::class,'register']);
 Route::get('/login', [CustomAuthController::class,'login']);
 Route::post('/register-user',[CustomAuthController::class,'registerUser']);
