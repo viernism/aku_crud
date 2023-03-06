@@ -33,7 +33,7 @@ class CustomAuthController extends Controller
         $res=$user->save();
 
         if ($res) {
-            return back()->with('success','You have been registered successfuly');
+            return redirect('login');
         } else {
             return back()->back('fail','Unfortunately, you are not registered. Please try again');
         }
