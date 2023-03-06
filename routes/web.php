@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,11 +30,10 @@ Route::get('/dashboard', function () {
     return view('pages.dashboard');
 });
 
-Route::get('/admin-panel', function () {
-    return view('pages.admin-panel');
-});
-
 Route::get('/register', [CustomAuthController::class,'register']);
 Route::get('/login', [CustomAuthController::class,'login']);
 Route::post('/register-user',[CustomAuthController::class,'registerUser']);
 Route::post('/login-user',[CustomAuthController::class,'loginUser']);
+Route::get('/admin-panel', [UserController::class, 'index']);
+
+Route::get('users/{id}', [UserController::class, 'show'])->name('users.show');
