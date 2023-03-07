@@ -31,9 +31,34 @@ Route::get('/dashboard', function () {
 });
 
 Route::get('/register', [CustomAuthController::class,'register']);
+
 Route::get('/login', [CustomAuthController::class,'login']);
+
 Route::post('/register-user',[CustomAuthController::class,'registerUser']);
+
 Route::post('/login-user',[CustomAuthController::class,'loginUser']);
+
 Route::get('/admin-panel', [UserController::class, 'index']);
 
 Route::get('users/{id}', [UserController::class, 'show'])->name('users.show');
+
+// Route to display the form for creating a new user
+Route::get('/admin-panel/create', [UserController::class, 'create'])->name('users.create');
+
+// Route to store the new user in the database
+Route::post('/admin-panel', [UserController::class, 'store'])->name('users.store');
+
+// Route to update the user in the database
+Route::put('/admin-panel/users/{user}', [UserController::class, 'update'])->name('admin.users.update');
+
+// Route to update the user in the database
+Route::put('/admin/users/{id}', [UserController::class, 'update'])->name('admin.users.update');
+
+// Route to delete the user in the database
+Route::delete('/admin-panel/users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
+
+
+
+
+
+
