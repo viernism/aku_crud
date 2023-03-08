@@ -44,7 +44,7 @@ $(document).ready(function() {
     //     $('.sidebar-menu-item').removeClass('active');
     //     // Add active class to the chosen item
     //     $(this).parent().addClass('active');
-    // });
+    // });f
 
     // // Exclude items with class "has-dropdown"
     // $('.sidebar-menu-item.has-dropdown a').click(function() {
@@ -108,9 +108,60 @@ $(document).ready(function() {
 	$('.sidebar:not(.collapsed)').hover(function() {
 		$('.sidebar-logo .text').show();
 	});
+
+    // Activate tooltip
+	$('[data-toggle="tooltip"]').tooltip();
+
+	// Select/Deselect checkboxes
+	var checkbox = $('table tbody input[type="checkbox"]');
+	$("#selectAll").click(function(){
+		if(this.checked){
+			checkbox.each(function(){
+				this.checked = true;
+			});
+		} else{
+			checkbox.each(function(){
+				this.checked = false;
+			});
+		}
+	});
+	checkbox.click(function(){
+		if(!this.checked){
+			$("#selectAll").prop("checked", false);
+		}
+	});
+
 	// end sidebar
+
 })
 
+$(document).ready(function() {
+    // Updates the form action URL with the usesr ID when submitted
+    $('a.edit').click(function(event) {
+        var userId = $(this).data('user-id');
+        var form = $('#editUserForm');
+        var actionUrl = form.attr('action').replace('1', userId);
+        form.attr('action', actionUrl);
+    });
+
+     // Update the action attribute of the edit user form when the modal is shown
+     $('#editUserModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var userId = button.data('user-id');
+        var form = $(this).find('form');
+        var action = form.attr('action').replace(':userId', userId);
+        form.attr('action', action);
+    });
+
+    // Update the action attribute of the delete user form when the modal is shown
+    $('#deleteUserModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var userId = button.data('user-id');
+        var form = $(this).find('form');
+        var action = form.attr('action').replace(':userId', userId);
+        form.attr('action', action);
+    });
+});
 
 
 
