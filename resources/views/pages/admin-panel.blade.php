@@ -52,9 +52,9 @@
                                     <a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#editUserModal" data-user-id="{{ $user->id }}">
                                         <i class="ri-pencil-line" data-bs-toggle="tooltip" title="Edit"></i>
                                     </a>
-                                    <a href="#" class="delete" data-bs-toggle="modal"
-                                        data-bs-target="#deleteUserModal"><i class="ri-delete-bin-line"
-                                            data-bs-toggle="tooltip" title="Delete"></i></a>
+                                    <a href="#" class="delete" data-bs-toggle="modal" data-bs-target="#deleteUserModal" data-user-id="{{ $user->id }}">
+                                        <i class="ri-delete-bin-line" data-bs-toggle="tooltip" title="Delete"></i>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
@@ -172,14 +172,14 @@
                     <p>Are you sure you want to delete these records?</p>
                     <p class="text-warning"><small>This action cannot be undone.</small></p>
                 </div>
-                <form action="{{ route('admin.users.destroy', $user) }}" method="POST">
+                <form action="{{ route('admin.users.destroy', ':userId') }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </div>
-            </form>
+                </form>
             </div>
         </div>
     </div>

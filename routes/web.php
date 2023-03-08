@@ -57,6 +57,9 @@ Route::put('/admin/users/{id}', [UserController::class, 'update'])->name('admin.
 // Route to delete the user in the database
 Route::delete('/admin-panel/users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
 
+Route::delete('/admin-panel/users/{id}', [UserController::class, 'destroy'])->name('admin.users.destroy');
+
+
 
 
 
