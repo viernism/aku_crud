@@ -44,7 +44,7 @@ $(document).ready(function() {
     //     $('.sidebar-menu-item').removeClass('active');
     //     // Add active class to the chosen item
     //     $(this).parent().addClass('active');
-    // });f
+    // });
 
     // // Exclude items with class "has-dropdown"
     // $('.sidebar-menu-item.has-dropdown a').click(function() {
