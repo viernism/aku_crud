@@ -80,7 +80,7 @@
                     <img src="https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png" alt="nobitches"
                         width="30" height="30" class="rounded-circle">
                     <div class="sidebar-logo p-2">
-                        <div class="text text-white h5 mb-0">Raihan</div>
+                        <div class="text text-white h5 mb-0">{{ Auth::user()->username }}</div>
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
@@ -89,7 +89,10 @@
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="#">Sign out</a></li>
+                    <form action="/logout" method="post">
+                        @csrf
+                        <button type="submit" class="dropdown-item">Log Out</button>
+                    </form>
                 </ul>
             </div>
         </div>
