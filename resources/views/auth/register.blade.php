@@ -12,7 +12,7 @@
 <body>
     <div class="container">
         <h1 class="text-center mb-4">Register</h1>
-        <form action="/register-user" method="POST">
+        <form action="/register" method="POST">
             @if (Session::has('success'))
             <div class="alert alert-success">{{ Session::get('success') }}</div>
             @endif
@@ -24,26 +24,26 @@
             {{-- nama --}}
             <label for="nama">Name</label><br>
             <input type="text" name="name" value="{{ old('name') }}"><br>
-            <span class="text-danger">@error('name') {{ $message }} @enderror</span><br>
+            @error('name') <div class="text-danger">{{ $message }}</div> @enderror<br>
             {{-- username --}}
             <label for="username">Username</label><br>
             <input type="text" name="username" value="{{ old('username') }}"><br>
-            <span class="text-danger">@error('username') {{ $message }} @enderror</span><br>
+            @error('username') <div class="text-danger">{{ $message }}</div> @enderror<br>
 
             {{-- email --}}
             <label for="email">Email</label><br>
             <input type="email" name="email" value="{{ old('email') }}"><br>
-            <span class="text-danger">@error('email') {{ $message }} @enderror</span><br>
+            @error('email') <div class="text-danger">{{ $message }}</div> @enderror<br>
 
             {{-- passwd --}}
             <label for="password">Password</label><br>
             <input type="password" name="password" value="{{ old('password') }}"><br>
-            <span class="text-danger">@error('password') {{ $message }} @enderror</span><br>
+            @error('password') <div class="text-danger">{{ $message }}</div> @enderror<br>
 
             {{-- button and things --}}
             <button>Register</button>
             <p> Already a user?
-                <a href="/login" class="test">Login here!</a>
+                <a href="/login" class="test">Login Here!</a>
             </p>
         </form>
     </div>

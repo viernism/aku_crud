@@ -12,20 +12,20 @@
 <body>
     <div class="container">
         <h1 class="text-center mb-4">Login</h1>
-        <form action="/login-user" method="post">
+        <form action="/login" method="post">
             @csrf
             <div class="form-group">
                 <label for="email">Email</label><br>
                 <input type="email" name="email" value="{{ old('email') }}"><br>
-                <span class="text-danger">@error('email') {{ $message }} @enderror</span><br>
+                @error('email') <div class="text-danger">{{ $message }}</div> @enderror<br>
             </div>
             <div class="form-group">
                 <label>Password</label><br>
                 <input type="password" name="password" value="{{ old('password') }}"><br>
-                <span class="text-danger">@error('password') {{ $message }} @enderror</span><br>
+                @error('password') <div class="text-danger">{{ $message }}</div> @enderror<br>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Login</button>
-            <p class="mt-3">Don't have an account? <a href="/register" class="test">REGISTER</a></p>
+            <p class="mt-3">Don't have an account? <a href="/register" class="test">Register Here!</a></p>
         </form>
     </div>
 

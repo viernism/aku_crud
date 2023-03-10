@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <div class="col-auto my-auto">
-                    <h5 class="mb-1"> Raihan </h5>
+                    <h5 class="mb-1">{{ Auth::user()->username }}</h5>
                     <p class="mb-0 font-weight-normal text-sm">Creator</p>
                 </div>
                 <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3 text-end">
@@ -34,11 +34,15 @@
                     <div class="row">
                         <div class="mb-3 col-md-6">
                             <label for="email" class="form-label">Email address</label>
-                            <p class="form-control-static">test@email..org</p>
+                            <p class="form-control-static">{{ Auth::user()->email }}</p>
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Name</label>
-                            <p class="form-control-static">Raihan</p>
+                            <label for="name" class="form-label">Nama</label>
+                            <p class="form-control-static">{{ Auth::user()->name }}</p>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="name" class="form-label">Username</label>
+                            <p class="form-control-static">{{ Auth::user()->username }}</p>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="phone" class="form-label">Phone</label>
