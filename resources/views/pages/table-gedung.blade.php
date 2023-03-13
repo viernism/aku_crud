@@ -10,9 +10,9 @@
                             <h2>Table <b> Gedung</b></h2>
                         </div>
                         <div class="col-6">
-                            <a href="#addEmployeeModal" class="btn btn-success" data-bs-toggle="modal"><i
-                                    class="bi bi-plus-circle"></i><span>Add New Employee</span></a>
-                            <a href="#deleteEmployeeModal" class="btn btn-danger" data-bs-toggle="modal"><i
+                            <a href="#addDataModal" class="btn btn-success" data-bs-toggle="modal"><i
+                                    class="bi bi-plus-circle"></i><span>Add New Data</span></a>
+                            <a href="#deleteDataModal" class="btn btn-danger" data-bs-toggle="modal"><i
                                     class="bi bi-trash"></i><span>Delete</span></a>
                         </div>
                     </div>
@@ -26,11 +26,17 @@
                                     <label class="form-check-label" for="selectAll"></label>
                                 </div>
                             </th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Address</th>
-                            <th>Phone</th>
-                            <th>Actions</th>
+                            <th>Nama</th>
+                            <th>Kategori</th>
+                            <th>Alamat</th>
+                            <th>Koordinat</th>
+                            <th>Tel. Cust</th>
+                            <th>PIC Cust</th>
+                            <th>AM</th>
+                            <th>Tel. AM</th>
+                            <th>STO</th>
+                            <th>Hero</th>
+                            <th>Tel. Hero</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,6 +53,13 @@
                             <td>thomashardy@mail.com</td>
                             <td>89 Chiaroscuro Rd, Portland, USA</td>
                             <td>(171) 555-2222</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td> </td>
+                            <td></td>
+                            <td></td>
                             <td>
                                 <a href="#" class="edit" data-bs-toggle="modal"
                                     data-bs-target="#editEmployeeModal"><i class="ri-pencil-line" data-bs-toggle="tooltip"
@@ -75,13 +88,13 @@
         </div>
     </div>
     <!-- Add Modal HTML -->
-    <div class="modal fade" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel"
+    <div class="modal fade" id="addDataModal" tabindex="-1" role="dialog" aria-labelledby="addDataModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form>
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addEmployeeModalLabel">Add Employee</h5>
+                        <h5 class="modal-title" id="addEmployeeModalLabel">Add Data</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -122,20 +135,48 @@
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="edit-name" class="form-label">Name</label>
+                            <label for="edit-name" class="form-label">Nama Gedung</label>
                             <input type="text" class="form-control" id="edit-name" required>
                         </div>
                         <div class="mb-3">
-                            <label for="edit-email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="edit-email" required>
+                            <label for="edit-kategori" class="form-label">Kategori</label>
+                            <input type="text" class="form-control" id="edit-kategori" required>
                         </div>
                         <div class="mb-3">
-                            <label for="edit-address" class="form-label">Address</label>
+                            <label for="edit-address" class="form-label">Alamat</label>
                             <textarea class="form-control" id="edit-address" required></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="edit-phone" class="form-label">Phone</label>
+                            <label for="edit-coor" class="form-label">Koordinat</label>
                             <input type="text" class="form-control" id="edit-phone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-telcust" class="form-label">Tel.  Cust</label>
+                            <input type="text" class="form-control" id="edit-telcust" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-piccust" class="form-label">PIC Cust</label>
+                            <input type="text" class="form-control" id="edit-piccust" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-am" class="form-label">Koordinat</label>
+                            <input type="text" class="form-control" id="edit-am" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-telam" class="form-label">Tel. AM</label>
+                            <input type="text" class="form-control" id="edit-telam" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-sto" class="form-label">STO</label>
+                            <input type="text" class="form-control" id="edit-sto" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-hero" class="form-label">Hero</label>
+                            <input type="text" class="form-control" id="edit-hero" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-telhero" class="form-label">Tel. Hero</label>
+                            <input type="text" class="form-control" id="edit-telhero" required>
                         </div>
                     </div>
                     <div class="modal-footer">

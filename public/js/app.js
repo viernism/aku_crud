@@ -162,6 +162,3 @@ $(document).ready(function() {
         form.attr('action', action);
     });
 });
-
-
-

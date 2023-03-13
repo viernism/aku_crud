@@ -27,13 +27,11 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/login',[CustomLoginController::class,'loginUser']);
 });
 
-Route::middleware(['auth'])->group(function () {
+
+
+Route::middleware(['auth', 'revalidate'])->group(function () {
     Route::get('/home', function () {
         return view('pages.home');
-    });
-
-    Route::get('/user-profile', function() {
-        return view('pages.user-profile');
     });
 
     Route::get('/gedung', function() {
@@ -44,7 +42,9 @@ Route::middleware(['auth'])->group(function () {
         return view('pages.dashboard');
     });
 
-    Route::post('logout', CustomLogoutController::class);
+    Route::get('/profile', [UserProfileController::class, 'index']);
+
+    Route::post('/logout', CustomLogoutController::class);
     //admin and things
     Route::get('/admin-panel', [UserController::class, 'index']);
 
@@ -67,3 +67,4 @@ Route::middleware(['auth'])->group(function () {
 
     Route::delete('/admin-panel/users/{id}', [UserController::class, 'destroy'])->name('admin.users.destroy');
 });
+

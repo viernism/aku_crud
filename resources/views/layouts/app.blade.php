@@ -89,7 +89,7 @@
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <form action="/logout" method="post">
+                    <form action="{{ url('/logout?nocache=1')}}" method="post">
                         @csrf
                         <button type="submit" class="dropdown-item">Log Out</button>
                     </form>
