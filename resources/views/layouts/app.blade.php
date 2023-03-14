@@ -45,7 +45,7 @@
                 </a>
                 <ul class="sidebar-dropdown-menu">
                     <li class="sidebar-dropdown-menu-item alert-button">
-                        <a href="/user-profile">
+                        <a href="/profile">
                             <i class="ri-user-line sidebar-menu-item-icon"></i> User Profile </a>
                     </li>
                     <li class="sidebar-dropdown-menu-item">
@@ -85,7 +85,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                     <li><a class="dropdown-item" href="#">Settings</a></li>
-                    <li><a class="dropdown-item" href="/user-profile">Profile</a></li>
+                    <li><a class="dropdown-item" href="/profile">Profile</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>

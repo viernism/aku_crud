@@ -5,10 +5,19 @@
         <div class="card card-body mx-3 mx-md-4 mt-n5">
             <div class="row gx-4 mb-2">
                 <div class="col-auto">
-                    <div class="avatar avatar-xl position-relative">
-                        <img src="https://yt3.googleusercontent.com/ytc/AL5GRJUcxwD492q8Ej-nOYuJ7_Jgiuj4vUARPgYXfY_Ixw=s900-c-k-c0x00ffffff-no-rj"
-                            alt="profile_image" class="w-100 img-border-radius shadow-sm">
-                    </div>
+                    <form id="profile-image-form" action="{{ route('updateProfileImage') }}" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div class="avatar avatar-xl position-relative">
+                            <img src="{{ asset(Auth::user()->photo) }}" alt="profile_image"
+                                class="w-100 img-border-radius shadow-sm">
+                            <div class="text-avatar">
+                                <label for="profile_image" class="cursor-pointer">Change Your Picture</label>
+                                <input type="file" name="photo" id="profile_image" class="d-none"
+                                    onchange="document.getElementById('profile-image-form').submit();">
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <div class="col-auto my-auto">
                     <h5 class="mb-1">{{ Auth::user()->username }}</h5>
@@ -33,34 +42,30 @@
                 <div class="card-body p-3">
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label for="email" class="form-label">Email address</label>
-                            <p class="form-control-static">{{ Auth::user()->email }}</p>
-                        </div>
-                        <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">Nama</label>
                             <p class="form-control-static">{{ Auth::user()->name }}</p>
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Username</label>
+                            <label for="username" class="form-label">Username</label>
                             <p class="form-control-static">{{ Auth::user()->username }}</p>
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="phone" class="form-label">Phone</label>
-                            <p class="form-control-static"></p>
+                            <label for="email" class="form-label">Email address</label>
+                            <p class="form-control-static">{{ Auth::user()->email }}</p>
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="location" class="form-label">Location</label>
-                            <p class="form-control-static"></p>
+                            <label for="phone" class="form-label">Phone</label>
+                            <p class="form-control-static">{{ Auth::user()->phone }}</p>
                         </div>
                         <div class="mb-3 col-md-12">
-                            <label for="about" class="form-label">About</label>
-                            <p class="form-control-static">"I don't know maybe I'm autistic or something..." Linus Torvalds
-                            </p>
+                            <label for="bio" class="form-label">About</label>
+                            <p class="form-control-static">{{ Auth::user()->bio }}</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <!-- Edit Profile Modal-->
     <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
@@ -81,41 +86,50 @@
                             </div>
                         </div>
                         <div class="card-body p-3">
-                            <form method="POST" action="">
+                            <form action="{{ route('edit.profile') }}" method="post">
+                                @csrf
+                                @method('PUT')
                                 <div class="row">
-                                    <div class="mb-3 col-md-6">
-                                        <label for="email" class="form-label">Email address</label>
-                                        <input type="email" name="email" class="form-control" id="email"
-                                            value="test@gmail.com">
-                                    </div>
                                     <div class="mb-3 col-md-6">
                                         <label for="name" class="form-label">Name</label>
                                         <input type="text" name="name" class="form-control" id="name"
-                                            value="Admin">
+                                            value="{{ old('name', Auth::user()->name) }}">
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="username" class="form-label">Username</label>
+                                        <input type="text" name="username" class="form-control" id="username"
+                                            value="{{ old('username', Auth::user()->username) }}">
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="email" class="form-label">Email address</label>
+                                        <input type="email" name="email" class="form-control" id="email"
+                                            value="{{ old('email', Auth::user()->email) }}">
+                                        @error('email')
+                                            <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="mb-3 col-md-6">
                                         <label for="phone" class="form-label">Phone</label>
-                                        <input type="number" name="phone" class="form-control" id="phone">
-                                    </div>
-                                    <div class="mb-3 col-md-6">
-                                        <label for="location" class="form-label">Location</label>
-                                        <input type="text" name="location" class="form-control" id="location">
+                                        <input type="number" name="phone" class="form-control" id="phone"
+                                            value="{{ old('phone', Auth::user()->phone) }}">
+                                        @error('phone')
+                                            <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="mb-3 col-md-12">
-                                        <label for="about" class="form-label">About</label>
-                                        <textarea class="form-control" id="about" name="about" rows="4"
-                                            placeholder="Say something about yourself"></textarea>
+                                        <label for="bio" class="form-label">About</label>
+                                        <input type="text" name="bio" id="bio" class="form-control"
+                                            value="{{ old('bio', Auth::user()->bio) }}">
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </form>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Save Changes</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>

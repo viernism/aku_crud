@@ -39,56 +39,55 @@
                             <th>Tel. Hero</th>
                         </tr>
                     </thead>
-                    <tbody id="table-body">
-                        @foreach ($gedungs as $gedung)
+                    <tbody>
                         <tr>
                             <td>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="selectAll"
-                                        onchange="updateCheckboxes()">
+                                    <input class="form-check-input" type="checkbox" id="checkbox1" name="options[]"
+                                        value="1">
                                     <label class="form-check-label" for="checkbox1"></label>
                                 </div>
                             </td>
-                            <td>{{$gedung->NAMA}}</td>
-                            <td>{{$gedung->KATEGORI}}</td>
-                            <td>{{$gedung->ALAMAT}}</td>
-                            <td>{{$gedung->KOORDINAT}}</td>
-                            <td>{{ $gedung->TEL_CUST}}</td>
-                            <td>{{$gedung->PIC_CUST}}</td>
-                            <td>{{$gedung->AM}}</td>
-                            <td>{{$gedung->TEL_AM}}</td>
-                            <td>{{$gedung->STO}} </td>
-                            <td>{{$gedung->HERO}}</td>
-                            <td>{{$gedung->TEL_HERO}}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td> </td>
+                            <td></td>
+                            <td></td>
                             <td>
-                                <a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#editGedungModal" data-user-id="{{ $gedung->id }}">
-                                    <i class="ri-pencil-line" data-bs-toggle="tooltip" title="Edit"></i>
-                                </a>
-                                <a href="#" class="delete" data-bs-toggle="modal" data-bs-target="#deleteGedungModal" data-user-id="{{ $gedung->id }}">
-                                    <i class="ri-delete-bin-line" data-bs-toggle="tooltip" title="Delete"></i>
-                                </a>
+                                <a href="#" class="edit" data-bs-toggle="modal"
+                                    data-bs-target="#editEmployeeModal"><i class="ri-pencil-line" data-bs-toggle="tooltip"
+                                        title="Edit"></i></a>
+                                <a href="#" class="delete" data-bs-toggle="modal"
+                                    data-bs-target="#deleteEmployeeModal"><i class="ri-delete-bin-line"
+                                        data-bs-toggle="tooltip" title="Delete"></i></a>
                             </td>
                         </tr>
-                        @endforeach
+                        {{-- @endforeach --}}
                     </tbody>
                 </table>
                 <div class="clearfix">
-                    <div class="hint-text">Showing <b>{{ $gedungs->firstItem() }}</b> to <b>{{ $gedungs->lastItem() }}</b> of
-                        <b>{{ $gedungs->total() }}</b> entries</div>
+                    <div class="hint-text">Showing <b>{{ $users->firstItem() }}</b> to <b>{{ $users->lastItem() }}</b> of
+                        <b>{{ $users->total() }}</b> entries</div>
                     <ul class="pagination">
-                        @if ($gedungs->currentPage() > 1)
+                        @if ($users->currentPage() > 1)
                             <li class="page-item">
-                                <a href="{{ $gedungs->previousPageUrl() }}" class="page-link">Previous</a>
+                                <a href="{{ $gedung->previousPageUrl() }}" class="page-link">Previous</a>
                             </li>
                         @endif
-                        @for ($i = 1; $i <= $gedungs->lastPage(); $i++)
-                            <li class="page-item{{ $gedungs->currentPage() == $i ? ' active' : '' }}">
-                                <a href="{{ $gedungs->url($i) }}" class="page-link">{{ $i }}</a>
+                        @for ($i = 1; $i <= $users->lastPage(); $i++)
+                            <li class="page-item{{ $users->currentPage() == $i ? ' active' : '' }}">
+                                <a href="{{ $gedung->url($i) }}" class="page-link">{{ $i }}</a>
                             </li>
                         @endfor
-                        @if ($gedungs->currentPage() < $gedungs->lastPage())
+                        @if ($users->currentPage() < $users->lastPage())
                             <li class="page-item">
-                                <a href="{{ $gedungs->nextPageUrl() }}" class="page-link">Next</a>
+                                <a href="{{ $gedung->nextPageUrl() }}" class="page-link">Next</a>
                             </li>
                         @endif
                     </ul>
