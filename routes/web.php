@@ -5,6 +5,8 @@ use App\Http\Controllers\CustomRegisterController;
 use App\Http\Controllers\CustomLoginController;
 use App\Http\Controllers\CustomLogoutController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\GedungController;
+use App\Http\Controllers\UserProfileController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,6 +46,10 @@ Route::middleware(['auth', 'revalidate'])->group(function () {
 
     Route::get('/profile', [UserProfileController::class, 'index']);
 
+    Route::post('/user-profile/update-profile-image', [UserProfileController::class, 'updateProfileImage'])->name('updateProfileImage');
+
+    Route::put('/profile', [UserProfileController::class, 'EditProfile'])->name('edit.profile');
+
     Route::post('/logout', CustomLogoutController::class);
     //admin and things
     Route::get('/admin-panel', [UserController::class, 'index']);
@@ -66,5 +72,8 @@ Route::middleware(['auth', 'revalidate'])->group(function () {
     Route::delete('/admin-panel/users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
 
     Route::delete('/admin-panel/users/{id}', [UserController::class, 'destroy'])->name('admin.users.destroy');
+
+    Route::get('/gedung', [GedungController::class, 'index']);
+
 });
 

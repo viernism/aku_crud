@@ -489,6 +489,7 @@ table.table .avatar {
 
 /* user profile styles */
 .avatar {
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -500,4 +501,21 @@ table.table .avatar {
 .avatar-xl {
     width: 74px !important;
     height: 74px !important;
+}
+
+.text-avatar {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 6px 12px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333;
+}
+
+.avatar:hover .text-avatar {
+    display: block;
 }
