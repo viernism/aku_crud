@@ -77,7 +77,7 @@
             <div class="dropdown pb-4">
                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                     id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png" alt="nobitches"
+                    <img src="{{ asset(Auth::user()->photo) }}" alt="nobitches"
                         width="30" height="30" class="rounded-circle">
                     <div class="sidebar-logo p-2">
                         <div class="text text-white h5 mb-0">{{ Auth::user()->username }}</div>

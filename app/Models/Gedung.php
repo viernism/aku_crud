@@ -9,4 +9,18 @@ class Gedung extends Model
 {
     use HasFactory;
     protected $table = 'gedung';
+
+    protected $fillable = [
+        'NAMA',
+        'KATEGORI',
+        'ALAMAT',
+        'KOORDINAT',
+        'TEL_CUST',
+        'PIC_CUST',
+        'AM',
+        'TEL_AM',
+        'STO',
+        'HERO',
+        'TEL_HERO',
+    ];
 }
