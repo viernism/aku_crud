@@ -75,5 +75,7 @@ Route::middleware(['auth', 'revalidate'])->group(function () {
 
     Route::get('/gedung', [GedungController::class, 'index']);
 
+    Route::post('/gedung/store', [GedungController::class, 'store'])->name('gedung.store');
+
 });
 

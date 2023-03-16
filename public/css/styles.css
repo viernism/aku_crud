@@ -83,11 +83,16 @@
 /* start universal  */
 
 body {
+    background-color: #E8DCCC !important;
     font-family: 'Ubuntu', sans-serif;
 }
 
 ul {
     list-style-type: none;
+}
+
+.text-gray-300 {
+    color: var(--bs-gray-300);
 }
 
 .text-white:hover,
@@ -456,23 +461,24 @@ table.table .avatar {
 
 /* modal styles  */
 .modal .modal-dialog {
-    max-width: 400px;
+    max-width: 600px;
 }
 .modal .modal-header, .modal .modal-body, .modal .modal-footer {
     padding: 20px 30px;
 }
 .modal .modal-content {
     border-radius: 3px;
+    border-radius: 10px;
 }
 .modal .modal-footer {
     background: #ecf0f1;
-    border-radius: 0 0 3px 3px;
+    border-radius: 10px;
 }
 .modal .modal-title {
     display: inline-block;
 }
 .modal .form-control {
-    border-radius: 2px;
+    border-radius: 5px;
     box-shadow: none;
     border-color: #dddddd;
 }
@@ -488,6 +494,23 @@ table.table .avatar {
 }
 
 /* user profile styles */
+
+.card.card-plain.h-100 {
+    border: none;
+}
+
+.card.card-body.mx-3.mx-md-4.mt-n5 {
+    background-color: #973232;
+}
+
+.card-header.pb-0.p-3 {
+    background-color: #672222;
+}
+
+.card-body.p-3 {
+    background-color: #973232;
+}
+
 .avatar {
     position: relative;
     display: inline-flex;
@@ -519,3 +542,71 @@ table.table .avatar {
 .avatar:hover .text-avatar {
     display: block;
 }
+
+/* Styles for button */
+
+.card .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    width: 40px;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .card .btn-primary .btn-text {
+    display: none;
+  }
+
+  .card .btn-primary:hover {
+    width: 120px;
+    background-color: #1b6ec2;
+  }
+
+  .card .btn-primary:hover .btn-text {
+    display: inline-block;
+  }
+
+  .card .btn-primary .btn-icon {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .card .btn-primary:hover .btn-icon {
+    transform: rotate(120deg);
+  }
+
+  .btn-primary:hover i {
+    animation: spin-grow 0.5s forwards;
+  }
+
+  .btn-primary:active i {
+    animation: pulse 0.2s forwards;
+  }
+
+  /* Keyframe animations */
+
+  @keyframes spin-grow {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+      transform-origin: center;
+    }
+    100% {
+      transform: scale(1.2) rotate(360deg);
+    }
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+

@@ -20,14 +20,14 @@
                     </form>
                 </div>
                 <div class="col-auto my-auto">
-                    <h5 class="mb-1">{{ Auth::user()->username }}</h5>
-                    <p class="mb-0 font-weight-normal text-sm">Creator</p>
+                    <h5 class="mb-1 text-white">{{ Auth::user()->username }}</h5>
+                    <p class="mb-0 font-weight-normal text-sm text-white">Creator</p>
                 </div>
                 <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3 text-end">
-                    <button type="button" class="btn btn-primary p-1 mb-0 py-1 actove" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-primary mb-0 py-1 actove edit-profile-button" data-bs-toggle="modal"
                         data-bs-target="#editProfileModal">
-                        <i class="ri-settings-2-line text-lg position-relative"></i>
-                        <span class="ms-1">Edit Profile</span>
+                        <i class="ri-settings-2-line text-lg position-relative btn-icon"></i>
+                        <span class="ms-1 btn-text">Edit Profile</span>
                     </button>
                 </div>
             </div>
@@ -35,31 +35,31 @@
                 <div class="card-header pb-0 p-3">
                     <div class="row">
                         <div class="col-md-8 d-flex align-items-center">
-                            <h6 class="mb-3">Profile Information</h6>
+                            <h6 class="mb-3 text-white">Profile Information</h6>
                         </div>
                     </div>
                 </div>
                 <div class="card-body p-3">
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Nama</label>
-                            <p class="form-control-static">{{ Auth::user()->name }}</p>
+                            <label for="name" class="form-label text-gray-300">Nama</label>
+                            <p class="form-control-static text-white">{{ Auth::user()->name }}</p>
                         </div>
-                        <div class="mb-3 col-md-6">
+                        <div class="mb-3 col-md-6 text-gray-300">
                             <label for="username" class="form-label">Username</label>
-                            <p class="form-control-static">{{ Auth::user()->username }}</p>
+                            <p class="form-control-static text-white">{{ Auth::user()->username }}</p>
                         </div>
-                        <div class="mb-3 col-md-6">
+                        <div class="mb-3 col-md-6 text-gray-300">
                             <label for="email" class="form-label">Email address</label>
-                            <p class="form-control-static">{{ Auth::user()->email }}</p>
+                            <p class="form-control-static text-white">{{ Auth::user()->email }}</p>
                         </div>
-                        <div class="mb-3 col-md-6">
+                        <div class="mb-3 col-md-6 text-gray-300">
                             <label for="phone" class="form-label">Phone</label>
-                            <p class="form-control-static">{{ Auth::user()->phone }}</p>
+                            <p class="form-control-static text-white">{{ Auth::user()->phone }}</p>
                         </div>
-                        <div class="mb-3 col-md-12">
+                        <div class="mb-3 col-md-12 text-gray-300">
                             <label for="bio" class="form-label">About</label>
-                            <p class="form-control-static">{{ Auth::user()->bio }}</p>
+                            <p class="form-control-static text-white">{{ Auth::user()->bio }}</p>
                         </div>
                     </div>
                 </div>
