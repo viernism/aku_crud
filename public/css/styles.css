@@ -466,13 +466,46 @@ table.table .avatar {
 .modal .modal-header, .modal .modal-body, .modal .modal-footer {
     padding: 20px 30px;
 }
+
+.modal .modal-header,
+.modal .modal-footer {
+    border: none;
+}
+
 .modal .modal-content {
     border-radius: 3px;
     border-radius: 10px;
+    background-color: #973232;
 }
+
+.modal .modal-header {
+    background-color: #672222;
+}
+
+.modal .modal-body,
+.modal .modal-footer,
+.modal .card-header.pb-0.p-3  {
+    background-color: #973232;
+    border: none;;
+}
+
+
+
+/* .modal .modal-header{
+    background-color: #973232;
+}
+
+.modal .modal-body {
+    background-color: #973232;
+}
+
+{
+    background-color:#973232 ;
+} */
+
+
 .modal .modal-footer {
-    background: #ecf0f1;
-    border-radius: 10px;
+    background-color:#973232;
 }
 .modal .modal-title {
     display: inline-block;

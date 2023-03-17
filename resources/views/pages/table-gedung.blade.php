@@ -10,9 +10,9 @@
                             <h2>Table <b> Gedung</b></h2>
                         </div>
                         <div class="col-6">
-                            <a href="#addDataModal" class="btn btn-success" data-bs-toggle="modal"><i
+                            <a href="#addGedungModal" class="btn btn-success" data-bs-toggle="modal"><i
                                     class="bi bi-plus-circle"></i><span>Add New Data</span></a>
-                            <a href="#deleteDataModal" class="btn btn-danger" data-bs-toggle="modal"><i
+                            <a href="#deleteGedungModal" class="btn btn-danger" data-bs-toggle="modal"><i
                                     class="bi bi-trash"></i><span>Delete</span></a>
                         </div>
                     </div>
@@ -61,10 +61,10 @@
                             <td>{{$gedung->HERO}}</td>
                             <td>{{$gedung->TEL_HERO}}</td>
                             <td>
-                                <a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#editGedungModal" data-user-id="{{ $gedung->id }}">
+                                <a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#editGedungModal" data-gedung-id="{{ $gedung->id }}">
                                     <i class="ri-pencil-line" data-bs-toggle="tooltip" title="Edit"></i>
                                 </a>
-                                <a href="#" class="delete" data-bs-toggle="modal" data-bs-target="#deleteGedungModal" data-user-id="{{ $gedung->id }}">
+                                <a href="#" class="delete" data-bs-toggle="modal" data-bs-target="#deleteGedungModal" data-gedung-id="{{ $gedung->id }}">
                                     <i class="ri-delete-bin-line" data-bs-toggle="tooltip" title="Delete"></i>
                                 </a>
                             </td>
@@ -97,20 +97,20 @@
         </div>
     </div>
     <!-- Add Modal HTML -->
-    <div class="modal fade" id="addDataModal" tabindex="-1" role="dialog" aria-labelledby="addDataModalLabel"
+    <div class="modal fade" id="addGedungModal" tabindex="-1" role="dialog" aria-labelledby="addSekolahModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form method="POST" action="{{ route('gedung.store')}}">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addDataModalLabel">Add Gedung</h5>
+                        <h5 class="modal-title" id="addSekolahModalLabel">Add Gedung</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="nama" class="form-label">Nama</label>
-                            <input type="text" class="form-control" id="nama" name="nama"required>
+                            <input type="text" class="form-control" id="nama" name="nama" required>
                         </div>
                         <div class="mb-3">
                             <label for="kategori" class="form-label">Kategori</label>
@@ -162,13 +162,13 @@
         </div>
     </div>
     <!-- Edit Modal HTML -->
-    <div class="modal fade" id="editEmployeeModal" tabindex="-1" role="dialog"
-    aria-labelledby="editEmployeeModalLabel" aria-hidden="true">
+     <div class="modal fade" id="editGedungModal" tabindex="-1" role="dialog"
+    aria-labelledby="editGedungModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form>
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editEmployeeModalLabel">Edit Employee</h5>
+                    <h5 class="modal-title" id="editGedungModalLabel">Edit Gedung</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -186,7 +186,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="edit-coor" class="form-label">Koordinat</label>
-                        <input type="text" class="form-control" id="edit-phone" required>
+                        <input type="text" class="form-control" id="edit-coor" required>
                     </div>
                     <div class="mb-3">
                         <label for="edit-telcust" class="form-label">Tel.  Cust</label>
@@ -226,12 +226,12 @@
     </div>
 </div>
     <!-- Delete Modal HTML -->
-    <div class="modal fade" id="deleteEmployeeModal" tabindex="-1" aria-labelledby="deleteEmployeeModalLabel"
+    <div class="modal fade" id="deleteGedungModal" tabindex="-1" aria-labelledby="deleteGedungModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="deleteEmployeeModalLabel">Delete Employee</h4>
+                    <h4 class="modal-title" id="deleteGedungModalLabel">Delete Gedung</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

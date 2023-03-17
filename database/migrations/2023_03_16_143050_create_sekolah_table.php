@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('sekolah', function (Blueprint $table) {
             $table->id();
             $table->text('NAMA');
-            $table->enum('LEVEL', ['SMA/MA/SMK/MAK', 'SMP/MTs', 'SD/MI', 'TK']);
+            $table->unsignedBigInteger('LEVEL_ID');
+            $table->foreign('LEVEL_ID')->references('id')->on('sekolahlevels');
             $table->text('ALAMAT');
             $table->text('KOORDINAT')->nullable();
             $table->string('TEL_CUST')->nullable();
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->text('STO');
             $table->string('HERO');
             $table->string('TEL_HERO');
+            $table->timestamps();
         });
     }
 

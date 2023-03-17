@@ -162,3 +162,33 @@ $(document).ready(function() {
         form.attr('action', action);
     });
 });
+
+
+// $(document).ready(function() {
+//     // Updates the form action URL with the gedung ID when submitted
+//     $('a.edit').click(function(event) {
+//         var gedungId = $(this).data('gedung-id');
+//         var form = $('#editGedungForm');
+//         var actionUrl = form.attr('action').replace('1', gedungId);
+//         form.attr('action', actionUrl);
+//     });
+
+//      // Update the action attribute of the edit gedung form when the modal is shown
+//      $('#editGedungModal').on('show.bs.modal', function (event) {
+//         var button = $(event.relatedTarget);
+//         var gedungId = button.data('gedung-id');
+//         var form = $(this).find('form');
+//         var action = form.attr('action').replace(':gedungId', gedungId);
+//         form.attr('action', action);
+//     });
+
+//     // Update the action attribute of the delete gedung form when the modal is shown
+//     $('#deleteGedungModal').on('show.bs.modal', function (event) {
+//         var button = $(event.relatedTarget);
+//         var gedungId = button.data('gedung-id');
+//         var form = $(this).find('form');
+//         var action = form.attr('action').replace(':gedungId', gedungId);
+//         form.attr('action', action);
+//     });
+// });
+

@@ -6,6 +6,7 @@ use App\Http\Controllers\CustomLoginController;
 use App\Http\Controllers\CustomLogoutController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GedungController;
+use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\UserProfileController;
 /*
 |--------------------------------------------------------------------------
@@ -63,9 +64,6 @@ Route::middleware(['auth', 'revalidate'])->group(function () {
     Route::post('/admin-panel', [UserController::class, 'store'])->name('users.store');
 
     // Route to update the user in the database
-    Route::put('/admin-panel/users/{user}', [UserController::class, 'update'])->name('admin.users.update');
-
-    // Route to update the user in the database
     Route::put('/admin/users/{id}', [UserController::class, 'update'])->name('admin.users.update');
 
     // Route to delete the user in the database
@@ -77,5 +75,8 @@ Route::middleware(['auth', 'revalidate'])->group(function () {
 
     Route::post('/gedung/store', [GedungController::class, 'store'])->name('gedung.store');
 
+    Route::get('/tabel/sekolah', [SekolahController::class, 'index']);
+
+    Route::post('/tabel/sekolah/store', [SekolahController::class, 'store'])->name('sekolah.store');
 });
 
