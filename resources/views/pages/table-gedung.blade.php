@@ -10,9 +10,9 @@
                             <h2>Table <b> Gedung</b></h2>
                         </div>
                         <div class="col-6">
-                            <a href="#l" class="btn btn-success" data-bs-toggle="modal"><i
+                            <a href="#addGedungModal" class="btn btn-success" data-bs-toggle="modal"><i
                                     class="bi bi-plus-circle"></i><span>Add New Data</span></a>
-                            <a href="#l" class="btn btn-danger" data-bs-toggle="modal"><i
+                            <a href="#deleteGedungModal" class="btn btn-danger" data-bs-toggle="modal"><i
                                     class="bi bi-trash"></i><span>Delete</span></a>
                         </div>
                     </div>
@@ -97,14 +97,14 @@
         </div>
     </div>
     <!-- Add Modal HTML -->
-    <div class="modal fade" id="addGedungModal" tabindex="-1" role="dialog" aria-labelledby="addDataModalLabel"
+    <div class="modal fade" id="addGedungModal" tabindex="-1" role="dialog" aria-labelledby="addSekolahModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form method="POST" action="{{ route('gedung.store')}}">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addDataModalLabel">Add Gedung</h5>
+                        <h5 class="modal-title" id="addSekolahModalLabel">Add Gedung</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">

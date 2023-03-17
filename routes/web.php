@@ -6,6 +6,7 @@ use App\Http\Controllers\CustomLoginController;
 use App\Http\Controllers\CustomLogoutController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GedungController;
+use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\UserProfileController;
 /*
 |--------------------------------------------------------------------------
@@ -73,5 +74,9 @@ Route::middleware(['auth', 'revalidate'])->group(function () {
     Route::get('/gedung', [GedungController::class, 'index']);
 
     Route::post('/gedung/store', [GedungController::class, 'store'])->name('gedung.store');
+
+    Route::get('/tabel/sekolah', [SekolahController::class, 'index']);
+
+    Route::post('/tabel/sekolah/store', [SekolahController::class, 'store'])->name('sekolah.store');
 });
 
