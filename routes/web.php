@@ -63,9 +63,6 @@ Route::middleware(['auth', 'revalidate'])->group(function () {
     Route::post('/admin-panel', [UserController::class, 'store'])->name('users.store');
 
     // Route to update the user in the database
-    Route::put('/admin-panel/users/{user}', [UserController::class, 'update'])->name('admin.users.update');
-
-    // Route to update the user in the database
     Route::put('/admin/users/{id}', [UserController::class, 'update'])->name('admin.users.update');
 
     // Route to delete the user in the database
@@ -76,6 +73,5 @@ Route::middleware(['auth', 'revalidate'])->group(function () {
     Route::get('/gedung', [GedungController::class, 'index']);
 
     Route::post('/gedung/store', [GedungController::class, 'store'])->name('gedung.store');
-
 });
 

@@ -51,4 +51,42 @@ class GedungController extends Controller
 
         return redirect('/gedung')->with('success', 'Gedung added successfully.');
     }
+
+    public function update(Request $request, $id)
+    {
+        $gedungs = Gedung::findOrFail($id);
+
+        // Validate the form data
+        $validatedData = $request->validate([
+            'nama' => 'required',
+            'kategori' => 'required',
+            'alamat' => 'required',
+            'koordinat' => 'required',
+            'tel_cust' => 'required',
+            'pic_cust' => 'required',
+            'am' => 'required',
+            'tel_am' => 'required',
+            'sto' => 'required',
+            'hero' => 'required',
+            'tel_hero' => 'required',
+        ]);
+
+        // Update the gedung data in the database
+        $gedungs->NAMA = $validatedData['nama'];
+        $gedungs->KATEGORI = $validatedData['kategori'];
+        $gedungs->ALAMAT = $validatedData['alamat'];
+        $gedungs->KOORDINAT = $validatedData['koordinat'];
+        $gedungs->TEL_CUST = $validatedData['tel_cust'];
+        $gedungs->PIC_CUST = $validatedData['pic_cust'];
+        $gedungs->AM = $validatedData['am'];
+        $gedungs->TEL_AM = $validatedData['tel_am'];
+        $gedungs->STO = $validatedData['sto'];
+        $gedungs->HERO = $validatedData['hero'];
+        $gedungs->TEL_HERO = $validatedData['tel_hero'];
+
+        // Save the changes to the database
+        $gedungs->save();
+
+        return redirect()->back()->with('success', 'Gedung has been updated successfully.');
+    }
 }
