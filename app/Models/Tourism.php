@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 
-class Gedung extends Model
+class Tourism extends Model
 {
     use HasFactory;
-    protected $table = 'gedung';
+    protected $table = 'tourism';
     protected $primarykey='id';
     protected $fillable = [
         'NAMA',
@@ -25,8 +25,8 @@ class Gedung extends Model
         'TEL_HERO',
     ];
 
-    public function kategorigedung()
+    public function kategoritourism()
     {
-        return $this->belongsTo(KategoriGedung::class,'KATEGORI');
+        return $this->belongsTo(KategoriTourism::class,'KATEGORI');
     }
 }

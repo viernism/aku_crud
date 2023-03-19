@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('toko', function (Blueprint $table) {
+        Schema::create('gedung', function (Blueprint $table) {
             $table->id();
             $table->text('NAMA');
-            $table->enum('KATEGORI', ['Supermarket', 'Minimarket', 'Aksesoris', 'Sport & Music', 'Fashion', 'Mall', 'Electronic', 'Gadget']);
+            $table->unsignedBigInteger('KATEGORI');
+            $table->foreign('KATEGORI')->references('id')->on('kategorigedung');
             $table->text('ALAMAT');
             $table->text('KOORDINAT')->nullable();
             $table->string('TEL_CUST')->nullable();
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->text('STO');
             $table->string('HERO');
             $table->string('TEL_HERO');
+            $table->timestamps();
         });
     }
 
@@ -32,6 +34,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('toko');
+        // Will Delete Table If Exists
+        Schema::dropIfExists('gedung');
     }
 };

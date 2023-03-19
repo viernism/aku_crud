@@ -5,15 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
-class Gedung extends Model
+class Sekolah extends Model
 {
     use HasFactory;
-    protected $table = 'gedung';
+    protected $table = 'sekolah';
     protected $primarykey='id';
     protected $fillable = [
         'NAMA',
-        'KATEGORI',
+        'LEVEL_ID',
         'ALAMAT',
         'KOORDINAT',
         'TEL_CUST',
@@ -25,8 +26,9 @@ class Gedung extends Model
         'TEL_HERO',
     ];
 
-    public function kategorigedung()
+    public function sekolahlevels()
     {
-        return $this->belongsTo(KategoriGedung::class,'KATEGORI');
+        return $this->belongsTo(LevelSekolah::class,'LEVEL_ID');
     }
 }
+

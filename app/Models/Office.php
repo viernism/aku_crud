@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 
-class Gedung extends Model
+class Office extends Model
 {
     use HasFactory;
-    protected $table = 'gedung';
+    protected $table = 'office';
     protected $primarykey='id';
     protected $fillable = [
         'NAMA',
@@ -25,8 +25,8 @@ class Gedung extends Model
         'TEL_HERO',
     ];
 
-    public function kategorigedung()
+    public function kategorioffice()
     {
-        return $this->belongsTo(KategoriGedung::class,'KATEGORI');
+        return $this->belongsTo(KategoriOffice::class,'KATEGORI');
     }
 }

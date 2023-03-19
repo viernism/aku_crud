@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('health', function (Blueprint $table) {
+        Schema::create('sekolah', function (Blueprint $table) {
             $table->id();
             $table->text('NAMA');
-            $table->enum('KATEGORI', ['Apotek', 'Klinik', 'Rumah Sakit', 'Puskesmas']);
+            $table->unsignedBigInteger('LEVEL_ID');
+            $table->foreign('LEVEL_ID')->references('id')->on('sekolahlevels');
             $table->text('ALAMAT');
             $table->text('KOORDINAT')->nullable();
             $table->string('TEL_CUST')->nullable();
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->text('STO');
             $table->string('HERO');
             $table->string('TEL_HERO');
+            $table->timestamps();
         });
     }
 
@@ -32,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('health');
+        Schema::dropIfExists('sekolah');
     }
 };

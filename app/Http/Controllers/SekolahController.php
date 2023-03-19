@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\KategoriGedung;
-use App\Models\Gedung;
+use App\Models\Sekolah;
+use App\Models\LevelSekolah;
 
-class GedungController extends Controller
+class SekolahController extends Controller
 {
     public function index()
     {
-        $gedungs = Gedung::with('kategorigedung')->paginate(5);
-        $kategoris=KategoriGedung::all();
+        $sekolahs=Sekolah::with('sekolahlevels')->paginate(5);
 
-        // Call the firstItem() method on the $gedungs variable
-        $firstItem = $gedungs->firstItem();
+        $levels=LevelSekolah::all();
+        // Call the firstItem() method on the $sekolahs variable
+        $firstItem = $sekolahs->firstItem();
 
-        return view('pages.table-gedung', compact('gedungs', 'firstItem','kategoris'));
+        return view('pages.table-sekolah', compact('sekolahs', 'firstItem', 'levels'));
     }
 
     public function store(Request $request)
@@ -24,7 +24,7 @@ class GedungController extends Controller
         // validate the form data
         $validatedData = $request->validate([
             'nama' => 'required',
-            'kategori' => 'required',
+            'LEVEL_ID' => 'required',
             'alamat' => 'required',
             'koordinat' => 'required',
             'tel_cust' => 'required',
@@ -37,9 +37,9 @@ class GedungController extends Controller
         ]);
 
         //  Create a new data in the db
-        Gedung::create ([
+        Sekolah::create ([
             'NAMA' => $validatedData['nama'],
-            'KATEGORI' => $validatedData['kategori'],
+            'LEVEL_ID' => $validatedData['LEVEL_ID'],
             'ALAMAT' => $validatedData['alamat'],
             'KOORDINAT' => $validatedData['koordinat'],
             'TEL_CUST' => $validatedData['tel_cust'],
@@ -51,15 +51,19 @@ class GedungController extends Controller
             'TEL_HERO' => $validatedData['tel_hero'],
         ]);
 
-        return redirect('/tabel/gedung')->with('success', 'Gedung added successfully.');
+        // $enumValues = Sekolah::getEnumValues('LEVEL');
+
+        return redirect('/tabel/sekolah')->with('success', 'sekolah added successfully.');
+
+        // ->with(['enumValues' => $enumValues])
     }
 
     public function update(Request $request, $id){
-        $gedung=Gedung::findorfail($id);
+        $sekolah=Sekolah::findorFail($id);
 
         $validatedData=$request->validate([
             'NAMA' => 'required',
-            'KATEGORI' =>'required',
+            'LEVEL_ID' =>'required',
             'ALAMAT' => 'required',
             'KOORDINAT' => 'required',
             'TEL_CUST' => 'required',
@@ -71,22 +75,25 @@ class GedungController extends Controller
             'TEL_HERO' => 'required'
         ]);
 
-        $gedung->NAMA=$validatedData['NAMA'];
-        $gedung->LEVEL_ID=$validatedData['KATEGORI'];
-        $gedung->ALAMAT=$validatedData['ALAMAT'];
-        $gedung->KOORDINAT=$validatedData['KOORDINAT'];
-        $gedung->TEL_CUST=$validatedData['TEL_CUST'];
-        $gedung->PIC_CUST=$validatedData['PIC_CUST'];
-        $gedung->AM=$validatedData['AM'];
-        $gedung->TEL_AM=$validatedData['TEL_AM'];
-        $gedung->STO=$validatedData['STO'];
-        $gedung->HERO=$validatedData['HERO'];
-        $gedung->TEL_HERO=$validatedData['TEL_HERO'];
-        $gedung->save();
+        $sekolah->NAMA=$validatedData['NAMA'];
+        $sekolah->LEVEL_ID=$validatedData['LEVEL_ID'];
+        $sekolah->ALAMAT=$validatedData['ALAMAT'];
+        $sekolah->KOORDINAT=$validatedData['KOORDINAT'];
+        $sekolah->TEL_CUST=$validatedData['TEL_CUST'];
+        $sekolah->PIC_CUST=$validatedData['PIC_CUST'];
+        $sekolah->AM=$validatedData['AM'];
+        $sekolah->TEL_AM=$validatedData['TEL_AM'];
+        $sekolah->STO=$validatedData['STO'];
+        $sekolah->HERO=$validatedData['HERO'];
+        $sekolah->TEL_HERO=$validatedData['TEL_HERO'];
+        $sekolah->save();
+
+        return redirect()->back()->with('success', 'Sekolah updated successfully.');
     }
 
-    public function remove(Gedung $gedung){
-        $gedung->delete();
-        return redirect()->back()->with('success', 'Gedung deleted successfully.');
+    public function remove(Sekolah $sekolah){
+        $sekolah->delete();
+        return redirect()->back()->with('success', 'Sekolah deleted successfully.');
     }
 }
+

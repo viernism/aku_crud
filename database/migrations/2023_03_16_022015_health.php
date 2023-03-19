@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('gedung', function (Blueprint $table) {
+        Schema::create('health', function (Blueprint $table) {
             $table->id();
             $table->text('NAMA');
-            $table->enum('KATEGORI', ['JKS', 'DBS', 'DBE']);
+            $table->unsignedBigInteger('KATEGORI');
+            $table->foreign('KATEGORI')->references('id')->on('kategorihealth');
             $table->text('ALAMAT');
             $table->text('KOORDINAT')->nullable();
             $table->string('TEL_CUST')->nullable();
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->text('STO');
             $table->string('HERO');
             $table->string('TEL_HERO');
+            $table->timestamps();
         });
     }
 
@@ -32,7 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // Will Delete Table If Exists
-        Schema::dropIfExists('gedung');
+        Schema::dropIfExists('health');
     }
 };

@@ -6,6 +6,7 @@ use App\Http\Controllers\CustomLoginController;
 use App\Http\Controllers\CustomLogoutController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GedungController;
+use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\UserProfileController;
 /*
 |--------------------------------------------------------------------------
@@ -34,10 +35,6 @@ Route::middleware(['guest'])->group(function () {
 Route::middleware(['auth', 'revalidate'])->group(function () {
     Route::get('/home', function () {
         return view('pages.home');
-    });
-
-    Route::get('/gedung', function() {
-        return view('pages.table-gedung');
     });
 
     Route::get('/dashboard', function () {
@@ -73,7 +70,13 @@ Route::middleware(['auth', 'revalidate'])->group(function () {
 
     Route::delete('/admin-panel/users/{id}', [UserController::class, 'destroy'])->name('admin.users.destroy');
 
-    Route::get('/gedung', [GedungController::class, 'index']);
+    Route::get('/tabel/gedung', [GedungController::class, 'index']);
+
+    Route::post('/tabel/gedung/store', [GedungController::class, 'store'])->name('gedung.store');
+
+    Route::get('/tabel/sekolah', [SekolahController::class, 'index']);
+
+    Route::post('/tabel/sekolah/store', [SekolahController::class, 'store'])->name('sekolah.store');
 
 });
 

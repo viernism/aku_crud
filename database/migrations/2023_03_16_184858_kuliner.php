@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('kuliner', function (Blueprint $table) {
             $table->id();
                 $table->text('NAMA');
-                $table->enum('KATEGORI', ['Warung', 'Cafe', 'Resto', 'Pujasera']);
+                $table->unsignedBigInteger('KATEGORI');
+                $table->foreign('KATEGORI')->references('id')->on('kategorikuliner');
                 $table->text('ALAMAT');
                 $table->text('KOORDINAT')->nullable();
                 $table->string('TEL_CUST')->nullable();
@@ -24,6 +25,7 @@ return new class extends Migration
                 $table->text('STO');
                 $table->string('HERO');
                 $table->string('TEL_HERO');
+                $table->timestamps();
         });
     }
 

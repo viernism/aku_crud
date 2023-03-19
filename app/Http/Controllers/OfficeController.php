@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\KategoriGedung;
-use App\Models\Gedung;
+use App\Models\Kategorioffice;
+use App\Models\office;
 
-class GedungController extends Controller
+class OfficeController extends Controller
 {
     public function index()
     {
-        $gedungs = Gedung::with('kategorigedung')->paginate(5);
-        $kategoris=KategoriGedung::all();
+        $offices = Office::with('kategorioffice')->paginate(5);
+        $kategoris=KategoriOffice::all();
 
-        // Call the firstItem() method on the $gedungs variable
-        $firstItem = $gedungs->firstItem();
+        // Call the firstItem() method on the $offices variable
+        $firstItem = $offices->firstItem();
 
-        return view('pages.table-gedung', compact('gedungs', 'firstItem','kategoris'));
+        return view('pages.table-office', compact('offices', 'firstItem','kategoris'));
     }
 
     public function store(Request $request)
@@ -37,7 +37,7 @@ class GedungController extends Controller
         ]);
 
         //  Create a new data in the db
-        Gedung::create ([
+        Office::create ([
             'NAMA' => $validatedData['nama'],
             'KATEGORI' => $validatedData['kategori'],
             'ALAMAT' => $validatedData['alamat'],
@@ -51,11 +51,11 @@ class GedungController extends Controller
             'TEL_HERO' => $validatedData['tel_hero'],
         ]);
 
-        return redirect('/tabel/gedung')->with('success', 'Gedung added successfully.');
+        return redirect('/tabel/office')->with('success', 'office added successfully.');
     }
 
     public function update(Request $request, $id){
-        $gedung=Gedung::findorfail($id);
+        $Office=Office::findorfail($id);
 
         $validatedData=$request->validate([
             'NAMA' => 'required',
@@ -71,22 +71,22 @@ class GedungController extends Controller
             'TEL_HERO' => 'required'
         ]);
 
-        $gedung->NAMA=$validatedData['NAMA'];
-        $gedung->LEVEL_ID=$validatedData['KATEGORI'];
-        $gedung->ALAMAT=$validatedData['ALAMAT'];
-        $gedung->KOORDINAT=$validatedData['KOORDINAT'];
-        $gedung->TEL_CUST=$validatedData['TEL_CUST'];
-        $gedung->PIC_CUST=$validatedData['PIC_CUST'];
-        $gedung->AM=$validatedData['AM'];
-        $gedung->TEL_AM=$validatedData['TEL_AM'];
-        $gedung->STO=$validatedData['STO'];
-        $gedung->HERO=$validatedData['HERO'];
-        $gedung->TEL_HERO=$validatedData['TEL_HERO'];
-        $gedung->save();
+        $office->NAMA=$validatedData['NAMA'];
+        $office->LEVEL_ID=$validatedData['KATEGORI'];
+        $office->ALAMAT=$validatedData['ALAMAT'];
+        $office->KOORDINAT=$validatedData['KOORDINAT'];
+        $office->TEL_CUST=$validatedData['TEL_CUST'];
+        $office->PIC_CUST=$validatedData['PIC_CUST'];
+        $office->AM=$validatedData['AM'];
+        $office->TEL_AM=$validatedData['TEL_AM'];
+        $office->STO=$validatedData['STO'];
+        $office->HERO=$validatedData['HERO'];
+        $office->TEL_HERO=$validatedData['TEL_HERO'];
+        $office->save();
     }
 
-    public function remove(Gedung $gedung){
-        $gedung->delete();
-        return redirect()->back()->with('success', 'Gedung deleted successfully.');
+    public function remove(Office $office){
+        $office->delete();
+        return redirect()->back()->with('success', 'office deleted successfully.');
     }
 }

@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\KategoriGedung;
-use App\Models\Gedung;
+use App\Models\KategoriKuliner;
+use App\Models\Kuliner;
 
-class GedungController extends Controller
+class KulinerController extends Controller
 {
     public function index()
     {
-        $gedungs = Gedung::with('kategorigedung')->paginate(5);
-        $kategoris=KategoriGedung::all();
+        $kuliners = Kuliner::with('kategorikuliner')->paginate(5);
+        $kategoris=KategoriKuliner::all();
 
         // Call the firstItem() method on the $gedungs variable
-        $firstItem = $gedungs->firstItem();
+        $firstItem = $kuliners->firstItem();
 
-        return view('pages.table-gedung', compact('gedungs', 'firstItem','kategoris'));
+        return view('pages.table-kuliner', compact('kuliners', 'firstItem','kategoris'));
     }
 
     public function store(Request $request)
@@ -37,7 +37,7 @@ class GedungController extends Controller
         ]);
 
         //  Create a new data in the db
-        Gedung::create ([
+        Kuliner::create ([
             'NAMA' => $validatedData['nama'],
             'KATEGORI' => $validatedData['kategori'],
             'ALAMAT' => $validatedData['alamat'],
@@ -51,11 +51,11 @@ class GedungController extends Controller
             'TEL_HERO' => $validatedData['tel_hero'],
         ]);
 
-        return redirect('/tabel/gedung')->with('success', 'Gedung added successfully.');
+        return redirect('/tabel/Kuliner')->with('success', 'Gedung added successfully.');
     }
 
     public function update(Request $request, $id){
-        $gedung=Gedung::findorfail($id);
+        $kuliner=Kuliner::findorfail($id);
 
         $validatedData=$request->validate([
             'NAMA' => 'required',
@@ -71,22 +71,22 @@ class GedungController extends Controller
             'TEL_HERO' => 'required'
         ]);
 
-        $gedung->NAMA=$validatedData['NAMA'];
-        $gedung->LEVEL_ID=$validatedData['KATEGORI'];
-        $gedung->ALAMAT=$validatedData['ALAMAT'];
-        $gedung->KOORDINAT=$validatedData['KOORDINAT'];
-        $gedung->TEL_CUST=$validatedData['TEL_CUST'];
-        $gedung->PIC_CUST=$validatedData['PIC_CUST'];
-        $gedung->AM=$validatedData['AM'];
-        $gedung->TEL_AM=$validatedData['TEL_AM'];
-        $gedung->STO=$validatedData['STO'];
-        $gedung->HERO=$validatedData['HERO'];
-        $gedung->TEL_HERO=$validatedData['TEL_HERO'];
-        $gedung->save();
+        $kuliner->NAMA=$validatedData['NAMA'];
+        $kuliner->LEVEL_ID=$validatedData['KATEGORI'];
+        $kuliner->ALAMAT=$validatedData['ALAMAT'];
+        $kuliner->KOORDINAT=$validatedData['KOORDINAT'];
+        $kuliner->TEL_CUST=$validatedData['TEL_CUST'];
+        $kuliner->PIC_CUST=$validatedData['PIC_CUST'];
+        $kuliner->AM=$validatedData['AM'];
+        $kuliner->TEL_AM=$validatedData['TEL_AM'];
+        $kuliner->STO=$validatedData['STO'];
+        $kuliner->HERO=$validatedData['HERO'];
+        $kuliner->TEL_HERO=$validatedData['TEL_HERO'];
+        $kuliner->save();
     }
 
-    public function remove(Gedung $gedung){
-        $gedung->delete();
-        return redirect()->back()->with('success', 'Gedung deleted successfully.');
+    public function remove(kuliner $kuliner){
+        $kuliner->delete();
+        return redirect()->back()->with('success', 'kuliner deleted successfully.');
     }
 }

@@ -6,17 +6,17 @@ use Illuminate\Http\Request;
 use App\Models\KategoriGedung;
 use App\Models\Gedung;
 
-class GedungController extends Controller
+class TokoController extends Controller
 {
     public function index()
     {
-        $gedungs = Gedung::with('kategorigedung')->paginate(5);
-        $kategoris=KategoriGedung::all();
+        $tokos = Toko::with('kategoritoko')->paginate(5);
+        $kategoris=KategoriToko::all();
 
         // Call the firstItem() method on the $gedungs variable
-        $firstItem = $gedungs->firstItem();
+        $firstItem = $tokos->firstItem();
 
-        return view('pages.table-gedung', compact('gedungs', 'firstItem','kategoris'));
+        return view('pages.table-toko', compact('tokos', 'firstItem','kategoris'));
     }
 
     public function store(Request $request)
@@ -37,7 +37,7 @@ class GedungController extends Controller
         ]);
 
         //  Create a new data in the db
-        Gedung::create ([
+        Toko::create ([
             'NAMA' => $validatedData['nama'],
             'KATEGORI' => $validatedData['kategori'],
             'ALAMAT' => $validatedData['alamat'],
@@ -51,7 +51,7 @@ class GedungController extends Controller
             'TEL_HERO' => $validatedData['tel_hero'],
         ]);
 
-        return redirect('/tabel/gedung')->with('success', 'Gedung added successfully.');
+        return redirect('/tabel/toko')->with('success', 'Toko added successfully.');
     }
 
     public function update(Request $request, $id){
