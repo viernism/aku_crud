@@ -37,10 +37,6 @@ Route::middleware(['auth', 'revalidate'])->group(function () {
         return view('pages.home');
     });
 
-    Route::get('/gedung', function() {
-        return view('pages.table-gedung');
-    });
-
     Route::get('/dashboard', function () {
         return view('pages.dashboard');
     });
@@ -71,7 +67,13 @@ Route::middleware(['auth', 'revalidate'])->group(function () {
 
     Route::delete('/admin-panel/users/{id}', [UserController::class, 'destroy'])->name('admin.users.destroy');
 
-    Route::get('/gedung', [GedungController::class, 'index']);
+    Route::get('/tabel/gedung', [GedungController::class, 'index']);
+
+    Route::post('/tabel/gedung/store', [GedungController::class, 'store'])->name('gedung.store');
+
+    Route::get('/tabel/sekolah', [SekolahController::class, 'index']);
+
+    Route::post('/tabel/sekolah/store', [SekolahController::class, 'store'])->name('sekolah.store');
 
     Route::post('/gedung/store', [GedungController::class, 'store'])->name('gedung.store');
 

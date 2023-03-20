@@ -22,12 +22,13 @@ class UserProfileController extends Controller
 
             // validate the uploaded file
             $validatedData = $request->validate([
-                'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'photo' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             ]);
 
             // store the file and get the file path
-            $path = $file->store('public/profile_images');
-            $path = str_replace('public/', '/storage/', $path);
+            $path = $file->store('profile_images', 'public');
+            $path = str_replace('public/', '', $path);
+            $path = '/storage/' . $path;
 
             // update the user's profile image
             $user->photo = $path;

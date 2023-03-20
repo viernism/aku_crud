@@ -62,11 +62,11 @@
                 </a>
                 <ul class="sidebar-dropdown-menu">
                     <li class="sidebar-dropdown-menu-item alert-button">
-                        <a href="/gedung">
+                        <a href="/tabel/gedung">
                             <i class="ri-building-2-line sidebar-menu-item-icon"></i>Gedung </a>
                     </li>
                     <li class="sidebar-dropdown-menu-item">
-                        <a href="#">
+                        <a href="/tabel/sekolah">
                             <i class="ri-community-line sidebar-menu-item-icon"></i> Sekolah</a>
                     </li>
                 </ul>

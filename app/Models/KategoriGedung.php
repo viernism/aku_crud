@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class KategoriGedung extends Model
+{
+    use HasFactory;
+    protected $table = 'kategorigedung';
+    protected $primarykey='id';
+    protected $fillable = [
+        'id',
+        'Kategori'
+    ];
+
+    public function gedung()
+    {
+        return $this->hasMany(Gedung::class,'KATEGORI');
+    }
+}
