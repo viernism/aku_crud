@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Table Gedung'])
+@extends('layouts.app', ['title' => 'Table Buscen'])
 
 @section('content')
     <div class="container">
@@ -7,12 +7,12 @@
                 <div class="table-title">
                     <div class="row">
                         <div class="col-6">
-                            <h2>Table <b> Gedung</b></h2>
+                            <h2>Table <b> Buscen</b></h2>
                         </div>
                         <div class="col-6">
-                            <a href="#addGedungModal" class="btn btn-success" data-bs-toggle="modal"><i
+                            <a href="#addBuscenModal" class="btn btn-success" data-bs-toggle="modal"><i
                                     class="bi bi-plus-circle"></i><span>Add New Data</span></a>
-                            <a href="#deleteGedungModal" class="btn btn-danger" data-bs-toggle="modal"><i
+                            <a href="#deleteBuscenModal" class="btn btn-danger" data-bs-toggle="modal"><i
                                     class="bi bi-trash"></i><span>Delete</span></a>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                         </tr>
                     </thead>
                     <tbody id="table-body">
-                        @foreach ($gedungs as $gedung)
+                        @foreach ($buscens as $buscen)
                         <tr>
                             <td>
                                 <div class="form-check">
@@ -49,22 +49,22 @@
                                     <label class="form-check-label" for="checkbox1"></label>
                                 </div>
                             </td>
-                            <td>{{$gedung->NAMA}}</td>
-                            <td>{{$gedung->kategorigedung->Kategori}}</td>
-                            <td>{{$gedung->ALAMAT}}</td>
-                            <td>{{$gedung->KOORDINAT}}</td>
-                            <td>{{ $gedung->TEL_CUST}}</td>
-                            <td>{{$gedung->PIC_CUST}}</td>
-                            <td>{{$gedung->AM}}</td>
-                            <td>{{$gedung->TEL_AM}}</td>
-                            <td>{{$gedung->STO}} </td>
-                            <td>{{$gedung->HERO}}</td>
-                            <td>{{$gedung->TEL_HERO}}</td>
+                            <td>{{$buscen->NAMA}}</td>
+                            <td>{{$buscen->kategoribuscen->Kategori}}</td>
+                            <td>{{$buscen->ALAMAT}}</td>
+                            <td>{{$buscen->KOORDINAT}}</td>
+                            <td>{{$buscen->TEL_CUST}}</td>
+                            <td>{{$buscen->PIC_CUST}}</td>
+                            <td>{{$buscen->AM}}</td>
+                            <td>{{$buscen->TEL_AM}}</td>
+                            <td>{{$buscen->STO}} </td>
+                            <td>{{$buscen->HERO}}</td>
+                            <td>{{$buscen->TEL_HERO}}</td>
                             <td>
-                                <a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#editGedungModal" data-gedung-id="{{ $gedung->id }}">
+                                <a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#editBuscenModal" data-buscen-id="{{ $buscen->id }}">
                                     <i class="ri-pencil-line" data-bs-toggle="tooltip" title="Edit"></i>
                                 </a>
-                                <a href="#" class="delete" data-bs-toggle="modal" data-bs-target="#deleteGedungModal" data-gedung-id="{{ $gedung->id }}">
+                                <a href="#" class="delete" data-bs-toggle="modal" data-bs-target="#deleteBuscenModal" data-buscen-id="{{ $buscen->id }}">
                                     <i class="ri-delete-bin-line" data-bs-toggle="tooltip" title="Delete"></i>
                                 </a>
                             </td>
@@ -73,22 +73,22 @@
                     </tbody>
                 </table>
                 <div class="clearfix">
-                    <div class="hint-text">Showing <b>{{ $gedungs->firstItem() }}</b> to <b>{{ $gedungs->lastItem() }}</b> of
-                        <b>{{ $gedungs->total() }}</b> entries</div>
+                    <div class="hint-text">Showing <b>{{ $buscens->firstItem() }}</b> to <b>{{ $buscens->lastItem() }}</b> of
+                        <b>{{ $buscens->total() }}</b> entries</div>
                     <ul class="pagination">
-                        @if ($gedungs->currentPage() > 1)
+                        @if ($buscens->currentPage() > 1)
                             <li class="page-item">
-                                <a href="{{ $gedungs->previousPageUrl() }}" class="page-link">Previous</a>
+                                <a href="{{ $buscens->previousPageUrl() }}" class="page-link">Previous</a>
                             </li>
                         @endif
-                        @for ($i = 1; $i <= $gedungs->lastPage(); $i++)
-                            <li class="page-item{{ $gedungs->currentPage() == $i ? ' active' : '' }}">
-                                <a href="{{ $gedungs->url($i) }}" class="page-link">{{ $i }}</a>
+                        @for ($i = 1; $i <= $buscens->lastPage(); $i++)
+                            <li class="page-item{{ $buscens->currentPage() == $i ? ' active' : '' }}">
+                                <a href="{{ $buscens->url($i) }}" class="page-link">{{ $i }}</a>
                             </li>
                         @endfor
-                        @if ($gedungs->currentPage() < $gedungs->lastPage())
+                        @if ($buscens->currentPage() < $buscens->lastPage())
                             <li class="page-item">
-                                <a href="{{ $gedungs->nextPageUrl() }}" class="page-link">Next</a>
+                                <a href="{{ $buscens->nextPageUrl() }}" class="page-link">Next</a>
                             </li>
                         @endif
                     </ul>
@@ -97,14 +97,14 @@
         </div>
     </div>
     <!-- Add Modal HTML -->
-    <div class="modal fade" id="addGedungModal" tabindex="-1" role="dialog" aria-labelledby="addSekolahModalLabel"
+    <div class="modal fade" id="addBuscenModal" tabindex="-1" role="dialog" aria-labelledby="addBuscenModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('gedung.store')}}">
+                <form method="POST" action="{{ route('buscen.store')}}">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addSekolahModalLabel">Add Gedung</h5>
+                        <h5 class="modal-title" id="addBuscenModalLabel">Add buscen</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -159,27 +159,27 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-success">Add Gedung</button>
+                        <button type="submit" class="btn btn-success">Add buscen</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
     <!-- Edit Modal HTML -->
-     <div class="modal fade" id="editGedungModal" tabindex="-1" role="dialog"
-    aria-labelledby="editGedungModalLabel" aria-hidden="true">
+     <div class="modal fade" id="editBuscenModal" tabindex="-1" role="dialog"
+    aria-labelledby="editBuscenModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form method="POST" action="{{ route('gedung.update', ':gedungId') }}">
+            <form method="POST" action="{{ route('buscen.update', ':buscenId') }}">
                 @csrf
                 @method('PUT')
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editGedungModalLabel">Edit Gedung</h5>
+                    <h5 class="modal-title" id="editBuscenModalLabel">Edit Buscen</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="edit-name" class="form-label">Nama Gedung</label>
+                        <label for="edit-name" class="form-label">Nama Buscen</label>
                         <input type="text" class="form-control" id="edit-name" name="NAMA" required>
                     </div>
                   <div class="mb-3 form-floating">
@@ -189,7 +189,7 @@
                                     <option value="{{ $kategori->id }}">{{ $kategori->Kategori }}</option>
                                 @endforeach
                             </select>
-                    </div>
+                        </div>
                     <div class="mb-3">
                         <label for="edit-address" class="form-label">Alamat</label>
                         <textarea class="form-control" id="edit-address" name="ALAMAT" required></textarea>
@@ -236,19 +236,19 @@
     </div>
 </div>
     <!-- Delete Modal HTML -->
-    <div class="modal fade" id="deleteGedungModal" tabindex="-1" aria-labelledby="deleteGedungModalLabel"
+    <div class="modal fade" id="deleteBuscenModal" tabindex="-1" aria-labelledby="deleteBuscenModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="deleteGedungModalLabel">Delete Gedung</h4>
+                    <h4 class="modal-title" id="deleteBuscenModalLabel">Delete Buscen</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <p>Are you sure you want to delete these records?</p>
                     <p class="text-warning"><small>This action cannot be undone.</small></p>
                 </div>
-                <form action="{{ route('gedung.destroy', ':gedungId') }}" method="POST">
+                <form action="{{ route('buscen.destroy', ':buscenId') }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="modal-footer">

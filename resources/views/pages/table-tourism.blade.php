@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Table Gedung'])
+@extends('layouts.app', ['title' => 'Table Tourism'])
 
 @section('content')
     <div class="container">
@@ -7,12 +7,12 @@
                 <div class="table-title">
                     <div class="row">
                         <div class="col-6">
-                            <h2>Table <b> Gedung</b></h2>
+                            <h2>Table <b> Tourism</b></h2>
                         </div>
                         <div class="col-6">
-                            <a href="#addGedungModal" class="btn btn-success" data-bs-toggle="modal"><i
+                            <a href="#addTourismModal" class="btn btn-success" data-bs-toggle="modal"><i
                                     class="bi bi-plus-circle"></i><span>Add New Data</span></a>
-                            <a href="#deleteGedungModal" class="btn btn-danger" data-bs-toggle="modal"><i
+                            <a href="#deleteTourismModal" class="btn btn-danger" data-bs-toggle="modal"><i
                                     class="bi bi-trash"></i><span>Delete</span></a>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                         </tr>
                     </thead>
                     <tbody id="table-body">
-                        @foreach ($gedungs as $gedung)
+                        @foreach ($tourisms as $tourism)
                         <tr>
                             <td>
                                 <div class="form-check">
@@ -49,22 +49,22 @@
                                     <label class="form-check-label" for="checkbox1"></label>
                                 </div>
                             </td>
-                            <td>{{$gedung->NAMA}}</td>
-                            <td>{{$gedung->kategorigedung->Kategori}}</td>
-                            <td>{{$gedung->ALAMAT}}</td>
-                            <td>{{$gedung->KOORDINAT}}</td>
-                            <td>{{ $gedung->TEL_CUST}}</td>
-                            <td>{{$gedung->PIC_CUST}}</td>
-                            <td>{{$gedung->AM}}</td>
-                            <td>{{$gedung->TEL_AM}}</td>
-                            <td>{{$gedung->STO}} </td>
-                            <td>{{$gedung->HERO}}</td>
-                            <td>{{$gedung->TEL_HERO}}</td>
+                            <td>{{$tourism->NAMA}}</td>
+                            <td>{{$tourism->kategoritourism->Kategori}}</td>
+                            <td>{{$tourism->ALAMAT}}</td>
+                            <td>{{$tourism->KOORDINAT}}</td>
+                            <td>{{$tourism->TEL_CUST}}</td>
+                            <td>{{$tourism->PIC_CUST}}</td>
+                            <td>{{$tourism->AM}}</td>
+                            <td>{{$tourism->TEL_AM}}</td>
+                            <td>{{$tourism->STO}} </td>
+                            <td>{{$tourism->HERO}}</td>
+                            <td>{{$tourism->TEL_HERO}}</td>
                             <td>
-                                <a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#editGedungModal" data-gedung-id="{{ $gedung->id }}">
+                                <a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#editTourismModal" data-tourism-id="{{ $tourism->id }}">
                                     <i class="ri-pencil-line" data-bs-toggle="tooltip" title="Edit"></i>
                                 </a>
-                                <a href="#" class="delete" data-bs-toggle="modal" data-bs-target="#deleteGedungModal" data-gedung-id="{{ $gedung->id }}">
+                                <a href="#" class="delete" data-bs-toggle="modal" data-bs-target="#deleteTourismModal" data-tourism-id="{{ $tourism->id }}">
                                     <i class="ri-delete-bin-line" data-bs-toggle="tooltip" title="Delete"></i>
                                 </a>
                             </td>
@@ -73,22 +73,22 @@
                     </tbody>
                 </table>
                 <div class="clearfix">
-                    <div class="hint-text">Showing <b>{{ $gedungs->firstItem() }}</b> to <b>{{ $gedungs->lastItem() }}</b> of
-                        <b>{{ $gedungs->total() }}</b> entries</div>
+                    <div class="hint-text">Showing <b>{{ $tourisms->firstItem() }}</b> to <b>{{ $tourisms->lastItem() }}</b> of
+                        <b>{{ $tourisms->total() }}</b> entries</div>
                     <ul class="pagination">
-                        @if ($gedungs->currentPage() > 1)
+                        @if ($tourisms->currentPage() > 1)
                             <li class="page-item">
-                                <a href="{{ $gedungs->previousPageUrl() }}" class="page-link">Previous</a>
+                                <a href="{{ $tourisms->previousPageUrl() }}" class="page-link">Previous</a>
                             </li>
                         @endif
-                        @for ($i = 1; $i <= $gedungs->lastPage(); $i++)
-                            <li class="page-item{{ $gedungs->currentPage() == $i ? ' active' : '' }}">
-                                <a href="{{ $gedungs->url($i) }}" class="page-link">{{ $i }}</a>
+                        @for ($i = 1; $i <= $tourisms->lastPage(); $i++)
+                            <li class="page-item{{ $tourisms->currentPage() == $i ? ' active' : '' }}">
+                                <a href="{{ $tourisms->url($i) }}" class="page-link">{{ $i }}</a>
                             </li>
                         @endfor
-                        @if ($gedungs->currentPage() < $gedungs->lastPage())
+                        @if ($tourisms->currentPage() < $tourisms->lastPage())
                             <li class="page-item">
-                                <a href="{{ $gedungs->nextPageUrl() }}" class="page-link">Next</a>
+                                <a href="{{ $tourisms->nextPageUrl() }}" class="page-link">Next</a>
                             </li>
                         @endif
                     </ul>
@@ -97,14 +97,14 @@
         </div>
     </div>
     <!-- Add Modal HTML -->
-    <div class="modal fade" id="addGedungModal" tabindex="-1" role="dialog" aria-labelledby="addSekolahModalLabel"
+    <div class="modal fade" id="addTourismModal" tabindex="-1" role="dialog" aria-labelledby="addSekolahModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('gedung.store')}}">
+                <form method="POST" action="{{ route('tourism.store')}}">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addSekolahModalLabel">Add Gedung</h5>
+                        <h5 class="modal-title" id="addSekolahModalLabel">Add tourism</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -159,27 +159,27 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-success">Add Gedung</button>
+                        <button type="submit" class="btn btn-success">Add tourism</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
     <!-- Edit Modal HTML -->
-     <div class="modal fade" id="editGedungModal" tabindex="-1" role="dialog"
-    aria-labelledby="editGedungModalLabel" aria-hidden="true">
+     <div class="modal fade" id="editTourismModal" tabindex="-1" role="dialog"
+    aria-labelledby="editTourismModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form method="POST" action="{{ route('gedung.update', ':gedungId') }}">
+            <form method="POST" action="{{ route('tourism.update', ':tourismId') }}">
                 @csrf
                 @method('PUT')
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editGedungModalLabel">Edit Gedung</h5>
+                    <h5 class="modal-title" id="editTourismModalLabel">Edit Tourism</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="edit-name" class="form-label">Nama Gedung</label>
+                        <label for="edit-name" class="form-label">Nama Tourism</label>
                         <input type="text" class="form-control" id="edit-name" name="NAMA" required>
                     </div>
                   <div class="mb-3 form-floating">
@@ -189,7 +189,7 @@
                                     <option value="{{ $kategori->id }}">{{ $kategori->Kategori }}</option>
                                 @endforeach
                             </select>
-                    </div>
+                        </div>
                     <div class="mb-3">
                         <label for="edit-address" class="form-label">Alamat</label>
                         <textarea class="form-control" id="edit-address" name="ALAMAT" required></textarea>
@@ -236,19 +236,19 @@
     </div>
 </div>
     <!-- Delete Modal HTML -->
-    <div class="modal fade" id="deleteGedungModal" tabindex="-1" aria-labelledby="deleteGedungModalLabel"
+    <div class="modal fade" id="deleteTourismModal" tabindex="-1" aria-labelledby="deleteTourismModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="deleteGedungModalLabel">Delete Gedung</h4>
+                    <h4 class="modal-title" id="deleteTourismModalLabel">Delete Tourism</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <p>Are you sure you want to delete these records?</p>
                     <p class="text-warning"><small>This action cannot be undone.</small></p>
                 </div>
-                <form action="{{ route('gedung.destroy', ':gedungId') }}" method="POST">
+                <form action="{{ route('tourism.destroy', ':tourismId') }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="modal-footer">

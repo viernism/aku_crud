@@ -19,6 +19,17 @@
                 </div>
                 <table class="table table-striped table-hover">
                     <thead>
+                        <span>Rows per page:</span>
+                        <select class="custom-select" onchange="window.location.href=this.value">
+                            <option value="{{ $sekolahs->url(10) }}" {{ $sekolahs->perPage() == 10 ? 'selected' : '' }}>10
+                            </option>
+                            <option value="{{ $sekolahs->url(25) }}" {{ $sekolahs->perPage() == 25 ? 'selected' : '' }}>25
+                            </option>
+                            <option value="{{ $sekolahs->url(50) }}" {{ $sekolahs->perPage() == 50 ? 'selected' : '' }}>50
+                            </option>
+                            <option value="{{ $sekolahs->url(100) }}" {{ $sekolahs->perPage() == 100 ? 'selected' : '' }}>
+                                100</option>
+                        </select>
                         <tr>
                             <th>
                                 <div class="form-check">
@@ -41,57 +52,63 @@
                     </thead>
                     <tbody id="table-body">
                         @foreach ($sekolahs as $sekolah)
-                        <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="selectAll"
-                                        onchange="updateCheckboxes()">
-                                    <label class="form-check-label" for="checkbox1"></label>
-                                </div>
-                            </td>
-                            <td>{{$sekolah->NAMA}}</td>
-                            <td>{{$sekolah->sekolahlevels->LEVEL}}</td>
-                            <td>{{$sekolah->ALAMAT}}</td>
-                            <td>{{$sekolah->KOORDINAT}}</td>
-                            <td>{{$sekolah->TEL_CUST}}</td>
-                            <td>{{$sekolah->PIC_CUST}}</td>
-                            <td>{{$sekolah->AM}}</td>
-                            <td>{{$sekolah->TEL_AM}}</td>
-                            <td>{{$sekolah->STO}} </td>
-                            <td>{{$sekolah->HERO}}</td>
-                            <td>{{$sekolah->TEL_HERO}}</td>
-                            <td>
-                                <a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#editSekolahModal" data-user-id="{{ $sekolah->id }}">
-                                    <i class="ri-pencil-line" data-bs-toggle="tooltip" title="Edit"></i>
-                                </a>
-                                <a href="#" class="delete" data-bs-toggle="modal" data-bs-target="#deleteSekolahModal" data-user-id="{{ $sekolah->id }}">
-                                    <i class="ri-delete-bin-line" data-bs-toggle="tooltip" title="Delete"></i>
-                                </a>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="selectAll"
+                                            onchange="updateCheckboxes()">
+                                        <label class="form-check-label" for="checkbox1"></label>
+                                    </div>
+                                </td>
+                                <td>{{ $sekolah->NAMA }}</td>
+                                <td>{{ $sekolah->sekolahlevels->LEVEL }}</td>
+                                <td>{{ $sekolah->ALAMAT }}</td>
+                                <td>{{ $sekolah->KOORDINAT }}</td>
+                                <td>{{ $sekolah->TEL_CUST }}</td>
+                                <td>{{ $sekolah->PIC_CUST }}</td>
+                                <td>{{ $sekolah->AM }}</td>
+                                <td>{{ $sekolah->TEL_AM }}</td>
+                                <td>{{ $sekolah->STO }} </td>
+                                <td>{{ $sekolah->HERO }}</td>
+                                <td>{{ $sekolah->TEL_HERO }}</td>
+                                <td>
+                                    <a href="#" class="edit" data-bs-toggle="modal"
+                                        data-bs-target="#editSekolahModal" data-sekolah-id="{{ $sekolah->id }}">
+                                        <i class="ri-pencil-line" data-bs-toggle="tooltip" title="Edit"></i>
+                                    </a>
+                                    <a href="#" class="delete" data-bs-toggle="modal"
+                                        data-bs-target="#deleteSekolahModal" data-sekolah-id="{{ $sekolah->id }}">
+                                        <i class="ri-delete-bin-line" data-bs-toggle="tooltip" title="Delete"></i>
+                                    </a>
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
                 <div class="clearfix">
-                    <div class="hint-text">Showing <b>{{ $sekolahs->firstItem() }}</b> to <b>{{ $sekolahs->lastItem() }}</b> of
-                        <b>{{ $sekolahs->total() }}</b> entries</div>
-                    <ul class="pagination">
-                        @if ($sekolahs->currentPage() > 1)
-                            <li class="page-item">
-                                <a href="{{ $sekolahs->previousPageUrl() }}" class="page-link">Previous</a>
-                            </li>
-                        @endif
-                        @for ($i = 1; $i <= $sekolahs->lastPage(); $i++)
-                            <li class="page-item{{ $sekolahs->currentPage() == $i ? ' active' : '' }}">
-                                <a href="{{ $sekolahs->url($i) }}" class="page-link">{{ $i }}</a>
-                            </li>
-                        @endfor
-                        @if ($sekolahs->currentPage() < $sekolahs->lastPage())
-                            <li class="page-item">
-                                <a href="{{ $sekolahs->nextPageUrl() }}" class="page-link">Next</a>
-                            </li>
-                        @endif
-                    </ul>
+                    <div class="hint-text">Showing <b>{{ $sekolahs->firstItem() }}</b> to
+                        <b>{{ $sekolahs->lastItem() }}</b> of
+                        <b>{{ $sekolahs->total() }}</b> entries
+                    </div>
+                    <div class="pagination">
+                        <ul class="pagination mt-3">
+                            @if ($sekolahs->currentPage() > 1)
+                                <li class="page-item">
+                                    <a href="{{ $sekolahs->previousPageUrl() }}" class="page-link">Previous</a>
+                                </li>
+                            @endif
+                            @for ($i = 1; $i <= $sekolahs->lastPage(); $i++)
+                                <li class="page-item{{ $sekolahs->currentPage() == $i ? ' active' : '' }}">
+                                    <a href="{{ $sekolahs->url($i) }}" class="page-link">{{ $i }}</a>
+                                </li>
+                            @endfor
+                            @if ($sekolahs->currentPage() < $sekolahs->lastPage())
+                                <li class="page-item">
+                                    <a href="{{ $sekolahs->nextPageUrl() }}" class="page-link">Next</a>
+                                </li>
+                            @endif
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -115,7 +132,7 @@
                         <div class="mb-3 form-floating">
                             <label for="LEVEL_ID" class="form-label">Level</label><br>
                             <select name="LEVEL_ID" class="form-select">
-                                @foreach($levels as $level)
+                                @foreach ($levels as $level)
                                     <option value="{{ $level->id }}">{{ $level->LEVEL }}</option>
                                 @endforeach
                             </select>
@@ -166,69 +183,75 @@
         </div>
     </div>
     <!-- Edit Modal HTML -->
-    <div class="modal fade" id="editSekolahModal" tabindex="-1" role="dialog"
-    aria-labelledby="editSekolahModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form>
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editSekolahModalLabel">Edit Sekolah</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="edit-name" class="form-label">Nama Sekolah</label>
-                        <input type="text" class="form-control" id="edit-name" required>
+    <div class="modal fade" id="editSekolahModal" tabindex="-1" role="dialog" aria-labelledby="editSekolahModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form method="POST" action="{{ route('sekolah.update', ':sekolahId') }}">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editSekolahModalLabel">Edit Sekolah</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="mb-3">
-                        <label for="edit-level" class="form-label">level</label>
-                        <input type="text" class="form-control" id="edit-level" required>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="edit-name" class="form-label">Nama Sekolah</label>
+                            <input type="text" class="form-control" id="edit-name" name="NAMA" required>
+                        </div>
+                        <div class="mb-3 form-floating">
+                            <label for="LEVEL_ID" class="form-label">Level</label><br>
+                            <select name="LEVEL_ID" class="form-select" id="edit-kategori">
+                                @foreach ($levels as $level)
+                                    <option value="{{ $level->id }}">{{ $level->LEVEL }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-address" class="form-label">Alamat</label>
+                            <textarea class="form-control" id="edit-address" name="ALAMAT" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-coor" class="form-label">Koordinat</label>
+                            <input type="text" class="form-control" id="edit-coor" name="KOORDINAT" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-telcust" class="form-label">Tel. Cust</label>
+                            <input type="text" class="form-control" id="edit-telcust" name="TEL_CUST" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-piccust" class="form-label">PIC Cust</label>
+                            <input type="text" class="form-control" id="edit-piccust" name="PIC_CUST" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-am" class="form-label">AM</label>
+                            <input type="text" class="form-control" id="edit-am" name="AM" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-telam" class="form-label">Tel. AM</label>
+                            <input type="text" class="form-control" id="edit-telam" name="TEL_AM" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-sto" class="form-label">STO</label>
+                            <input type="text" class="form-control" id="edit-sto" name="STO" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-hero" class="form-label">Hero</label>
+                            <input type="text" class="form-control" id="edit-hero" name="HERO" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-telhero" class="form-label">Tel. Hero</label>
+                            <input type="text" class="form-control" id="edit-telhero" name="TEL_HERO" required>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="edit-address" class="form-label">Alamat</label>
-                        <textarea class="form-control" id="edit-address" required></textarea>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
-                    <div class="mb-3">
-                        <label for="edit-coor" class="form-label">Koordinat</label>
-                        <input type="text" class="form-control" id="edit-phone" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-telcust" class="form-label">Tel.  Cust</label>
-                        <input type="text" class="form-control" id="edit-telcust" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-piccust" class="form-label">PIC Cust</label>
-                        <input type="text" class="form-control" id="edit-piccust" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-am" class="form-label">Koordinat</label>
-                        <input type="text" class="form-control" id="edit-am" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-telam" class="form-label">Tel. AM</label>
-                        <input type="text" class="form-control" id="edit-telam" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-sto" class="form-label">STO</label>
-                        <input type="text" class="form-control" id="edit-sto" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-hero" class="form-label">Hero</label>
-                        <input type="text" class="form-control" id="edit-hero" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-telhero" class="form-label">Tel. Hero</label>
-                        <input type="text" class="form-control" id="edit-telhero" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
     <!-- Delete Modal HTML -->
     <div class="modal fade" id="deleteSekolahModal" tabindex="-1" aria-labelledby="deleteSekolahModalLabel"
         aria-hidden="true">
@@ -242,11 +265,16 @@
                     <p>Are you sure you want to delete these records?</p>
                     <p class="text-warning"><small>This action cannot be undone.</small></p>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger">Delete</button>
-                </div>
+                <form action="{{ route('sekolah.destroy', ':sekolahId') }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+    {{ $sekolahs->links() }}
 @endsection

@@ -11,9 +11,9 @@ class KulinerController extends Controller
     public function index()
     {
         $kuliners = Kuliner::with('kategorikuliner')->paginate(5);
-        $kategoris=KategoriKuliner::all();
 
-        // Call the firstItem() method on the $gedungs variable
+        $kategoris=KategoriKuliner::all();
+        // Call the firstItem() method on the $kuliners variable
         $firstItem = $kuliners->firstItem();
 
         return view('pages.table-kuliner', compact('kuliners', 'firstItem','kategoris'));
@@ -51,12 +51,11 @@ class KulinerController extends Controller
             'TEL_HERO' => $validatedData['tel_hero'],
         ]);
 
-        return redirect('/tabel/Kuliner')->with('success', 'Gedung added successfully.');
+        return redirect('/tabel/kuliner')->with('success', 'Kuliner facility added successfully.');
     }
 
-    public function update(Request $request, $id){
-        $kuliner=Kuliner::findorfail($id);
-
+    public function update(Request $request, $kulinerId)
+    {
         $validatedData=$request->validate([
             'NAMA' => 'required',
             'KATEGORI' =>'required',
@@ -71,8 +70,10 @@ class KulinerController extends Controller
             'TEL_HERO' => 'required'
         ]);
 
+        $kuliner = new Kuliner;
+        $kuliner = Kuliner::find($kulinerId);
         $kuliner->NAMA=$validatedData['NAMA'];
-        $kuliner->LEVEL_ID=$validatedData['KATEGORI'];
+        $kuliner->KATEGORI=$validatedData['KATEGORI'];
         $kuliner->ALAMAT=$validatedData['ALAMAT'];
         $kuliner->KOORDINAT=$validatedData['KOORDINAT'];
         $kuliner->TEL_CUST=$validatedData['TEL_CUST'];
@@ -83,10 +84,18 @@ class KulinerController extends Controller
         $kuliner->HERO=$validatedData['HERO'];
         $kuliner->TEL_HERO=$validatedData['TEL_HERO'];
         $kuliner->save();
+
+        return redirect()->back()->with('success', 'Kuliner updated successfully.');
     }
 
-    public function remove(kuliner $kuliner){
+    public function destroy( $kulinerId){
+        $kuliner = Kuliner::find($kulinerId);
+        if (!$kuliner) {
+            return redirect()->back()->with('error', 'Kuliner not found.');
+        }
+
         $kuliner->delete();
-        return redirect()->back()->with('success', 'kuliner deleted successfully.');
+
+        return redirect()->back()->with('success', 'Kuliner deleted successfully.');
     }
-}
+ }

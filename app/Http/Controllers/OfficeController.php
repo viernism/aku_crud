@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Kategorioffice;
-use App\Models\office;
+use App\Models\KategoriOffice;
+use App\Models\Office;
 
 class OfficeController extends Controller
 {
@@ -51,11 +51,11 @@ class OfficeController extends Controller
             'TEL_HERO' => $validatedData['tel_hero'],
         ]);
 
-        return redirect('/tabel/office')->with('success', 'office added successfully.');
+        return redirect('/tabel/office')->with('success', 'Office added successfully.');
     }
 
-    public function update(Request $request, $id){
-        $Office=Office::findorfail($id);
+    public function update(Request $request, $officeId){
+
 
         $validatedData=$request->validate([
             'NAMA' => 'required',
@@ -71,8 +71,10 @@ class OfficeController extends Controller
             'TEL_HERO' => 'required'
         ]);
 
+        $office = new Office;
+        $office=Office::findorfail($officeId);
         $office->NAMA=$validatedData['NAMA'];
-        $office->LEVEL_ID=$validatedData['KATEGORI'];
+        $office->KATEGORI=$validatedData['KATEGORI'];
         $office->ALAMAT=$validatedData['ALAMAT'];
         $office->KOORDINAT=$validatedData['KOORDINAT'];
         $office->TEL_CUST=$validatedData['TEL_CUST'];
@@ -83,10 +85,18 @@ class OfficeController extends Controller
         $office->HERO=$validatedData['HERO'];
         $office->TEL_HERO=$validatedData['TEL_HERO'];
         $office->save();
+
+        return redirect()->back()->with('success', 'Office updated successfully.');
     }
 
-    public function remove(Office $office){
+    public function destroy( $officeId){
+        $office = Office::find($officeId);
+        if (!$office) {
+            return redirect()->back()->with('error', 'Office not found.');
+        }
+
         $office->delete();
-        return redirect()->back()->with('success', 'office deleted successfully.');
+
+        return redirect()->back()->with('success', 'Office deleted successfully.');
     }
 }

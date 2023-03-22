@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\KategoriGedung;
-use App\Models\Gedung;
+use App\Models\KategoriToko;
+use App\Models\Toko ;
 
 class TokoController extends Controller
 {
@@ -13,7 +13,7 @@ class TokoController extends Controller
         $tokos = Toko::with('kategoritoko')->paginate(5);
         $kategoris=KategoriToko::all();
 
-        // Call the firstItem() method on the $gedungs variable
+        // Call the firstItem() method on the $tokos variable
         $firstItem = $tokos->firstItem();
 
         return view('pages.table-toko', compact('tokos', 'firstItem','kategoris'));
@@ -54,8 +54,8 @@ class TokoController extends Controller
         return redirect('/tabel/toko')->with('success', 'Toko added successfully.');
     }
 
-    public function update(Request $request, $id){
-        $gedung=Gedung::findorfail($id);
+    public function update(Request $request, $tokoId){
+
 
         $validatedData=$request->validate([
             'NAMA' => 'required',
@@ -71,22 +71,32 @@ class TokoController extends Controller
             'TEL_HERO' => 'required'
         ]);
 
-        $gedung->NAMA=$validatedData['NAMA'];
-        $gedung->LEVEL_ID=$validatedData['KATEGORI'];
-        $gedung->ALAMAT=$validatedData['ALAMAT'];
-        $gedung->KOORDINAT=$validatedData['KOORDINAT'];
-        $gedung->TEL_CUST=$validatedData['TEL_CUST'];
-        $gedung->PIC_CUST=$validatedData['PIC_CUST'];
-        $gedung->AM=$validatedData['AM'];
-        $gedung->TEL_AM=$validatedData['TEL_AM'];
-        $gedung->STO=$validatedData['STO'];
-        $gedung->HERO=$validatedData['HERO'];
-        $gedung->TEL_HERO=$validatedData['TEL_HERO'];
-        $gedung->save();
+        $toko = new Toko;
+        $toko=Toko::findorfail($tokoId);
+        $toko->NAMA=$validatedData['NAMA'];
+        $toko->KATEGORI=$validatedData['KATEGORI'];
+        $toko->ALAMAT=$validatedData['ALAMAT'];
+        $toko->KOORDINAT=$validatedData['KOORDINAT'];
+        $toko->TEL_CUST=$validatedData['TEL_CUST'];
+        $toko->PIC_CUST=$validatedData['PIC_CUST'];
+        $toko->AM=$validatedData['AM'];
+        $toko->TEL_AM=$validatedData['TEL_AM'];
+        $toko->STO=$validatedData['STO'];
+        $toko->HERO=$validatedData['HERO'];
+        $toko->TEL_HERO=$validatedData['TEL_HERO'];
+        $toko->save();
+
+        return redirect()->back()->with('success', 'Tourism updated successfully.');
     }
 
-    public function remove(Gedung $gedung){
-        $gedung->delete();
-        return redirect()->back()->with('success', 'Gedung deleted successfully.');
+    public function destroy( $tokoId){
+        $toko = Toko::find($tokoId);
+        if (!$toko) {
+            return redirect()->back()->with('error', 'Toko not found.');
+        }
+
+        $toko->delete();
+
+        return redirect()->back()->with('success', 'Toko deleted successfully.');
     }
 }

@@ -9,7 +9,7 @@
                         enctype="multipart/form-data">
                         @csrf
                         <div class="avatar avatar-xl position-relative">
-                            <img src="{{ asset(Auth::user()->photo) }}" alt="profile_image"
+                            <img src="{{ asset(Auth::user()->photo ?? 'https://i.pinimg.com/564x/11/fa/5c/11fa5ca25a562adefabd37cdfd037136.jpg' )}}" alt="profile_image"
                                 class="w-100 img-border-radius shadow-sm">
                             <div class="text-avatar">
                                 <label for="profile_image" class="cursor-pointer">Change Your Picture</label>
