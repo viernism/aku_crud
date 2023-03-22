@@ -11,6 +11,7 @@ class GedungController extends Controller
     public function index()
     {
         $gedungs = Gedung::with('kategorigedung')->paginate(5);
+
         $kategoris=KategoriGedung::all();
 
         // Call the firstItem() method on the $gedungs variable
@@ -54,12 +55,11 @@ class GedungController extends Controller
         return redirect('/tabel/gedung')->with('success', 'Gedung added successfully.');
     }
 
-    public function update(Request $request, $id){
-        $gedung=Gedung::findorfail($id);
-
-        $validatedData=$request->validate([
+    public function update(Request $request, $gedungId)
+    {
+        $validatedData = $request->validate([
             'NAMA' => 'required',
-            'KATEGORI' =>'required',
+            'KATEGORI' => 'required',
             'ALAMAT' => 'required',
             'KOORDINAT' => 'required',
             'TEL_CUST' => 'required',
@@ -68,25 +68,36 @@ class GedungController extends Controller
             'TEL_AM' => 'required',
             'STO' => 'required',
             'HERO' => 'required',
-            'TEL_HERO' => 'required'
+            'TEL_HERO' => 'required',
         ]);
 
-        $gedung->NAMA=$validatedData['NAMA'];
-        $gedung->LEVEL_ID=$validatedData['KATEGORI'];
-        $gedung->ALAMAT=$validatedData['ALAMAT'];
-        $gedung->KOORDINAT=$validatedData['KOORDINAT'];
-        $gedung->TEL_CUST=$validatedData['TEL_CUST'];
-        $gedung->PIC_CUST=$validatedData['PIC_CUST'];
-        $gedung->AM=$validatedData['AM'];
-        $gedung->TEL_AM=$validatedData['TEL_AM'];
-        $gedung->STO=$validatedData['STO'];
-        $gedung->HERO=$validatedData['HERO'];
-        $gedung->TEL_HERO=$validatedData['TEL_HERO'];
+        $gedung = new Gedung;
+        $gedung = Gedung::find($gedungId);
+        $gedung->NAMA = $validatedData['NAMA'];
+        $gedung->KATEGORI = $validatedData['KATEGORI'];
+        $gedung->ALAMAT = $validatedData['ALAMAT'];
+        $gedung->KOORDINAT = $validatedData['KOORDINAT'];
+        $gedung->TEL_CUST = $validatedData['TEL_CUST'];
+        $gedung->PIC_CUST = $validatedData['PIC_CUST'];
+        $gedung->AM = $validatedData['AM'];
+        $gedung->TEL_AM = $validatedData['TEL_AM'];
+        $gedung->STO = $validatedData['STO'];
+        $gedung->HERO = $validatedData['HERO'];
+        $gedung->TEL_HERO = $validatedData['TEL_HERO'];
         $gedung->save();
+
+        return redirect()->back()->with('success', 'Gedung updated successfully.');
     }
 
-    public function remove(Gedung $gedung){
+    public function destroy ($gedungId)
+    {
+        $gedung = Gedung::find($gedungId);
+        if (!$gedung) {
+            return redirect()->back()->with('error', 'Gedung not found.');
+        }
+
         $gedung->delete();
+
         return redirect()->back()->with('success', 'Gedung deleted successfully.');
     }
 }

@@ -9,7 +9,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::paginate(5);
+        $users = User::paginate();
 
         return view('pages.admin-panel', compact('users'));
     }

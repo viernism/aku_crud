@@ -163,32 +163,124 @@ $(document).ready(function() {
     });
 });
 
+$(document).ready(function() {
+    $('#editGedungModal, #deleteGedungModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var gedungId = button.data('gedung-id');
+        var form = $(this).find('form');
+        var action = form.attr('action').replace(':gedungId', gedungId);
+        form.attr('action', action);
+        form.find('#gedungId').val(gedungId);
+      });
 
-// $(document).ready(function() {
-//     // Updates the form action URL with the gedung ID when submitted
-//     $('a.edit').click(function(event) {
-//         var gedungId = $(this).data('gedung-id');
-//         var form = $('#editGedungForm');
-//         var actionUrl = form.attr('action').replace('1', gedungId);
-//         form.attr('action', actionUrl);
-//     });
+      $('#editSekolahModal, #deleteSekolahModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var sekolahId = button.data('sekolah-id');
+        var form = $(this).find('form');
+        var action = form.attr('action').replace(':sekolahId', sekolahId);
+        form.attr('action', action);
+        form.find('#sekolahId').val(sekolahId);
+      });
 
-//      // Update the action attribute of the edit gedung form when the modal is shown
-//      $('#editGedungModal').on('show.bs.modal', function (event) {
-//         var button = $(event.relatedTarget);
-//         var gedungId = button.data('gedung-id');
-//         var form = $(this).find('form');
-//         var action = form.attr('action').replace(':gedungId', gedungId);
-//         form.attr('action', action);
-//     });
+      $('#editHealthModal, #deleteHealthModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var healthId = button.data('health-id');
+        var form = $(this).find('form');
+        var action = form.attr('action').replace(':healthId', healthId);
+        form.attr('action', action);
+        form.find('#healthId').val(healthId);
+      });
 
-//     // Update the action attribute of the delete gedung form when the modal is shown
-//     $('#deleteGedungModal').on('show.bs.modal', function (event) {
-//         var button = $(event.relatedTarget);
-//         var gedungId = button.data('gedung-id');
-//         var form = $(this).find('form');
-//         var action = form.attr('action').replace(':gedungId', gedungId);
-//         form.attr('action', action);
-//     });
-// });
+      $('#editKulinerModal, #deleteKulinerModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var kulinerId = button.data('kuliner-id');
+        var form = $(this).find('form');
+        var action = form.attr('action').replace(':kulinerId', kulinerId);
+        form.attr('action', action);
+        form.find('#kulinerId').val(kulinerId);
+      });
 
+      $('#editTokoModal, #deleteTokoModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var tokoId = button.data('toko-id');
+        var form = $(this).find('form');
+        var action = form.attr('action').replace(':tokoId', tokoId);
+        form.attr('action', action);
+        form.find('#tokoId').val(tokoId);
+      });
+
+      $('#editOfficeModal, #deleteOfficeModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var officeId = button.data('office-id');
+        var form = $(this).find('form');
+        var action = form.attr('action').replace(':officeId', officeId);
+        form.attr('action', action);
+        form.find('#officeId').val(officeId);
+      });
+
+      $('#editOfficeModal, #deleteOfficeModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var officeId = button.data('office-id');
+        var form = $(this).find('form');
+        var action = form.attr('action').replace(':officeId', officeId);
+        form.attr('action', action);
+        form.find('#officeId').val(officeId);
+      });
+
+      $('#editBuscenModal, #deleteBuscenModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var buscenId = button.data('buscen-id');
+        var form = $(this).find('form');
+        var action = form.attr('action').replace(':buscenId', buscenId);
+        form.attr('action', action);
+        form.find('#buscenId').val(buscenId);
+      });
+
+      $('#editBuscenModal, #deleteBuscenModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var buscenId = button.data('buscen-id');
+        var form = $(this).find('form');
+        var action = form.attr('action').replace(':buscenId', buscenId);
+        form.attr('action', action);
+        form.find('#buscenId').val(buscenId);
+      });
+
+      $('#editTourismModal, #deleteTourismModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var tourismId = button.data('tourism-id');
+        var form = $(this).find('form');
+        var action = form.attr('action').replace(':tourismId', tourismId);
+        form.attr('action', action);
+        form.find('#tourismId').val(tourismId);
+      });
+
+      // ewww old code thats too shitty so i had to recode, well shitty as in not effective lol when you can do that in 8 lines instead
+    // // Updates the form action URL with the gedung ID when submitted
+    // $('a.edit').click(function(event) {
+    //     var gedungId = $(this).data('gedung-id');
+    //     var form = $('#editGedungModal').find('form');
+    //     var actionUrl = form.attr('action').replace(':gedungId', gedungId);
+    //     form.attr('action', actionUrl);
+    // });
+
+    // // Update the action attribute of the edit gedung form when the modal is shown
+    // $('#editGedungModal').on('show.bs.modal', function (event) {
+    //     var button = $(event.relatedTarget);
+    //     var gedungId = button.data('gedung-id');
+    //     var form = $(this).find('form');
+    //     var action = form.attr('action').replace(':gedungId', gedungId);
+    //     form.attr('action', action);
+    // });
+
+    // // Update the action attribute of the delete gedung form when the modal is shown
+    // $('#deleteGedungModal').on('show.bs.modal', function (event) {
+    //     var button = $(event.relatedTarget);
+    //     var gedungId = button.data('gedung-id');
+    //     var form = $(this).find('form');
+    //     var action = form.attr('action').replace(':gedungId', gedungId);
+    //     form.attr('action', action);
+    // });
+});
+
+
+// bro i dont know how i actually did all of this, I DONT REMEMBER dODUING IT

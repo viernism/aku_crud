@@ -58,12 +58,11 @@ class SekolahController extends Controller
         // ->with(['enumValues' => $enumValues])
     }
 
-    public function update(Request $request, $id){
-        $sekolah=Sekolah::findorFail($id);
-
-        $validatedData=$request->validate([
+    public function update(Request $request, $sekolahId)
+    {
+        $validatedData = $request->validate([
             'NAMA' => 'required',
-            'LEVEL_ID' =>'required',
+            'LEVEL_ID' => 'required',
             'ALAMAT' => 'required',
             'KOORDINAT' => 'required',
             'TEL_CUST' => 'required',
@@ -72,27 +71,37 @@ class SekolahController extends Controller
             'TEL_AM' => 'required',
             'STO' => 'required',
             'HERO' => 'required',
-            'TEL_HERO' => 'required'
+            'TEL_HERO' => 'required',
         ]);
 
-        $sekolah->NAMA=$validatedData['NAMA'];
-        $sekolah->LEVEL_ID=$validatedData['LEVEL_ID'];
-        $sekolah->ALAMAT=$validatedData['ALAMAT'];
-        $sekolah->KOORDINAT=$validatedData['KOORDINAT'];
-        $sekolah->TEL_CUST=$validatedData['TEL_CUST'];
-        $sekolah->PIC_CUST=$validatedData['PIC_CUST'];
-        $sekolah->AM=$validatedData['AM'];
-        $sekolah->TEL_AM=$validatedData['TEL_AM'];
-        $sekolah->STO=$validatedData['STO'];
-        $sekolah->HERO=$validatedData['HERO'];
-        $sekolah->TEL_HERO=$validatedData['TEL_HERO'];
+        $sekolah = new Sekolah;
+        $sekolah = Sekolah::find($sekolahId);
+        $sekolah->NAMA = $validatedData['NAMA'];
+        $sekolah->LEVEL_ID = $validatedData['LEVEL_ID'];
+        $sekolah->ALAMAT = $validatedData['ALAMAT'];
+        $sekolah->KOORDINAT = $validatedData['KOORDINAT'];
+        $sekolah->TEL_CUST = $validatedData['TEL_CUST'];
+        $sekolah->PIC_CUST = $validatedData['PIC_CUST'];
+        $sekolah->AM = $validatedData['AM'];
+        $sekolah->TEL_AM = $validatedData['TEL_AM'];
+        $sekolah->STO = $validatedData['STO'];
+        $sekolah->HERO = $validatedData['HERO'];
+        $sekolah->TEL_HERO = $validatedData['TEL_HERO'];
         $sekolah->save();
 
         return redirect()->back()->with('success', 'Sekolah updated successfully.');
     }
 
-    public function remove(Sekolah $sekolah){
+
+    public function destroy ($sekolahId)
+    {
+        $sekolah = Sekolah::find($sekolahId);
+        if (!$sekolah) {
+            return redirect()->back()->with('error', 'Sekolah not found.');
+        }
+
         $sekolah->delete();
+
         return redirect()->back()->with('success', 'Sekolah deleted successfully.');
     }
 }

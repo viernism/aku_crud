@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\KategoriHealth;
-use App\Models\Health;
+use App\Models\KategoriBuscen;
+use App\Models\Buscen;
 
-class HealthController extends Controller
+class BuscenController extends Controller
 {
     public function index()
     {
-        $healths = Health::with('kategorihealth')->paginate(5);
+        $buscens = Buscen::with('kategoribuscen')->paginate(5);
 
-        $kategoris=KategoriHealth::all();
-        // Call the firstItem() method on the $healths variable
-        $firstItem = $healths->firstItem();
+        $kategoris=KategoriBuscen::all();
+        // Call the firstItem() method on the $buscens variable
+        $firstItem = $buscens->firstItem();
 
-        return view('pages.table-health', compact('healths', 'firstItem','kategoris'));
+        return view('pages.table-buscen', compact('buscens', 'firstItem','kategoris'));
     }
 
     public function store(Request $request)
@@ -37,7 +37,7 @@ class HealthController extends Controller
         ]);
 
         //  Create a new data in the db
-        Health::create ([
+        Buscen::create ([
             'NAMA' => $validatedData['nama'],
             'KATEGORI' => $validatedData['kategori'],
             'ALAMAT' => $validatedData['alamat'],
@@ -51,10 +51,10 @@ class HealthController extends Controller
             'TEL_HERO' => $validatedData['tel_hero'],
         ]);
 
-        return redirect('/tabel/health')->with('success', 'Health facility added successfully.');
+        return redirect('/tabel/buscen')->with('success', 'Buscen facility added successfully.');
     }
 
-    public function update(Request $request, $healthId)
+    public function update(Request $request, $buscenId)
     {
         $validatedData=$request->validate([
             'NAMA' => 'required',
@@ -70,32 +70,33 @@ class HealthController extends Controller
             'TEL_HERO' => 'required'
         ]);
 
-        $health = new Health;
-        $health = Health::find($healthId);
-        $health->NAMA=$validatedData['NAMA'];
-        $health->KATEGORI=$validatedData['KATEGORI'];
-        $health->ALAMAT=$validatedData['ALAMAT'];
-        $health->KOORDINAT=$validatedData['KOORDINAT'];
-        $health->TEL_CUST=$validatedData['TEL_CUST'];
-        $health->PIC_CUST=$validatedData['PIC_CUST'];
-        $health->AM=$validatedData['AM'];
-        $health->TEL_AM=$validatedData['TEL_AM'];
-        $health->STO=$validatedData['STO'];
-        $health->HERO=$validatedData['HERO'];
-        $health->TEL_HERO=$validatedData['TEL_HERO'];
-        $health->save();
+        $buscen = new Buscen;
+        $buscen = Buscen::find($buscenId);
+        $buscen->NAMA=$validatedData['NAMA'];
+        $buscen->KATEGORI=$validatedData['KATEGORI'];
+        $buscen->ALAMAT=$validatedData['ALAMAT'];
+        $buscen->KOORDINAT=$validatedData['KOORDINAT'];
+        $buscen->TEL_CUST=$validatedData['TEL_CUST'];
+        $buscen->PIC_CUST=$validatedData['PIC_CUST'];
+        $buscen->AM=$validatedData['AM'];
+        $buscen->TEL_AM=$validatedData['TEL_AM'];
+        $buscen->STO=$validatedData['STO'];
+        $buscen->HERO=$validatedData['HERO'];
+        $buscen->TEL_HERO=$validatedData['TEL_HERO'];
+        $buscen->save();
 
-        return redirect()->back()->with('success', 'Health updated successfully.');
+        return redirect()->back()->with('success', 'Buscen updated successfully.');
     }
 
-    public function destroy( $healthId){
-        $health = Health::find($healthId);
-        if (!$health) {
-            return redirect()->back()->with('error', 'Health not found.');
+    public function destroy( $buscenId)
+    {
+        $buscen = Buscen::find($buscenId);
+        if (!$buscen) {
+            return redirect()->back()->with('error', 'Buscen not found.');
         }
 
-        $health->delete();
+        $buscen->delete();
 
-        return redirect()->back()->with('success', 'Health deleted successfully.');
+        return redirect()->back()->with('success', 'Buscen deleted successfully.');
     }
- }
+}

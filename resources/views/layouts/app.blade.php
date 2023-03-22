@@ -67,8 +67,33 @@
                     </li>
                     <li class="sidebar-dropdown-menu-item">
                         <a href="/tabel/sekolah">
-                            <i class="ri-community-line sidebar-menu-item-icon"></i> Sekolah</a>
+                            <i class="ri-community-line sidebar-menu-item-icon"></i> Sekolah </a>
                     </li>
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="/tabel/health">
+                            <i class="ri-hospital-line sidebar-menu-item-icon"></i> Health </a>
+                    </li>
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="/tabel/kuliner">
+                            <i class="ri-restaurant-line sidebar-menu-item-icon"></i> Kuliner </a>
+                    </li>
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="/tabel/toko">
+                            <i class="ri-store-3-line sidebar-menu-item-icon"></i> Toko </a>
+                    </li>
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="/tabel/office">
+                            <i class="ri-building-4-line sidebar-menu-item-icon"></i> Office </a>
+                    </li>
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="/tabel/buscen">
+                            <i class="ri-suitcase-line sidebar-menu-item-icon"></i> BusCen </a>
+                    </li>
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="/tabel/tourism">
+                            <i class="ri-road-map-line sidebar-menu-item-icon"></i> Tourism </a>
+                    </li>
+
                 </ul>
             </li>
         </ul>
