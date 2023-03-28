@@ -8,9 +8,20 @@ use App\Models\LevelSekolah;
 
 class SekolahController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $sekolahs=Sekolah::with('sekolahlevels')->paginate(5);
+
+        $length = $request->input('length', 10); // default = 10 if not set
+
+        $sekolahs = Sekolah::with('sekolahlevels')->paginate($length);
+
+        if ($request->has('search')) {
+            $sekolahs = Sekolah::with('sekolahlevels')
+                ->where('NAMA', 'like', '%' . $request->input('search') . '%')
+                ->paginate($length);
+        }
+
+        // $sekolahs=Sekolah::with('sekolahlevels')->paginate(5);
 
         $levels=LevelSekolah::all();
         // Call the firstItem() method on the $sekolahs variable
