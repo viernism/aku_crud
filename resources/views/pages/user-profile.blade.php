@@ -12,7 +12,7 @@
                             <img src="{{ asset(Auth::user()->photo ?? 'https://i.pinimg.com/564x/11/fa/5c/11fa5ca25a562adefabd37cdfd037136.jpg' )}}" alt="profile_image"
                                 class="w-100 img-border-radius shadow-sm">
                             <div class="text-avatar">
-                                <label for="profile_image" class="cursor-pointer">Change Your Picture</label>
+                                <label for="profile_image" class="cursor-pointer"><i class="fa-solid fa-image"></i></label>
                                 <input type="file" name="photo" id="profile_image" class="d-none"
                                     onchange="document.getElementById('profile-image-form').submit();">
                             </div>
@@ -118,8 +118,7 @@
                                     </div>
                                     <div class="mb-3 col-md-12">
                                         <label for="bio" class="form-label">About</label>
-                                        <input type="text" name="bio" id="bio" class="form-control"
-                                            value="{{ old('bio', Auth::user()->bio) }}">
+                                        <textarea class="form-control" name="bio" id="bio" rows="1">{{ old('bio', Auth::user()->bio) }}</textarea>
                                     </div>
                                 </div>
                         </div>
