@@ -289,7 +289,7 @@ opacity: 1;
     margin: -20px -25px 10px;
     border-radius: 3px 3px 0 0;
     display: inline-block;
-    width: calc(100% - 1em);
+    width: calc(100% + 3.15em);
 }
 .table-title h2 {
     margin: 5px 0 0;

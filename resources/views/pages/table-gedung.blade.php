@@ -14,6 +14,36 @@
                                     class="bi bi-plus-circle"></i><span>Add New Data</span></a>
                             <a href="#deleteGedungModal" class="btn btn-danger" data-bs-toggle="modal"><i
                                     class="bi bi-trash"></i><span>Delete</span></a>
+                            <a href="/tabel/sekolah/exportexcel" class="btn btn-info">Export</a>
+
+                            <!-- Button trigger modal -->
+                            <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-warning">Import</a>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form action="{{ route('gedung.importexcel') }}" method="post" enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label for="formFile" class="form-label">Insert File</label>
+                                                    <input class="form-control" type="file" id="formFile" name="upexcel"><br>
+                                                    <p>Caution: only .XLSX files allowed</p>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-warning" data-bs-dismiss="modal">Import</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -97,7 +127,7 @@
         </div>
     </div>
     <!-- Add Modal HTML -->
-    <div class="modal fade" id="addGedungModal" tabindex="-1" role="dialog" aria-labelledby="addSekolahModalLabel"
+    <div class="modal fade modal-dialog-scrollable" id="addGedungModal" id="staticBackdrop" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="addSekolahModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -112,7 +142,7 @@
                             <label for="nama" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="nama" name="nama" required>
                         </div>
-                        <div class="mb-3 form-floating">
+                        <div class="mb-3">
                             <label for="kategori" class="form-label">Kategori</label><br>
                             <select name="kategori" class="form-select">
                                 @foreach($kategoris as $kategori)
@@ -182,7 +212,7 @@
                         <label for="edit-name" class="form-label">Nama Gedung</label>
                         <input type="text" class="form-control" id="edit-name" name="NAMA" required>
                     </div>
-                  <div class="mb-3 form-floating">
+                  <div class="mb-3">
                             <label for="edit-kategori" class="form-label">Kategori</label><br>
                            <select name="KATEGORI" class="form-select" id="edit-kategori">
                                 @foreach($kategoris as $kategori)

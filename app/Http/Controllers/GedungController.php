@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use App\Models\KategoriGedung;
 use App\Models\Gedung;
+use App\Exports\GedungExport;
+use App\Imports\GedungImport;
 
 class GedungController extends Controller
 {
@@ -99,5 +102,27 @@ class GedungController extends Controller
         $gedung->delete();
 
         return redirect()->back()->with('success', 'Gedung deleted successfully.');
+    }
+
+    public function exportexcel(){
+        return Excel::download(new GedungExport,'datagedung.xlsx');
+    }
+
+    public function importexcel(Request $request){
+        if ($request->hasFile('upexcel')) {
+            $data=$request->file('upexcel');
+            $validatedData = $request->validate([
+                'upexcel' => 'required|mimes:xlsx',
+            ]);
+
+            $namafile=$data;
+            $path=$data->move('submitteddata',$namafile);
+            Excel::import(new GedungImport,\public_path('/submitteddata/'.$namafile));
+            return redirect()->back();
+        }
+        else {
+            # code...
+        }
+
     }
 }

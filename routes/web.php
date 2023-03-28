@@ -149,5 +149,12 @@ Route::middleware(['auth', 'revalidate'])->group(function () {
     Route::put('/tabel/tourism/{tourismId}', [TourismController::class, 'update'])->name('tourism.update');
 
     Route::delete('/tabel/tourism/delete/{tourismId}', [TourismController::class, 'destroy'])->name('tourism.destroy');
+
+    Route::get('/tabel/gedung/exportexcel', [GedungController::class,'exportexcel'])->name('gedung.exportexcel');
+    Route::post('/tabel/gedung/importexcel', [GedungController::class,'importexcel'])->name('gedung.importexcel');
+
+    Route::get('/imejcrop', function () {
+        return view('pages.imej');
+    });
 });
 
