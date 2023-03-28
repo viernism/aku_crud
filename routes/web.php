@@ -19,10 +19,6 @@ use App\Http\Controllers\UserProfileController;
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
 */
 //login-register
 Route::middleware(['guest'])->group(function () {
@@ -35,7 +31,6 @@ Route::middleware(['guest'])->group(function () {
 
     Route::post('/login',[CustomLoginController::class,'loginUser']);
 });
-
 
 
 Route::middleware(['auth', 'revalidate'])->group(function () {
@@ -89,13 +84,16 @@ Route::middleware(['auth', 'revalidate'])->group(function () {
     Route::delete('/tabel/gedung/delete/{gedungId}', [GedungController::class, 'destroy'])->name('gedung.destroy');
 
     // table sekolah routes
-    Route::get('/tabel/sekolah', [SekolahController::class, 'index']);
+    Route::get('/tabel/sekolah', [SekolahController::class, 'index'])->name('sekolah.index');
 
     Route::post('/tabel/sekolah/store', [SekolahController::class, 'store'])->name('sekolah.store');
 
     Route::put('/tabel/sekolah/{sekolahId}', [SekolahController::class, 'update'])->name('sekolah.update');
 
     Route::delete('/tabel/sekolah/delete/{sekolahId}', [SekolahController::class, 'destroy'])->name('sekolah.destroy');
+
+    Route::get('/tabel/sekolah/search', [SekolahController::class. 'index'])->name('sekolah.index');
+
 
     // table health routes
     Route::get('/tabel/health', [HealthController::class, 'index']);

@@ -254,6 +254,28 @@ $(document).ready(function() {
         form.find('#tourismId').val(tourismId);
       });
 
+      // user pagination length function
+      function changePaginationLength(length) {
+        window.location.href = "/tabel/sekolah?length=" + length;
+    }
+
+    $(document).ready(function() {
+        $('.custom-select').change(function() {
+            var length = $(this).val();
+            changePaginationLength(length);
+        });
+    });
+
+    // live search function
+    $(document).ready(function(){
+        $("#search").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#table-body tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+
       // ewww old code thats too shitty so i had to recode, well shitty as in not effective lol when you can do that in 8 lines instead
     // // Updates the form action URL with the gedung ID when submitted
     // $('a.edit').click(function(event) {
@@ -284,3 +306,4 @@ $(document).ready(function() {
 
 
 // bro i dont know how i actually did all of this, I DONT REMEMBER dODUING IT
+// mf be like "just use ajax" brO if i knew how to use ajax i would use it instead

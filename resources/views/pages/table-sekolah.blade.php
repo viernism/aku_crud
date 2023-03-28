@@ -18,18 +18,20 @@
                     </div>
                 </div>
                 <table class="table table-striped table-hover">
+                    <div class="row-cols-4">
+                        <div class="col-4">
+                            <span>Rows per page:</span>
+                            <select class="custom-select" onchange="changePaginationLength(this.value)">
+                                <option value="10" {{ $sekolahs->perPage() == 10 ? 'selected' : '' }}>10</option>
+                                <option value="25" {{ $sekolahs->perPage() == 25 ? 'selected' : '' }}>25</option>
+                                <option value="50" {{ $sekolahs->perPage() == 50 ? 'selected' : '' }}>50</option>
+                                <option value="100" {{ $sekolahs->perPage() == 100 ? 'selected' : '' }}>100</option>
+                            </select>
+                        </div>
+                        <div class="col-4 pb-2 pt-2"></div>
+                        <input type="text" class="form-controller" id="search" name="search" oninput="search()">
+                    </div>
                     <thead>
-                        <span>Rows per page:</span>
-                        <select class="custom-select" onchange="window.location.href=this.value">
-                            <option value="{{ $sekolahs->url(10) }}" {{ $sekolahs->perPage() == 10 ? 'selected' : '' }}>10
-                            </option>
-                            <option value="{{ $sekolahs->url(25) }}" {{ $sekolahs->perPage() == 25 ? 'selected' : '' }}>25
-                            </option>
-                            <option value="{{ $sekolahs->url(50) }}" {{ $sekolahs->perPage() == 50 ? 'selected' : '' }}>50
-                            </option>
-                            <option value="{{ $sekolahs->url(100) }}" {{ $sekolahs->perPage() == 100 ? 'selected' : '' }}>
-                                100</option>
-                        </select>
                         <tr>
                             <th>
                                 <div class="form-check">
@@ -129,7 +131,7 @@
                             <label for="nama" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="nama" name="nama"required>
                         </div>
-                        <div class="mb-3 form-floating">
+                        <div class="mb-3">
                             <label for="LEVEL_ID" class="form-label">Level</label><br>
                             <select name="LEVEL_ID" class="form-select">
                                 @foreach ($levels as $level)
@@ -276,5 +278,4 @@
             </div>
         </div>
     </div>
-    {{ $sekolahs->links() }}
 @endsection
