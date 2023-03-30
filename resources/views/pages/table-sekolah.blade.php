@@ -18,8 +18,8 @@
                     </div>
                 </div>
                 <table class="table table-striped table-hover">
-                    <div class="row-cols-4">
-                        <div class="col-4">
+                    <div class="row">
+                        <div class="col-md-3">
                             <span>Rows per page:</span>
                             <select class="custom-select" onchange="changePaginationLength(this.value)">
                                 <option value="10" {{ $sekolahs->perPage() == 10 ? 'selected' : '' }}>10</option>
@@ -28,8 +28,22 @@
                                 <option value="100" {{ $sekolahs->perPage() == 100 ? 'selected' : '' }}>100</option>
                             </select>
                         </div>
-                        <div class="col-4 pb-2 pt-2"></div>
-                        <input type="text" class="form-controller" id="search" name="search" oninput="search()">
+                        <div class="col-md-3">
+                            <span>Filter by AM:</span>
+                            <select id="filter-am" name="filter-am">
+                                <option value="" {{ request()->input('filter-am') == '' ? 'selected' : '' }}>All AMs</option>
+                                @foreach ($ams as $am)
+                                    <option value="{{ $am }}" {{ request()->input('filter-am') == $am ? 'selected' : '' }}>
+                                        {{ $am }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" class="form-controller" id="search" name="search" oninput="search()" placeholder="Search by Name or AMs">
+                        </div>
                     </div>
                     <thead>
                         <tr>
@@ -119,7 +133,7 @@
     <div class="modal fade" id="addSekolahModal" tabindex="-1" role="dialog" aria-labelledby="addSekolahModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div class="modal-content text-white">
                 <form method="POST" action="{{ url('/tabel/sekolah/store') }}">
                     @csrf
                     <div class="modal-header">
@@ -188,7 +202,7 @@
     <div class="modal fade" id="editSekolahModal" tabindex="-1" role="dialog" aria-labelledby="editSekolahModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div class="modal-content text-white">
                 <form method="POST" action="{{ route('sekolah.update', ':sekolahId') }}">
                     @csrf
                     @method('PUT')
@@ -201,7 +215,7 @@
                             <label for="edit-name" class="form-label">Nama Sekolah</label>
                             <input type="text" class="form-control" id="edit-name" name="NAMA" required>
                         </div>
-                        <div class="mb-3 form-floating">
+                        <div class="mb-3">
                             <label for="LEVEL_ID" class="form-label">Level</label><br>
                             <select name="LEVEL_ID" class="form-select" id="edit-kategori">
                                 @foreach ($levels as $level)
@@ -258,7 +272,7 @@
     <div class="modal fade" id="deleteSekolahModal" tabindex="-1" aria-labelledby="deleteSekolahModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content text-white">
                 <div class="modal-header">
                     <h4 class="modal-title" id="deleteSekolahModalLabel">Delete Sekolah</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

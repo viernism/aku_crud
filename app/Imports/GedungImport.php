@@ -16,7 +16,6 @@ class GedungImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         return new Gedung([
-            'id' => $row['id'],
             'NAMA'=> $row['NAMA'],
             'KATEGORI'=>$row['KATEGORI'],
             'ALAMAT'=>$row['ALAMAT'],

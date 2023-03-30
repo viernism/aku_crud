@@ -18,6 +18,32 @@
                     </div>
                 </div>
                 <table class="table table-striped table-hover">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span>Rows per page:</span>
+                            <select class="custom-select" onchange="changePaginationLength(this.value)">
+                                <option value="10" {{ $offices->perPage() == 10 ? 'selected' : '' }}>10</option>
+                                <option value="25" {{ $offices->perPage() == 25 ? 'selected' : '' }}>25</option>
+                                <option value="50" {{ $offices->perPage() == 50 ? 'selected' : '' }}>50</option>
+                                <option value="100" {{ $offices->perPage() == 100 ? 'selected' : '' }}>100</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <span>Filter by AM:</span>
+                            <select id="filter-am" name="filter-am">
+                                <option value="" {{ request()->input('filter-am') == '' ? 'selected' : '' }}>All AMs</option>
+                                @foreach ($ams as $am)
+                                    <option value="{{ $am }}" {{ request()->input('filter-am') == $am ? 'selected' : '' }}>
+                                        {{ $am }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-3 pb-2 pt-2"></div>
+                        <div class="col-md-3">
+                            <input type="text" class="form-controller" id="search" name="search" oninput="search()" placeholder="Search...">
+                        </div>
+                    </div>
                     <thead>
                         <tr>
                             <th>
@@ -100,7 +126,7 @@
     <div class="modal fade" id="addOfficeModal" tabindex="-1" role="dialog" aria-labelledby="addSekolahModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div class="modal-content text-white">
                 <form method="POST" action="{{ route('office.store')}}">
                     @csrf
                     <div class="modal-header">
@@ -112,7 +138,7 @@
                             <label for="nama" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="nama" name="nama" required>
                         </div>
-                        <div class="mb-3 form-floating">
+                        <div class="mb-3 ">
                             <label for="kategori" class="form-label">Kategori</label><br>
                             <select name="kategori" class="form-select">
                                 @foreach($kategoris as $kategori)
@@ -169,7 +195,7 @@
      <div class="modal fade" id="editOfficeModal" tabindex="-1" role="dialog"
     aria-labelledby="editOfficeModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content text-white">
             <form method="POST" action="{{ route('office.update', ':officeId') }}">
                 @csrf
                 @method('PUT')
@@ -182,7 +208,7 @@
                         <label for="edit-name" class="form-label">Nama Office</label>
                         <input type="text" class="form-control" id="edit-name" name="NAMA" required>
                     </div>
-                  <div class="mb-3 form-floating">
+                  <div class="mb-3 ">
                             <label for="edit-kategori" class="form-label">Kategori</label><br>
                            <select name="KATEGORI" class="form-select" id="edit-kategori">
                                 @foreach($kategoris as $kategori)
@@ -239,7 +265,7 @@
     <div class="modal fade" id="deleteOfficeModal" tabindex="-1" aria-labelledby="deleteOfficeModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content text-white">
                 <div class="modal-header">
                     <h4 class="modal-title" id="deleteOfficeModalLabel">Delete Office</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

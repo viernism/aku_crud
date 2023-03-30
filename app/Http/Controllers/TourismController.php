@@ -8,15 +8,38 @@ use App\Models\Tourism;
 
 class TourismController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $tourisms = Tourism::with('kategoritourism')->paginate(5);
-        $kategoris=KategoriTourism::all();
+        $length = $request->input('length', 10); // default = 10 if not set
 
+        $tourisms = Tourism::with('kategoritourism');
+
+        // live search method
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $tourisms->where(function($query) use ($search) {
+                $query->where('NAMA', 'like', '%' . $search . '%')
+                    ->orWhere('AM', 'like', '%' . $search . '%');
+                // add more where clauses as needed
+            });
+        }
+
+         // filter by am
+        if ($request->has('filter-am')) {
+            $filterAm = $request->input('filter-am');
+            if (!empty($filterAm)) {
+                $tourisms->where('AM', $filterAm);
+            }
+        }
+
+        $tourisms = $tourisms->paginate($length);
+
+        $kategoris=KategoriTourism::all();
         // Call the firstItem() method on the $tourisms variable
         $firstItem = $tourisms->firstItem();
 
-        return view('pages.table-tourism', compact('tourisms', 'firstItem','kategoris'));
+        $ams = Tourism::distinct('AM')->pluck('AM')->toArray();
+        return view('pages.table-tourism', compact('tourisms', 'firstItem','kategoris', 'ams'));
     }
 
     public function store(Request $request)

@@ -8,15 +8,38 @@ use App\Models\Office;
 
 class OfficeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $offices = Office::with('kategorioffice')->paginate(5);
-        $kategoris=KategoriOffice::all();
+        $length = $request->input('length', 10); // default = 10 if not set
 
+        $offices = Office::with('kategorioffice');
+
+        // live search method
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $offices->where(function($query) use ($search) {
+                $query->where('NAMA', 'like', '%' . $search . '%')
+                    ->orWhere('AM', 'like', '%' . $search . '%');
+                // add more where clauses as needed
+            });
+        }
+
+         // filter by am
+        if ($request->has('filter-am')) {
+            $filterAm = $request->input('filter-am');
+            if (!empty($filterAm)) {
+                $offices->where('AM', $filterAm);
+            }
+        }
+
+        $offices = $offices->paginate($length);
+
+        $kategoris=KategoriOffice::all();
         // Call the firstItem() method on the $offices variable
         $firstItem = $offices->firstItem();
 
-        return view('pages.table-office', compact('offices', 'firstItem','kategoris'));
+        $ams = Office::distinct('AM')->pluck('AM')->toArray();
+        return view('pages.table-office', compact('offices', 'firstItem','kategoris', 'ams'));
     }
 
     public function store(Request $request)
