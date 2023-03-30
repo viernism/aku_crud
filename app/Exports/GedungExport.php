@@ -14,12 +14,11 @@ class GedungExport implements FromCollection, WithMapping, WithHeadings
     */
     public function collection()
     {
-        return Gedung::select('id','NAMA','KATEGORI','ALAMAT','KOORDINAT','PIC_CUST','TEL_CUST','AM','TEL_AM','STO','HERO','TEL_HERO')->get();
+        return Gedung::select('NAMA','KATEGORI','ALAMAT','KOORDINAT','PIC_CUST','TEL_CUST','AM','TEL_AM','STO','HERO','TEL_HERO')->get();
     }
 
     public function map($gedung): array{
         return[
-            $gedung->id,
             $gedung->NAMA,
             $gedung->KATEGORI,
             $gedung->ALAMAT,
@@ -37,7 +36,6 @@ class GedungExport implements FromCollection, WithMapping, WithHeadings
     public function headings(): array
     {
         return [
-        'id',
         'NAMA',
         'KATEGORI',
         'ALAMAT',

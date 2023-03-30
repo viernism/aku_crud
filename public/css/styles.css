@@ -266,9 +266,9 @@ opacity: 1;
 }
 /*  end  sidebar  */
 
-
 /* tables  */
 .table-responsive {
+    width: fit-content;
     margin: 30px 0;
     overflow-x: auto;
 }

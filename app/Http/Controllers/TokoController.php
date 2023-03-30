@@ -8,15 +8,38 @@ use App\Models\Toko ;
 
 class TokoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $tokos = Toko::with('kategoritoko')->paginate(5);
-        $kategoris=KategoriToko::all();
+        $length = $request->input('length', 10); // default = 10 if not set
 
+        $tokos = Toko::with('kategoritoko');
+
+        // live search method
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $tokos->where(function($query) use ($search) {
+                $query->where('NAMA', 'like', '%' . $search . '%')
+                    ->orWhere('AM', 'like', '%' . $search . '%');
+                // add more where clauses as needed
+            });
+        }
+
+         // filter by am
+        if ($request->has('filter-am')) {
+            $filterAm = $request->input('filter-am');
+            if (!empty($filterAm)) {
+                $tokos->where('AM', $filterAm);
+            }
+        }
+
+        $tokos = $tokos->paginate($length);
+
+        $kategoris=KategoriToko::all();
         // Call the firstItem() method on the $tokos variable
         $firstItem = $tokos->firstItem();
 
-        return view('pages.table-toko', compact('tokos', 'firstItem','kategoris'));
+        $ams = Toko::distinct('AM')->pluck('AM')->toArray();
+        return view('pages.table-toko', compact('tokos', 'firstItem','kategoris', 'ams'));
     }
 
     public function store(Request $request)

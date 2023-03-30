@@ -8,15 +8,38 @@ use App\Models\Health;
 
 class HealthController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $healths = Health::with('kategorihealth')->paginate(5);
+        $length = $request->input('length', 10); // default = 10 if not set
+
+        $healths = Health::with('kategorihealth');
+
+        // live search method
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $healths->where(function($query) use ($search) {
+                $query->where('NAMA', 'like', '%' . $search . '%')
+                    ->orWhere('AM', 'like', '%' . $search . '%');
+                // add more where clauses as needed
+            });
+        }
+
+         // filter by am
+        if ($request->has('filter-am')) {
+            $filterAm = $request->input('filter-am');
+            if (!empty($filterAm)) {
+                $healths->where('AM', $filterAm);
+            }
+        }
+
+        $healths = $healths->paginate($length);
 
         $kategoris=KategoriHealth::all();
         // Call the firstItem() method on the $healths variable
         $firstItem = $healths->firstItem();
 
-        return view('pages.table-health', compact('healths', 'firstItem','kategoris'));
+        $ams = Health::distinct('AM')->pluck('AM')->toArray();
+        return view('pages.table-health', compact('healths', 'firstItem','kategoris', 'ams'));
     }
 
     public function store(Request $request)

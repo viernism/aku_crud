@@ -8,15 +8,38 @@ use App\Models\Buscen;
 
 class BuscenController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $buscens = Buscen::with('kategoribuscen')->paginate(5);
+        $length = $request->input('length', 10); // default = 10 if not set
+
+        $buscens = Buscen::with('kategoribuscen');
+
+        // live search method
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $buscens->where(function($query) use ($search) {
+                $query->where('NAMA', 'like', '%' . $search . '%')
+                    ->orWhere('AM', 'like', '%' . $search . '%');
+                // add more where clauses as needed
+            });
+        }
+
+         // filter by am
+        if ($request->has('filter-am')) {
+            $filterAm = $request->input('filter-am');
+            if (!empty($filterAm)) {
+                $buscens->where('AM', $filterAm);
+            }
+        }
+
+        $buscens = $buscens->paginate($length);
 
         $kategoris=KategoriBuscen::all();
         // Call the firstItem() method on the $buscens variable
         $firstItem = $buscens->firstItem();
 
-        return view('pages.table-buscen', compact('buscens', 'firstItem','kategoris'));
+        $ams = Buscen::distinct('AM')->pluck('AM')->toArray();
+        return view('pages.table-buscen', compact('buscens', 'firstItem','kategoris', 'ams'));
     }
 
     public function store(Request $request)

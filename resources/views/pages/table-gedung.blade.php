@@ -14,11 +14,9 @@
                                     class="bi bi-plus-circle"></i><span>Add New Data</span></a>
                             <a href="#deleteGedungModal" class="btn btn-danger" data-bs-toggle="modal"><i
                                     class="bi bi-trash"></i><span>Delete</span></a>
-                            <a href="/tabel/sekolah/exportexcel" class="btn btn-info">Export</a>
-
+                            <a href="/tabel/gedung/exportexcel" class="btn btn-info">Export</a>
                             <!-- Button trigger modal -->
                             <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-warning">Import</a>
-
                             <!-- Modal -->
                             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -210,7 +208,7 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="edit-name" class="form-label">Nama Gedung</label>
-                        <input type="text" class="form-control" id="edit-name" name="NAMA" required>
+                        <input type="text" class="form-control" id="edit-name" name="NAMA" value="{{ old('NAMA', $gedung->NAMA) }}"  required>
                     </div>
                   <div class="mb-3">
                             <label for="edit-kategori" class="form-label">Kategori</label><br>
@@ -269,7 +267,7 @@
     <div class="modal fade" id="deleteGedungModal" tabindex="-1" aria-labelledby="deleteGedungModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content text-white">
                 <div class="modal-header">
                     <h4 class="modal-title" id="deleteGedungModalLabel">Delete Gedung</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

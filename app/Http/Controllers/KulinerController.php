@@ -8,17 +8,39 @@ use App\Models\Kuliner;
 
 class KulinerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $kuliners = Kuliner::with('kategorikuliner')->paginate(5);
+        $length = $request->input('length', 10); // default = 10 if not set
+
+        $kuliners = Kuliner::with('kategorikuliner');
+
+        // live search method
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $kuliners->where(function($query) use ($search) {
+                $query->where('NAMA', 'like', '%' . $search . '%')
+                    ->orWhere('AM', 'like', '%' . $search . '%');
+                // add more where clauses as needed
+            });
+        }
+
+         // filter by am
+        if ($request->has('filter-am')) {
+            $filterAm = $request->input('filter-am');
+            if (!empty($filterAm)) {
+                $kuliners->where('AM', $filterAm);
+            }
+        }
+
+        $kuliners = $kuliners->paginate($length);
 
         $kategoris=KategoriKuliner::all();
         // Call the firstItem() method on the $kuliners variable
         $firstItem = $kuliners->firstItem();
 
-        return view('pages.table-kuliner', compact('kuliners', 'firstItem','kategoris'));
+        $ams = Kuliner::distinct('AM')->pluck('AM')->toArray();
+        return view('pages.table-kuliner', compact('kuliners', 'firstItem','kategoris', 'ams'));
     }
-
     public function store(Request $request)
     {
         // validate the form data

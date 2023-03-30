@@ -10,24 +10,37 @@ class SekolahController extends Controller
 {
     public function index(Request $request)
     {
-
         $length = $request->input('length', 10); // default = 10 if not set
 
-        $sekolahs = Sekolah::with('sekolahlevels')->paginate($length);
+        $sekolahs = Sekolah::with('sekolahlevels');
 
+        // live search method
         if ($request->has('search')) {
-            $sekolahs = Sekolah::with('sekolahlevels')
-                ->where('NAMA', 'like', '%' . $request->input('search') . '%')
-                ->paginate($length);
+            $search = $request->input('search');
+            $sekolahs->where(function($query) use ($search) {
+                $query->where('NAMA', 'like', '%' . $search . '%')
+                    ->orWhere('AM', 'like', '%' . $search . '%');
+                // add more where clauses as needed
+            });
         }
 
-        // $sekolahs=Sekolah::with('sekolahlevels')->paginate(5);
+       // filter by am
+        if ($request->has('filter-am')) {
+            $filterAm = $request->input('filter-am');
+            if (!empty($filterAm)) {
+                $sekolahs->where('AM', $filterAm);
+            }
+        }
 
-        $levels=LevelSekolah::all();
+        $sekolahs = $sekolahs->paginate($length);
+
+        $levels = LevelSekolah::all();
+
         // Call the firstItem() method on the $sekolahs variable
         $firstItem = $sekolahs->firstItem();
 
-        return view('pages.table-sekolah', compact('sekolahs', 'firstItem', 'levels'));
+        $ams = Sekolah::distinct('AM')->pluck('AM')->toArray();
+        return view('pages.table-sekolah', compact('sekolahs', 'firstItem', 'levels', 'ams'));
     }
 
     public function store(Request $request)
