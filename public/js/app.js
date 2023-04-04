@@ -187,7 +187,6 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $('#editGedungModal, #deleteGedungModal').on('show.bs.modal', function (event) {
-
         var button = $(event.relatedTarget);
         var gedungId = button.data('gedung-id');
         var form = $(this).find('form');

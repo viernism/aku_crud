@@ -46,6 +46,33 @@
                     </div>
                 </div>
                 <table class="table table-striped table-hover">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span>Rows per page:</span>
+                            <select class="custom-select form-select" onchange="changePaginationLength(this.value)">
+                                <option value="10" {{ $gedungs->perPage() == 10 ? 'selected' : '' }}>10</option>
+                                <option value="25" {{ $gedungs->perPage() == 25 ? 'selected' : '' }}>25</option>
+                                <option value="50" {{ $gedungs->perPage() == 50 ? 'selected' : '' }}>50</option>
+                                <option value="100" {{ $gedungs->perPage() == 100 ? 'selected' : '' }}>100</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <span>Filter by AM:</span>
+                            <select id="filter-am" name="filter-am" class="form-select">
+                                <option value="" {{ request()->input('filter-am') == '' ? 'selected' : '' }}>All AMs</option>
+                                @foreach ($ams as $am)
+                                    <option value="{{ $am }}" {{ request()->input('filter-am') == $am ? 'selected' : '' }}>
+                                        {{ $am }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-3 pb-2 pt-2"></div>
+                        <div class="col-md-3 form-inline">
+                            <span>Search</span>
+                            <input type="text" class="form-control mr-sm-2" id="search" name="search" oninput="search()" placeholder="Search by Name or AMs">
+                        </div>
+                    </div>
                     <thead>
                         <tr>
                             <th>
