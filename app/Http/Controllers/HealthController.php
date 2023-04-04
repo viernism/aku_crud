@@ -39,7 +39,7 @@ class HealthController extends Controller
         $firstItem = $healths->firstItem();
 
         $ams = Health::distinct('AM')->pluck('AM')->toArray();
-        return view('pages.table-health', compact('healths', 'firstItem','kategoris', 'ams'));
+        return view('pages.table.table-health', compact('healths', 'firstItem','kategoris', 'ams'));
     }
 
     public function store(Request $request)

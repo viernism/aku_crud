@@ -187,6 +187,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $('#editGedungModal, #deleteGedungModal').on('show.bs.modal', function (event) {
+
         var button = $(event.relatedTarget);
         var gedungId = button.data('gedung-id');
         var form = $(this).find('form');
@@ -362,3 +363,5 @@ $(document).ready(function () {
 // mf be like "just use ajax" brO if i knew how to use ajax i would use it instead
 
 // when you only learned laravel for 2 weeks and need to get on a project coz school xd
+
+//pov u dont have understatement about js at all

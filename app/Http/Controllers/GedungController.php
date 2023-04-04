@@ -20,7 +20,7 @@ class GedungController extends Controller
         // Call the firstItem() method on the $gedungs variable
         $firstItem = $gedungs->firstItem();
 
-        return view('pages.table-gedung', compact('gedungs', 'firstItem','kategoris'));
+        return view('pages.table.table-gedung', compact('gedungs', 'firstItem','kategoris'));
     }
 
     public function store(Request $request)

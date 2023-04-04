@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Table Kuliner'])
+@extends('layouts.app', ['title' => 'Table Tourism'])
 
 @section('content')
     <div class="container">
@@ -7,12 +7,12 @@
                 <div class="table-title">
                     <div class="row">
                         <div class="col-6">
-                            <h2>Table <b> Kuliner</b></h2>
+                            <h2>Table <b> Tourism</b></h2>
                         </div>
                         <div class="col-6">
-                            <a href="#addKulinerModal" class="btn btn-success" data-bs-toggle="modal"><i
+                            <a href="#addTourismModal" class="btn btn-success" data-bs-toggle="modal"><i
                                     class="bi bi-plus-circle"></i><span>Add New Data</span></a>
-                            <a href="#deleteKulinerModal" class="btn btn-danger" data-bs-toggle="modal"><i
+                            <a href="#deleteTourismModal" class="btn btn-danger" data-bs-toggle="modal"><i
                                     class="bi bi-trash"></i><span>Delete</span></a>
                         </div>
                     </div>
@@ -21,16 +21,16 @@
                     <div class="row">
                         <div class="col-md-3">
                             <span>Rows per page:</span>
-                            <select class="custom-select" onchange="changePaginationLength(this.value)">
-                                <option value="10" {{ $kuliners->perPage() == 10 ? 'selected' : '' }}>10</option>
-                                <option value="25" {{ $kuliners->perPage() == 25 ? 'selected' : '' }}>25</option>
-                                <option value="50" {{ $kuliners->perPage() == 50 ? 'selected' : '' }}>50</option>
-                                <option value="100" {{ $kuliners->perPage() == 100 ? 'selected' : '' }}>100</option>
+                            <select class="custom-select form-select" onchange="changePaginationLength(this.value)">
+                                <option value="10" {{ $tourisms->perPage() == 10 ? 'selected' : '' }}>10</option>
+                                <option value="25" {{ $tourisms->perPage() == 25 ? 'selected' : '' }}>25</option>
+                                <option value="50" {{ $tourisms->perPage() == 50 ? 'selected' : '' }}>50</option>
+                                <option value="100" {{ $tourisms->perPage() == 100 ? 'selected' : '' }}>100</option>
                             </select>
                         </div>
                         <div class="col-md-3">
                             <span>Filter by AM:</span>
-                            <select id="filter-am" name="filter-am">
+                            <select id="filter-am" name="filter-am" class="form-select">
                                 <option value="" {{ request()->input('filter-am') == '' ? 'selected' : '' }}>All AMs</option>
                                 @foreach ($ams as $am)
                                     <option value="{{ $am }}" {{ request()->input('filter-am') == $am ? 'selected' : '' }}>
@@ -40,8 +40,9 @@
                             </select>
                         </div>
                         <div class="col-md-3 pb-2 pt-2"></div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-controller" id="search" name="search" oninput="search()" placeholder="Search...">
+                        <div class="col-md-3 form-inline">
+                            <span>Search</span>
+                            <input type="text" class="form-control mr-sm-2" id="search" name="search" oninput="search()" placeholder="Search by Name or AMs">
                         </div>
                     </div>
                     <thead>
@@ -63,10 +64,11 @@
                             <th>STO</th>
                             <th>Hero</th>
                             <th>Tel. Hero</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody id="table-body">
-                        @foreach ($kuliners as $kuliner)
+                        @foreach ($tourisms as $tourism)
                         <tr>
                             <td>
                                 <div class="form-check">
@@ -75,22 +77,22 @@
                                     <label class="form-check-label" for="checkbox1"></label>
                                 </div>
                             </td>
-                            <td>{{$kuliner->NAMA}}</td>
-                            <td>{{$kuliner->kategorikuliner->Kategori}}</td>
-                            <td>{{$kuliner->ALAMAT}}</td>
-                            <td>{{$kuliner->KOORDINAT}}</td>
-                            <td>{{$kuliner->TEL_CUST}}</td>
-                            <td>{{$kuliner->PIC_CUST}}</td>
-                            <td>{{$kuliner->AM}}</td>
-                            <td>{{$kuliner->TEL_AM}}</td>
-                            <td>{{$kuliner->STO}} </td>
-                            <td>{{$kuliner->HERO}}</td>
-                            <td>{{$kuliner->TEL_HERO}}</td>
+                            <td>{{$tourism->NAMA}}</td>
+                            <td>{{$tourism->KATEGORI}}</td>
+                            <td>{{$tourism->ALAMAT}}</td>
+                            <td>{{$tourism->KOORDINAT}}</td>
+                            <td>{{$tourism->TEL_CUST}}</td>
+                            <td>{{$tourism->PIC_CUST}}</td>
+                            <td>{{$tourism->AM}}</td>
+                            <td>{{$tourism->TEL_AM}}</td>
+                            <td>{{$tourism->STO}} </td>
+                            <td>{{$tourism->HERO}}</td>
+                            <td>{{$tourism->TEL_HERO}}</td>
                             <td>
-                                <a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#editKulinerModal" data-kuliner-id="{{ $kuliner->id }}">
+                                <a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#editTourismModal" data-tourism-id="{{ $tourism->id }}">
                                     <i class="ri-pencil-line" data-bs-toggle="tooltip" title="Edit"></i>
                                 </a>
-                                <a href="#" class="delete" data-bs-toggle="modal" data-bs-target="#deleteKulinerModal" data-kuliner-id="{{ $kuliner->id }}">
+                                <a href="#" class="delete" data-bs-toggle="modal" data-bs-target="#deleteTourismModal" data-tourism-id="{{ $tourism->id }}">
                                     <i class="ri-delete-bin-line" data-bs-toggle="tooltip" title="Delete"></i>
                                 </a>
                             </td>
@@ -99,22 +101,22 @@
                     </tbody>
                 </table>
                 <div class="clearfix">
-                    <div class="hint-text">Showing <b>{{ $kuliners->firstItem() }}</b> to <b>{{ $kuliners->lastItem() }}</b> of
-                        <b>{{ $kuliners->total() }}</b> entries</div>
+                    <div class="hint-text">Showing <b>{{ $tourisms->firstItem() }}</b> to <b>{{ $tourisms->lastItem() }}</b> of
+                        <b>{{ $tourisms->total() }}</b> entries</div>
                     <ul class="pagination">
-                        @if ($kuliners->currentPage() > 1)
+                        @if ($tourisms->currentPage() > 1)
                             <li class="page-item">
-                                <a href="{{ $kuliners->previousPageUrl() }}" class="page-link">Previous</a>
+                                <a href="{{ $tourisms->previousPageUrl() }}" class="page-link">Previous</a>
                             </li>
                         @endif
-                        @for ($i = 1; $i <= $kuliners->lastPage(); $i++)
-                            <li class="page-item{{ $kuliners->currentPage() == $i ? ' active' : '' }}">
-                                <a href="{{ $kuliners->url($i) }}" class="page-link">{{ $i }}</a>
+                        @for ($i = 1; $i <= $tourisms->lastPage(); $i++)
+                            <li class="page-item{{ $tourisms->currentPage() == $i ? ' active' : '' }}">
+                                <a href="{{ $tourisms->url($i) }}" class="page-link">{{ $i }}</a>
                             </li>
                         @endfor
-                        @if ($kuliners->currentPage() < $kuliners->lastPage())
+                        @if ($tourisms->currentPage() < $tourisms->lastPage())
                             <li class="page-item">
-                                <a href="{{ $kuliners->nextPageUrl() }}" class="page-link">Next</a>
+                                <a href="{{ $tourisms->nextPageUrl() }}" class="page-link">Next</a>
                             </li>
                         @endif
                     </ul>
@@ -123,14 +125,14 @@
         </div>
     </div>
     <!-- Add Modal HTML -->
-    <div class="modal fade" id="addKulinerModal" tabindex="-1" role="dialog" aria-labelledby="addSekolahModalLabel"
+    <div class="modal fade" id="addTourismModal" tabindex="-1" role="dialog" aria-labelledby="addSekolahModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content text-white">
-                <form method="POST" action="{{ route('kuliner.store')}}">
+            <div class="modal-content">
+                <form method="POST" action="{{ route('tourism.store')}}">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addSekolahModalLabel">Add kuliner</h5>
+                        <h5 class="modal-title" id="addSekolahModalLabel">Add tourism</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -185,27 +187,27 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-success">Add kuliner</button>
+                        <button type="submit" class="btn btn-success">Add tourism</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
     <!-- Edit Modal HTML -->
-     <div class="modal fade" id="editKulinerModal" tabindex="-1" role="dialog"
-    aria-labelledby="editKulinerModalLabel" aria-hidden="true">
+     <div class="modal fade" id="editTourismModal" tabindex="-1" role="dialog"
+    aria-labelledby="editTourismModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content text-white">
-            <form method="POST" action="{{ route('kuliner.update', ':kulinerId') }}">
+            <form method="POST" action="{{ route('tourism.update', ':tourismId') }}">
                 @csrf
                 @method('PUT')
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editKulinerModalLabel">Edit Kuliner</h5>
+                    <h5 class="modal-title" id="editTourismModalLabel">Edit Tourism</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="edit-name" class="form-label">Nama Kuliner</label>
+                        <label for="edit-name" class="form-label">Nama Tourism</label>
                         <input type="text" class="form-control" id="edit-name" name="NAMA" required>
                     </div>
                   <div class="mb-3 ">
@@ -262,19 +264,19 @@
     </div>
 </div>
     <!-- Delete Modal HTML -->
-    <div class="modal fade" id="deleteKulinerModal" tabindex="-1" aria-labelledby="deleteKulinerModalLabel"
+    <div class="modal fade" id="deleteTourismModal" tabindex="-1" aria-labelledby="deleteTourismModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content text-white">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="deleteKulinerModalLabel">Delete Kuliner</h4>
+                    <h4 class="modal-title" id="deleteTourismModalLabel">Delete Tourism</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <p>Are you sure you want to delete these records?</p>
                     <p class="text-warning"><small>This action cannot be undone.</small></p>
                 </div>
-                <form action="{{ route('kuliner.destroy', ':kulinerId') }}" method="POST">
+                <form action="{{ route('tourism.destroy', ':tourismId') }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="modal-footer">
@@ -286,4 +288,3 @@
         </div>
     </div>
 @endsection
-

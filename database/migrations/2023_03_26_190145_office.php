@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('office', function (Blueprint $table) {
             $table->id();
             $table->text('NAMA');
-            $table->unsignedBigInteger('KATEGORI');
-            $table->foreign('KATEGORI')->references('id')->on('kategorioffice');
+            $table->string('KATEGORI');
+            $table->foreign('KATEGORI')->references('Kategori')->on('kategorioffice');
             $table->text('ALAMAT');
             $table->text('KOORDINAT')->nullable();
             $table->string('TEL_CUST')->nullable();

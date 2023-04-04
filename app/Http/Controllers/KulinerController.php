@@ -39,7 +39,7 @@ class KulinerController extends Controller
         $firstItem = $kuliners->firstItem();
 
         $ams = Kuliner::distinct('AM')->pluck('AM')->toArray();
-        return view('pages.table-kuliner', compact('kuliners', 'firstItem','kategoris', 'ams'));
+        return view('pages.table.table-kuliner', compact('kuliners', 'firstItem','kategoris', 'ams'));
     }
     public function store(Request $request)
     {

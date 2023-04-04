@@ -11,6 +11,7 @@ class KategoriHealth extends Model
     use HasFactory;
     protected $table = 'kategorihealth';
     protected $primarykey='id';
+    protected $uniquekey='Kategori';
     protected $fillable = [
         'id',
         'Kategori'

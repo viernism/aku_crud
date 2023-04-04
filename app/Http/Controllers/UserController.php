@@ -11,7 +11,7 @@ class UserController extends Controller
     {
         $users = User::paginate();
 
-        return view('pages.admin-panel', compact('users'));
+        return view('pages.admin.admin', compact('users'));
     }
 
 

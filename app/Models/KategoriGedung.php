@@ -10,7 +10,8 @@ class KategoriGedung extends Model
 {
     use HasFactory;
     protected $table = 'kategorigedung';
-    protected $primarykey='id';
+    // protected $primarykey='id';
+    protected $uniquekey='Kategori';
     protected $fillable = [
         'id',
         'Kategori'

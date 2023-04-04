@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('kuliner', function (Blueprint $table) {
             $table->id();
                 $table->text('NAMA');
-                $table->unsignedBigInteger('KATEGORI');
-                $table->foreign('KATEGORI')->references('id')->on('kategorikuliner');
+                $table->string('KATEGORI');
+                $table->foreign('KATEGORI')->references('Kategori')->on('kategorikuliner');
                 $table->text('ALAMAT');
                 $table->text('KOORDINAT')->nullable();
                 $table->string('TEL_CUST')->nullable();

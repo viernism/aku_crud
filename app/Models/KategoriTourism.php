@@ -11,6 +11,7 @@ class KategoriTourism extends Model
     use HasFactory;
     protected $table = 'kategoritourism';
     protected $primarykey='id';
+    protected $uniquekey='Kategori';
     protected $fillable = [
         'id',
         'Kategori'

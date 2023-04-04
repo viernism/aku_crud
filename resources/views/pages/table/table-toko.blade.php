@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Table Office'])
+@extends('layouts.app', ['title' => 'Table Toko'])
 
 @section('content')
     <div class="container">
@@ -7,12 +7,12 @@
                 <div class="table-title">
                     <div class="row">
                         <div class="col-6">
-                            <h2>Table <b> Office</b></h2>
+                            <h2>Table <b> Toko</b></h2>
                         </div>
                         <div class="col-6">
-                            <a href="#addOfficeModal" class="btn btn-success" data-bs-toggle="modal"><i
+                            <a href="#addTokoModal" class="btn btn-success" data-bs-toggle="modal"><i
                                     class="bi bi-plus-circle"></i><span>Add New Data</span></a>
-                            <a href="#deleteOfficeModal" class="btn btn-danger" data-bs-toggle="modal"><i
+                            <a href="#deleteTokoModal" class="btn btn-danger" data-bs-toggle="modal"><i
                                     class="bi bi-trash"></i><span>Delete</span></a>
                         </div>
                     </div>
@@ -21,16 +21,16 @@
                     <div class="row">
                         <div class="col-md-3">
                             <span>Rows per page:</span>
-                            <select class="custom-select" onchange="changePaginationLength(this.value)">
-                                <option value="10" {{ $offices->perPage() == 10 ? 'selected' : '' }}>10</option>
-                                <option value="25" {{ $offices->perPage() == 25 ? 'selected' : '' }}>25</option>
-                                <option value="50" {{ $offices->perPage() == 50 ? 'selected' : '' }}>50</option>
-                                <option value="100" {{ $offices->perPage() == 100 ? 'selected' : '' }}>100</option>
+                            <select class="custom-select form-select" onchange="changePaginationLength(this.value)">
+                                <option value="10" {{ $tokos->perPage() == 10 ? 'selected' : '' }}>10</option>
+                                <option value="25" {{ $tokos->perPage() == 25 ? 'selected' : '' }}>25</option>
+                                <option value="50" {{ $tokos->perPage() == 50 ? 'selected' : '' }}>50</option>
+                                <option value="100" {{ $tokos->perPage() == 100 ? 'selected' : '' }}>100</option>
                             </select>
                         </div>
                         <div class="col-md-3">
                             <span>Filter by AM:</span>
-                            <select id="filter-am" name="filter-am">
+                            <select id="filter-am" name="filter-am" class="form-select">
                                 <option value="" {{ request()->input('filter-am') == '' ? 'selected' : '' }}>All AMs</option>
                                 @foreach ($ams as $am)
                                     <option value="{{ $am }}" {{ request()->input('filter-am') == $am ? 'selected' : '' }}>
@@ -40,8 +40,9 @@
                             </select>
                         </div>
                         <div class="col-md-3 pb-2 pt-2"></div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-controller" id="search" name="search" oninput="search()" placeholder="Search...">
+                        <div class="col-md-3 form-inline">
+                            <span>Search</span>
+                            <input type="text" class="form-control mr-sm-2" id="search" name="search" oninput="search()" placeholder="Search by Name or AMs">
                         </div>
                     </div>
                     <thead>
@@ -63,10 +64,11 @@
                             <th>STO</th>
                             <th>Hero</th>
                             <th>Tel. Hero</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody id="table-body">
-                        @foreach ($offices as $office)
+                        @foreach ($tokos as $toko)
                         <tr>
                             <td>
                                 <div class="form-check">
@@ -75,22 +77,22 @@
                                     <label class="form-check-label" for="checkbox1"></label>
                                 </div>
                             </td>
-                            <td>{{$office->NAMA}}</td>
-                            <td>{{$office->kategorioffice->Kategori}}</td>
-                            <td>{{$office->ALAMAT}}</td>
-                            <td>{{$office->KOORDINAT}}</td>
-                            <td>{{$office->TEL_CUST}}</td>
-                            <td>{{$office->PIC_CUST}}</td>
-                            <td>{{$office->AM}}</td>
-                            <td>{{$office->TEL_AM}}</td>
-                            <td>{{$office->STO}} </td>
-                            <td>{{$office->HERO}}</td>
-                            <td>{{$office->TEL_HERO}}</td>
+                            <td>{{$toko->NAMA}}</td>
+                            <td>{{$toko->KATEGORI}}</td>
+                            <td>{{$toko->ALAMAT}}</td>
+                            <td>{{$toko->KOORDINAT}}</td>
+                            <td>{{$toko->TEL_CUST}}</td>
+                            <td>{{$toko->PIC_CUST}}</td>
+                            <td>{{$toko->AM}}</td>
+                            <td>{{$toko->TEL_AM}}</td>
+                            <td>{{$toko->STO}} </td>
+                            <td>{{$toko->HERO}}</td>
+                            <td>{{$toko->TEL_HERO}}</td>
                             <td>
-                                <a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#editOfficeModal" data-office-id="{{ $office->id }}">
+                                <a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#editTokoModal" data-toko-id="{{ $toko->id }}">
                                     <i class="ri-pencil-line" data-bs-toggle="tooltip" title="Edit"></i>
                                 </a>
-                                <a href="#" class="delete" data-bs-toggle="modal" data-bs-target="#deleteOfficeModal" data-office-id="{{ $office->id }}">
+                                <a href="#" class="delete" data-bs-toggle="modal" data-bs-target="#deleteTokoModal" data-toko-id="{{ $toko->id }}">
                                     <i class="ri-delete-bin-line" data-bs-toggle="tooltip" title="Delete"></i>
                                 </a>
                             </td>
@@ -99,22 +101,22 @@
                     </tbody>
                 </table>
                 <div class="clearfix">
-                    <div class="hint-text">Showing <b>{{ $offices->firstItem() }}</b> to <b>{{ $offices->lastItem() }}</b> of
-                        <b>{{ $offices->total() }}</b> entries</div>
+                    <div class="hint-text">Showing <b>{{ $tokos->firstItem() }}</b> to <b>{{ $tokos->lastItem() }}</b> of
+                        <b>{{ $tokos->total() }}</b> entries</div>
                     <ul class="pagination">
-                        @if ($offices->currentPage() > 1)
+                        @if ($tokos->currentPage() > 1)
                             <li class="page-item">
-                                <a href="{{ $offices->previousPageUrl() }}" class="page-link">Previous</a>
+                                <a href="{{ $tokos->previousPageUrl() }}" class="page-link">Previous</a>
                             </li>
                         @endif
-                        @for ($i = 1; $i <= $offices->lastPage(); $i++)
-                            <li class="page-item{{ $offices->currentPage() == $i ? ' active' : '' }}">
-                                <a href="{{ $offices->url($i) }}" class="page-link">{{ $i }}</a>
+                        @for ($i = 1; $i <= $tokos->lastPage(); $i++)
+                            <li class="page-item{{ $tokos->currentPage() == $i ? ' active' : '' }}">
+                                <a href="{{ $tokos->url($i) }}" class="page-link">{{ $i }}</a>
                             </li>
                         @endfor
-                        @if ($offices->currentPage() < $offices->lastPage())
+                        @if ($tokos->currentPage() < $tokos->lastPage())
                             <li class="page-item">
-                                <a href="{{ $offices->nextPageUrl() }}" class="page-link">Next</a>
+                                <a href="{{ $tokos->nextPageUrl() }}" class="page-link">Next</a>
                             </li>
                         @endif
                     </ul>
@@ -123,14 +125,14 @@
         </div>
     </div>
     <!-- Add Modal HTML -->
-    <div class="modal fade" id="addOfficeModal" tabindex="-1" role="dialog" aria-labelledby="addSekolahModalLabel"
+    <div class="modal fade" id="addTokoModal" tabindex="-1" role="dialog" aria-labelledby="addSekolahModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content text-white">
-                <form method="POST" action="{{ route('office.store')}}">
+                <form method="POST" action="{{ route('toko.store')}}">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addSekolahModalLabel">Add office</h5>
+                        <h5 class="modal-title" id="addSekolahModalLabel">Add toko</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -185,27 +187,27 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-success">Add office</button>
+                        <button type="submit" class="btn btn-success">Add toko</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
     <!-- Edit Modal HTML -->
-     <div class="modal fade" id="editOfficeModal" tabindex="-1" role="dialog"
-    aria-labelledby="editOfficeModalLabel" aria-hidden="true">
+     <div class="modal fade" id="editTokoModal" tabindex="-1" role="dialog"
+    aria-labelledby="editTokoModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content text-white">
-            <form method="POST" action="{{ route('office.update', ':officeId') }}">
+            <form method="POST" action="{{ route('toko.update', ':tokoId') }}">
                 @csrf
                 @method('PUT')
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editOfficeModalLabel">Edit Office</h5>
+                    <h5 class="modal-title" id="editTokoModalLabel">Edit Toko</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="edit-name" class="form-label">Nama Office</label>
+                        <label for="edit-name" class="form-label">Nama Toko</label>
                         <input type="text" class="form-control" id="edit-name" name="NAMA" required>
                     </div>
                   <div class="mb-3 ">
@@ -262,19 +264,19 @@
     </div>
 </div>
     <!-- Delete Modal HTML -->
-    <div class="modal fade" id="deleteOfficeModal" tabindex="-1" aria-labelledby="deleteOfficeModalLabel"
+    <div class="modal fade" id="deleteTokoModal" tabindex="-1" aria-labelledby="deleteTokoModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content text-white">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="deleteOfficeModalLabel">Delete Office</h4>
+                    <h4 class="modal-title" id="deleteTokoModalLabel">Delete Toko</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <p>Are you sure you want to delete these records?</p>
                     <p class="text-warning"><small>This action cannot be undone.</small></p>
                 </div>
-                <form action="{{ route('office.destroy', ':officeId') }}" method="POST">
+                <form action="{{ route('toko.destroy', ':tokoId') }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="modal-footer">
