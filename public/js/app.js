@@ -265,6 +265,9 @@ $(document).ready(function () {
         var action = form.attr('action').replace(':buscenId', buscenId);
         form.attr('action', action);
         form.find('#buscenId').val(buscenId);
+
+        // Set the old input values in the form
+        // form.find('#edit-name').val('{{ old('NAMA') ?? '' }}');
     });
 
     $('#editTourismModal, #deleteTourismModal').on('show.bs.modal', function (event) {

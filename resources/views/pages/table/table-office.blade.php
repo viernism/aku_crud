@@ -14,6 +14,34 @@
                                     class="bi bi-plus-circle"></i><span>Add New Data</span></a>
                             <a href="#deleteOfficeModal" class="btn btn-danger" data-bs-toggle="modal"><i
                                     class="bi bi-trash"></i><span>Delete</span></a>
+                                    <a href="/tabel/office/exportexcel" class="btn btn-info">Export</a>
+                                    <!-- Button trigger modal -->
+                                    <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-warning">Import</a>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <form action="{{ route('office.importexcel') }}" method="post" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <div class="modal-body">
+                                                        <div class="mb-3">
+                                                            <label for="formFile" class="form-label">Insert File</label>
+                                                            <input class="form-control" type="file" id="formFile" name="upexcel"><br>
+                                                            <p>Caution: only .XLSX files allowed</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-warning" data-bs-dismiss="modal">Import</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                         </div>
                     </div>
                 </div>

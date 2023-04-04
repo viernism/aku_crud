@@ -14,6 +14,41 @@
                                     class="bi bi-plus-circle"></i><span>Add New Data</span></a>
                             <a href="#deleteHealthModal" class="btn btn-danger" data-bs-toggle="modal"><i
                                     class="bi bi-trash"></i><span>Delete</span></a>
+                            <a href="/tabel/health/exportexcel" class="btn btn-info">Export</a>
+                            <!-- Button trigger modal -->
+                            <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                class="btn btn-warning">Import</a>
+                            <!-- Modal -->
+                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <form action="{{ route('health.importexcel') }}" method="post"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label for="formFile" class="form-label">Insert File</label>
+                                                    <input class="form-control" type="file" id="formFile"
+                                                        name="upexcel"><br>
+                                                    <p>Caution: only .XLSX files allowed</p>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-warning"
+                                                    data-bs-dismiss="modal">Import</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -31,9 +66,11 @@
                         <div class="col-md-3">
                             <span>Filter by AM:</span>
                             <select id="filter-am" name="filter-am" class="form-select">
-                                <option value="" {{ request()->input('filter-am') == '' ? 'selected' : '' }}>All AMs</option>
+                                <option value="" {{ request()->input('filter-am') == '' ? 'selected' : '' }}>All AMs
+                                </option>
                                 @foreach ($ams as $am)
-                                    <option value="{{ $am }}" {{ request()->input('filter-am') == $am ? 'selected' : '' }}>
+                                    <option value="{{ $am }}"
+                                        {{ request()->input('filter-am') == $am ? 'selected' : '' }}>
                                         {{ $am }}
                                     </option>
                                 @endforeach
@@ -42,7 +79,8 @@
                         <div class="col-md-3 pb-2 pt-2"></div>
                         <div class="col-md-3 form-inline">
                             <span>Search</span>
-                            <input type="text" class="form-control mr-sm-2" id="search" name="search" oninput="search()" placeholder="Search by Name or AMs">
+                            <input type="text" class="form-control mr-sm-2" id="search" name="search"
+                                oninput="search()" placeholder="Search by Name or AMs">
                         </div>
                     </div>
                     <thead>
@@ -69,40 +107,44 @@
                     </thead>
                     <tbody id="table-body">
                         @foreach ($healths as $health)
-                        <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="selectAll"
-                                        onchange="updateCheckboxes()">
-                                    <label class="form-check-label" for="checkbox1"></label>
-                                </div>
-                            </td>
-                            <td>{{$health->NAMA}}</td>
-                            <td>{{$health->KATEGORI}}</td>
-                            <td>{{$health->ALAMAT}}</td>
-                            <td>{{$health->KOORDINAT}}</td>
-                            <td>{{$health->TEL_CUST}}</td>
-                            <td>{{$health->PIC_CUST}}</td>
-                            <td>{{$health->AM}}</td>
-                            <td>{{$health->TEL_AM}}</td>
-                            <td>{{$health->STO}} </td>
-                            <td>{{$health->HERO}}</td>
-                            <td>{{$health->TEL_HERO}}</td>
-                            <td>
-                                <a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#editHealthModal" data-health-id="{{ $health->id }}">
-                                    <i class="ri-pencil-line" data-bs-toggle="tooltip" title="Edit"></i>
-                                </a>
-                                <a href="#" class="delete" data-bs-toggle="modal" data-bs-target="#deleteHealthModal" data-health-id="{{ $health->id }}">
-                                    <i class="ri-delete-bin-line" data-bs-toggle="tooltip" title="Delete"></i>
-                                </a>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="selectAll"
+                                            onchange="updateCheckboxes()">
+                                        <label class="form-check-label" for="checkbox1"></label>
+                                    </div>
+                                </td>
+                                <td>{{ $health->NAMA }}</td>
+                                <td>{{ $health->KATEGORI }}</td>
+                                <td>{{ $health->ALAMAT }}</td>
+                                <td>{{ $health->KOORDINAT }}</td>
+                                <td>{{ $health->TEL_CUST }}</td>
+                                <td>{{ $health->PIC_CUST }}</td>
+                                <td>{{ $health->AM }}</td>
+                                <td>{{ $health->TEL_AM }}</td>
+                                <td>{{ $health->STO }} </td>
+                                <td>{{ $health->HERO }}</td>
+                                <td>{{ $health->TEL_HERO }}</td>
+                                <td>
+                                    <a href="#" class="edit" data-bs-toggle="modal"
+                                        data-bs-target="#editHealthModal" data-health-id="{{ $health->id }}">
+                                        <i class="ri-pencil-line" data-bs-toggle="tooltip" title="Edit"></i>
+                                    </a>
+                                    <a href="#" class="delete" data-bs-toggle="modal"
+                                        data-bs-target="#deleteHealthModal" data-health-id="{{ $health->id }}">
+                                        <i class="ri-delete-bin-line" data-bs-toggle="tooltip" title="Delete"></i>
+                                    </a>
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
                 <div class="clearfix">
-                    <div class="hint-text">Showing <b>{{ $healths->firstItem() }}</b> to <b>{{ $healths->lastItem() }}</b> of
-                        <b>{{ $healths->total() }}</b> entries</div>
+                    <div class="hint-text">Showing <b>{{ $healths->firstItem() }}</b> to
+                        <b>{{ $healths->lastItem() }}</b> of
+                        <b>{{ $healths->total() }}</b> entries
+                    </div>
                     <ul class="pagination">
                         @if ($healths->currentPage() > 1)
                             <li class="page-item">
@@ -129,7 +171,7 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('health.store')}}">
+                <form method="POST" action="{{ route('health.store') }}">
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title" id="addSekolahModalLabel">Add health</h5>
@@ -143,7 +185,7 @@
                         <div class="mb-3 ">
                             <label for="kategori" class="form-label">Kategori</label><br>
                             <select name="kategori" class="form-select">
-                                @foreach($kategoris as $kategori)
+                                @foreach ($kategoris as $kategori)
                                     <option value="{{ $kategori->id }}">{{ $kategori->Kategori }}</option>
                                 @endforeach
                             </select>
@@ -194,75 +236,75 @@
         </div>
     </div>
     <!-- Edit Modal HTML -->
-     <div class="modal fade" id="editHealthModal" tabindex="-1" role="dialog"
-    aria-labelledby="editHealthModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content text-white">
-            <form method="POST" action="{{ route('health.update', ':healthId') }}">
-                @csrf
-                @method('PUT')
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editHealthModalLabel">Edit Health</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="edit-name" class="form-label">Nama Health</label>
-                        <input type="text" class="form-control" id="edit-name" name="NAMA" required>
+    <div class="modal fade" id="editHealthModal" tabindex="-1" role="dialog" aria-labelledby="editHealthModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content text-white">
+                <form method="POST" action="{{ route('health.update', ':healthId') }}">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editHealthModalLabel">Edit Health</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                  <div class="mb-3 ">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="edit-name" class="form-label">Nama Health</label>
+                            <input type="text" class="form-control" id="edit-name" name="NAMA" required>
+                        </div>
+                        <div class="mb-3 ">
                             <label for="edit-kategori" class="form-label">Kategori</label><br>
-                           <select name="KATEGORI" class="form-select" id="edit-kategori">
-                                @foreach($kategoris as $kategori)
+                            <select name="KATEGORI" class="form-select" id="edit-kategori">
+                                @foreach ($kategoris as $kategori)
                                     <option value="{{ $kategori->id }}">{{ $kategori->Kategori }}</option>
                                 @endforeach
                             </select>
                         </div>
-                    <div class="mb-3">
-                        <label for="edit-address" class="form-label">Alamat</label>
-                        <textarea class="form-control" id="edit-address" name="ALAMAT" required></textarea>
+                        <div class="mb-3">
+                            <label for="edit-address" class="form-label">Alamat</label>
+                            <textarea class="form-control" id="edit-address" name="ALAMAT" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-coor" class="form-label">Koordinat</label>
+                            <input type="text" class="form-control" id="edit-coor" name="KOORDINAT" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-telcust" class="form-label">Tel. Cust</label>
+                            <input type="text" class="form-control" id="edit-telcust" name="TEL_CUST" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-piccust" class="form-label">PIC Cust</label>
+                            <input type="text" class="form-control" id="edit-piccust" name="PIC_CUST" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-am" class="form-label">AM</label>
+                            <input type="text" class="form-control" id="edit-am" name="AM" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-telam" class="form-label">Tel. AM</label>
+                            <input type="text" class="form-control" id="edit-telam" name="TEL_AM" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-sto" class="form-label">STO</label>
+                            <input type="text" class="form-control" id="edit-sto" name="STO" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-hero" class="form-label">Hero</label>
+                            <input type="text" class="form-control" id="edit-hero" name="HERO" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-telhero" class="form-label">Tel. Hero</label>
+                            <input type="text" class="form-control" id="edit-telhero" name="TEL_HERO" required>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="edit-coor" class="form-label">Koordinat</label>
-                        <input type="text" class="form-control" id="edit-coor" name="KOORDINAT" required>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
-                    <div class="mb-3">
-                        <label for="edit-telcust" class="form-label">Tel.  Cust</label>
-                        <input type="text" class="form-control" id="edit-telcust" name="TEL_CUST" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-piccust" class="form-label">PIC Cust</label>
-                        <input type="text" class="form-control" id="edit-piccust" name="PIC_CUST" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-am" class="form-label">AM</label>
-                        <input type="text" class="form-control" id="edit-am" name="AM" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-telam" class="form-label">Tel. AM</label>
-                        <input type="text" class="form-control" id="edit-telam" name="TEL_AM" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-sto" class="form-label">STO</label>
-                        <input type="text" class="form-control" id="edit-sto" name="STO" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-hero" class="form-label">Hero</label>
-                        <input type="text" class="form-control" id="edit-hero" name="HERO" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-telhero" class="form-label">Tel. Hero</label>
-                        <input type="text" class="form-control" id="edit-telhero" name="TEL_HERO" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
     <!-- Delete Modal HTML -->
     <div class="modal fade" id="deleteHealthModal" tabindex="-1" aria-labelledby="deleteHealthModalLabel"
         aria-hidden="true">
@@ -281,8 +323,8 @@
                     @method('DELETE')
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                         <button type="submit" class="btn btn-danger">Delete</button>
-                      </div>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
                 </form>
             </div>
         </div>
