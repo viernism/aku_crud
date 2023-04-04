@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('gedung', function (Blueprint $table) {
+        Schema::create('sekolah', function (Blueprint $table) {
             $table->id();
             $table->text('NAMA');
-            $table->unsignedBigInteger('KATEGORI');
-            $table->foreign('KATEGORI')->references('id')->on('kategorigedung');
+            $table->string('LEVEL');
+            $table->foreign('LEVEL')->references('LEVEL')->on('sekolahlevels');
             $table->text('ALAMAT');
             $table->text('KOORDINAT')->nullable();
             $table->string('TEL_CUST')->nullable();
@@ -34,7 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // Will Delete Table If Exists
-        Schema::dropIfExists('gedung');
+        Schema::dropIfExists('sekolah');
     }
 };

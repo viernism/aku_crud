@@ -11,6 +11,7 @@ class LevelSekolah extends Model
     use HasFactory;
     protected $table = 'sekolahlevels';
     protected $primarykey='id';
+    protected $uniquekey='LEVEL';
     protected $fillable = [
         'id',
         'LEVEL'
@@ -18,6 +19,6 @@ class LevelSekolah extends Model
 
     public function sekolah()
     {
-        return $this->hasMany(Sekolah::class,'LEVEL_ID');
+        return $this->hasMany(Sekolah::class,'LEVEL');
     }
 }

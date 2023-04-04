@@ -40,7 +40,7 @@ class SekolahController extends Controller
         $firstItem = $sekolahs->firstItem();
 
         $ams = Sekolah::distinct('AM')->pluck('AM')->toArray();
-        return view('pages.table-sekolah', compact('sekolahs', 'firstItem', 'levels', 'ams'));
+        return view('pages.table.table-sekolah', compact('sekolahs', 'firstItem', 'levels', 'ams'));
     }
 
     public function store(Request $request)
@@ -84,6 +84,7 @@ class SekolahController extends Controller
 
     public function update(Request $request, $sekolahId)
     {
+        // $sekolahId = $request->input('id');
         $validatedData = $request->validate([
             'NAMA' => 'required',
             'LEVEL_ID' => 'required',

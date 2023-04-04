@@ -39,7 +39,7 @@ class OfficeController extends Controller
         $firstItem = $offices->firstItem();
 
         $ams = Office::distinct('AM')->pluck('AM')->toArray();
-        return view('pages.table-office', compact('offices', 'firstItem','kategoris', 'ams'));
+        return view('pages.table.table-office', compact('offices', 'firstItem','kategoris', 'ams'));
     }
 
     public function store(Request $request)

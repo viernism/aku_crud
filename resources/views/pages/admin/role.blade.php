@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Table Buscen'])
+@extends('layouts.app', ['title' => 'Role List'])
 
 @section('content')
     <div class="container">
@@ -18,14 +18,14 @@
                     </div>
                 </div>
                 <table class="table table-striped table-hover">
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="col-md-3">
                             <span>Rows per page:</span>
                             <select class="custom-select" onchange="changePaginationLength(this.value)">
-                                <option value="10" {{ $buscens->perPage() == 10 ? 'selected' : '' }}>10</option>
-                                <option value="25" {{ $buscens->perPage() == 25 ? 'selected' : '' }}>25</option>
-                                <option value="50" {{ $buscens->perPage() == 50 ? 'selected' : '' }}>50</option>
-                                <option value="100" {{ $buscens->perPage() == 100 ? 'selected' : '' }}>100</option>
+                                <option value="10" {{ $roles->perPage() == 10 ? 'selected' : '' }}>10</option>
+                                <option value="25" {{ $roles->perPage() == 25 ? 'selected' : '' }}>25</option>
+                                <option value="50" {{ $roles->perPage() == 50 ? 'selected' : '' }}>50</option>
+                                <option value="100" {{ $roles->perPage() == 100 ? 'selected' : '' }}>100</option>
                             </select>
                         </div>
                         <div class="col-md-3">
@@ -43,8 +43,7 @@
                         <div class="col-md-3">
                             <input type="text" class="form-controller" id="search" name="search" oninput="search()" placeholder="Search...">
                         </div>
-                    </div>
-                    <thead>
+                    </div> --}}
                     <thead>
                         <tr>
                             <th>
@@ -54,20 +53,12 @@
                                 </div>
                             </th>
                             <th>Nama</th>
-                            <th>Kategori</th>
-                            <th>Alamat</th>
-                            <th>Koordinat</th>
-                            <th>Tel. Cust</th>
-                            <th>PIC Cust</th>
-                            <th>AM</th>
-                            <th>Tel. AM</th>
-                            <th>STO</th>
-                            <th>Hero</th>
-                            <th>Tel. Hero</th>
+                            <th>Tipe</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody id="table-body">
-                        @foreach ($buscens as $buscen)
+                        @foreach ($roles as $role)
                         <tr>
                             <td>
                                 <div class="form-check">
@@ -76,22 +67,13 @@
                                     <label class="form-check-label" for="checkbox1"></label>
                                 </div>
                             </td>
-                            <td>{{$buscen->NAMA}}</td>
-                            <td>{{$buscen->kategoribuscen->Kategori}}</td>
-                            <td>{{$buscen->ALAMAT}}</td>
-                            <td>{{$buscen->KOORDINAT}}</td>
-                            <td>{{$buscen->TEL_CUST}}</td>
-                            <td>{{$buscen->PIC_CUST}}</td>
-                            <td>{{$buscen->AM}}</td>
-                            <td>{{$buscen->TEL_AM}}</td>
-                            <td>{{$buscen->STO}} </td>
-                            <td>{{$buscen->HERO}}</td>
-                            <td>{{$buscen->TEL_HERO}}</td>
+                            <td>{{$role->name}}</td>
+                            <td>{{$role->guard_name}}</td>
                             <td>
-                                <a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#editBuscenModal" data-buscen-id="{{ $buscen->id }}">
+                                <a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#editBuscenModal" data-buscen-id="{{ $role->id }}">
                                     <i class="ri-pencil-line" data-bs-toggle="tooltip" title="Edit"></i>
                                 </a>
-                                <a href="#" class="delete" data-bs-toggle="modal" data-bs-target="#deleteBuscenModal" data-buscen-id="{{ $buscen->id }}">
+                                <a href="#" class="delete" data-bs-toggle="modal" data-bs-target="#deleteBuscenModal" data-buscen-id="{{ $role->id }}">
                                     <i class="ri-delete-bin-line" data-bs-toggle="tooltip" title="Delete"></i>
                                 </a>
                             </td>
@@ -99,27 +81,27 @@
                         @endforeach
                     </tbody>
                 </table>
-                <div class="clearfix">
-                    <div class="hint-text">Showing <b>{{ $buscens->firstItem() }}</b> to <b>{{ $buscens->lastItem() }}</b> of
-                        <b>{{ $buscens->total() }}</b> entries</div>
+                {{-- <div class="clearfix">
+                    <div class="hint-text">Showing <b>{{ $roles->firstItem() }}</b> to <b>{{ $roles->lastItem() }}</b> of
+                        <b>{{ $roles->total() }}</b> entries</div>
                     <ul class="pagination">
-                        @if ($buscens->currentPage() > 1)
+                        @if ($roles->currentPage() > 1)
                             <li class="page-item">
-                                <a href="{{ $buscens->previousPageUrl() }}" class="page-link">Previous</a>
+                                <a href="{{ $roles->previousPageUrl() }}" class="page-link">Previous</a>
                             </li>
                         @endif
-                        @for ($i = 1; $i <= $buscens->lastPage(); $i++)
-                            <li class="page-item{{ $buscens->currentPage() == $i ? ' active' : '' }}">
-                                <a href="{{ $buscens->url($i) }}" class="page-link">{{ $i }}</a>
+                        @for ($i = 1; $i <= $roles->lastPage(); $i++)
+                            <li class="page-item{{ $roles->currentPage() == $i ? ' active' : '' }}">
+                                <a href="{{ $roles->url($i) }}" class="page-link">{{ $i }}</a>
                             </li>
                         @endfor
-                        @if ($buscens->currentPage() < $buscens->lastPage())
+                        @if ($roles->currentPage() < $roles->lastPage())
                             <li class="page-item">
-                                <a href="{{ $buscens->nextPageUrl() }}" class="page-link">Next</a>
+                                <a href="{{ $roles->nextPageUrl() }}" class="page-link">Next</a>
                             </li>
                         @endif
                     </ul>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -275,7 +257,7 @@
                     <p>Are you sure you want to delete these records?</p>
                     <p class="text-warning"><small>This action cannot be undone.</small></p>
                 </div>
-                <form action="{{ route('buscen.destroy', ':buscenId') }}" method="POST">
+                <form action="{{ route('role.destroy', ':buscenId') }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="modal-footer">

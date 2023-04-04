@@ -39,7 +39,7 @@ class TourismController extends Controller
         $firstItem = $tourisms->firstItem();
 
         $ams = Tourism::distinct('AM')->pluck('AM')->toArray();
-        return view('pages.table-tourism', compact('tourisms', 'firstItem','kategoris', 'ams'));
+        return view('pages.table.table-tourism', compact('tourisms', 'firstItem','kategoris', 'ams'));
     }
 
     public function store(Request $request)

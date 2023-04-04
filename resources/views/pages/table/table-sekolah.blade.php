@@ -21,7 +21,7 @@
                     <div class="row">
                         <div class="col-md-3">
                             <span>Rows per page:</span>
-                            <select class="custom-select" onchange="changePaginationLength(this.value)">
+                            <select class="custom-select form-select" onchange="changePaginationLength(this.value)" >
                                 <option value="10" {{ $sekolahs->perPage() == 10 ? 'selected' : '' }}>10</option>
                                 <option value="25" {{ $sekolahs->perPage() == 25 ? 'selected' : '' }}>25</option>
                                 <option value="50" {{ $sekolahs->perPage() == 50 ? 'selected' : '' }}>50</option>
@@ -30,7 +30,7 @@
                         </div>
                         <div class="col-md-3">
                             <span>Filter by AM:</span>
-                            <select id="filter-am" name="filter-am">
+                            <select id="filter-am" name="filter-am" class="form-select">
                                 <option value="" {{ request()->input('filter-am') == '' ? 'selected' : '' }}>All AMs</option>
                                 @foreach ($ams as $am)
                                     <option value="{{ $am }}" {{ request()->input('filter-am') == $am ? 'selected' : '' }}>
@@ -41,8 +41,9 @@
                         </div>
                         <div class="col-md-3">
                         </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-controller" id="search" name="search" oninput="search()" placeholder="Search by Name or AMs">
+                        <div class="col-md-3 form-inline">
+                            <span>Search</span>
+                            <input type="text" class="form-control mr-sm-2" id="search" name="search" oninput="search()" placeholder="Search by Name or AMs">
                         </div>
                     </div>
                     <thead>
@@ -64,6 +65,7 @@
                             <th>STO</th>
                             <th>Hero</th>
                             <th>Tel. Hero</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody id="table-body">
@@ -77,7 +79,7 @@
                                     </div>
                                 </td>
                                 <td>{{ $sekolah->NAMA }}</td>
-                                <td>{{ $sekolah->sekolahlevels->LEVEL }}</td>
+                                <td>{{ $sekolah->LEVEL }}</td>
                                 <td>{{ $sekolah->ALAMAT }}</td>
                                 <td>{{ $sekolah->KOORDINAT }}</td>
                                 <td>{{ $sekolah->TEL_CUST }}</td>
@@ -88,8 +90,7 @@
                                 <td>{{ $sekolah->HERO }}</td>
                                 <td>{{ $sekolah->TEL_HERO }}</td>
                                 <td>
-                                    <a href="#" class="edit" data-bs-toggle="modal"
-                                        data-bs-target="#editSekolahModal" data-sekolah-id="{{ $sekolah->id }}">
+                                    <a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#editSekolahModal" data-sekolah-id="{{ $sekolah->id }}" onclick="editSekolah(event, {{ $sekolah->id }})">
                                         <i class="ri-pencil-line" data-bs-toggle="tooltip" title="Edit"></i>
                                     </a>
                                     <a href="#" class="delete" data-bs-toggle="modal"
@@ -149,7 +150,7 @@
                             <label for="LEVEL_ID" class="form-label">Level</label><br>
                             <select name="LEVEL_ID" class="form-select">
                                 @foreach ($levels as $level)
-                                    <option value="{{ $level->id }}">{{ $level->LEVEL }}</option>
+                                    <option value="{{ $level->LEVEL }}">{{ $level->LEVEL }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -203,23 +204,25 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content text-white">
-                <form method="POST" action="{{ route('sekolah.update', ':sekolahId') }}">
+                <form method="POST" action="{{ route('sekolah.update', ':sekolahId') }}" id="edit-sekolah-form">
                     @csrf
                     @method('PUT')
                     <div class="modal-header">
                         <h5 class="modal-title" id="editSekolahModalLabel">Edit Sekolah</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+
                     <div class="modal-body">
+                        {{-- <input type="hidden" name="id" value="{{ $sekolahs->id }}"> --}}
                         <div class="mb-3">
                             <label for="edit-name" class="form-label">Nama Sekolah</label>
-                            <input type="text" class="form-control" id="edit-name" name="NAMA" required>
+                            <input type="text" class="form-control" id="edit-name" name="NAMA" value="" required>
                         </div>
                         <div class="mb-3">
-                            <label for="LEVEL_ID" class="form-label">Level</label><br>
-                            <select name="LEVEL_ID" class="form-select" id="edit-kategori">
+                            <label for="LEVEL" class="form-label">Level</label><br>
+                            <select name="LEVEL" class="form-select" id="edit-kategori">
                                 @foreach ($levels as $level)
-                                    <option value="{{ $level->id }}">{{ $level->LEVEL }}</option>
+                                    <option value="{{ $level->LEVEL }}">{{ $level->LEVEL }}</option>
                                 @endforeach
                             </select>
                         </div>

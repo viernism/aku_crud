@@ -14,7 +14,7 @@ class Sekolah extends Model
     protected $primarykey='id';
     protected $fillable = [
         'NAMA',
-        'LEVEL_ID',
+        'LEVEL',
         'ALAMAT',
         'KOORDINAT',
         'TEL_CUST',
@@ -28,7 +28,7 @@ class Sekolah extends Model
 
     public function sekolahlevels()
     {
-        return $this->belongsTo(LevelSekolah::class,'LEVEL_ID');
+        return $this->belongsTo(LevelSekolah::class,'LEVEL');
     }
 }
 

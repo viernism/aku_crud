@@ -39,7 +39,7 @@ class TokoController extends Controller
         $firstItem = $tokos->firstItem();
 
         $ams = Toko::distinct('AM')->pluck('AM')->toArray();
-        return view('pages.table-toko', compact('tokos', 'firstItem','kategoris', 'ams'));
+        return view('pages.table.table-toko', compact('tokos', 'firstItem','kategoris', 'ams'));
     }
 
     public function store(Request $request)

@@ -39,7 +39,7 @@ class BuscenController extends Controller
         $firstItem = $buscens->firstItem();
 
         $ams = Buscen::distinct('AM')->pluck('AM')->toArray();
-        return view('pages.table-buscen', compact('buscens', 'firstItem','kategoris', 'ams'));
+        return view('pages.table.table-buscen', compact('buscens', 'firstItem','kategoris', 'ams'));
     }
 
     public function store(Request $request)

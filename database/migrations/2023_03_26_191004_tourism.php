@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('toko', function (Blueprint $table) {
+        Schema::create('tourism', function (Blueprint $table) {
             $table->id();
             $table->text('NAMA');
-            $table->unsignedBigInteger('KATEGORI');
-            $table->foreign('KATEGORI')->references('id')->on('kategoritoko');
+            $table->string('KATEGORI');
+            $table->foreign('KATEGORI')->references('Kategori')->on('kategoritourism');
             $table->text('ALAMAT');
             $table->text('KOORDINAT')->nullable();
             $table->string('TEL_CUST')->nullable();
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('toko');
+        Schema::dropIfExists('tourism');
     }
 };

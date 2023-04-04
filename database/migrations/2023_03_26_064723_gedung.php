@@ -11,20 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sekolah', function (Blueprint $table) {
+        Schema::create('gedung', function (Blueprint $table) {
             $table->id();
             $table->text('NAMA');
-            $table->unsignedBigInteger('LEVEL_ID');
-            $table->foreign('LEVEL_ID')->references('id')->on('sekolahlevels');
-            $table->text('ALAMAT');
+            $table->string('KATEGORI');
+            $table->foreign('KATEGORI')->references('Kategori')->on('kategorigedung');
+            $table->text('ALAMAT')->nullable();
             $table->text('KOORDINAT')->nullable();
             $table->string('TEL_CUST')->nullable();
             $table->string('PIC_CUST')->nullable();
-            $table->string('AM');
-            $table->string('TEL_AM');
-            $table->text('STO');
-            $table->string('HERO');
-            $table->string('TEL_HERO');
+            $table->string('AM')->nullable();
+            $table->string('TEL_AM')->nullable();
+            $table->text('STO')->nullable();
+            $table->string('HERO')->nullable();
+            $table->string('TEL_HERO')->nullable();
             $table->timestamps();
         });
     }
@@ -34,6 +34,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sekolah');
+        // Will Delete Table If Exists
+        Schema::dropIfExists('gedung');
     }
 };

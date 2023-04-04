@@ -11,6 +11,7 @@ class KategoriOffice extends Model
     use HasFactory;
     protected $table = 'kategorioffice';
     protected $primarykey='id';
+    protected $uniquekey='Kategori';
     protected $fillable = [
         'id',
         'Kategori'

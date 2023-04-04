@@ -31,6 +31,8 @@
                             <th>Name</th>
                             <th>Username</th>
                             <th>Email</th>
+                            <th>Phone</th>
+                            <th>Bio</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -48,6 +50,8 @@
                                 <td>{{ $user->name }} </td>
                                 <td>{{ $user->username }}</td>
                                 <td>{{ $user->email }}</td>
+                                <td>{{ $user->phone }}</td>
+                                <td>{{ $user->bio }}</td>
                                 <td>
                                     <a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#editUserModal" data-user-id="{{ $user->id }}">
                                         <i class="ri-pencil-line" data-bs-toggle="tooltip" title="Edit"></i>

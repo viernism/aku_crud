@@ -38,28 +38,44 @@
                 <a href="/dashboard">
                     <i class="ri-dashboard-fill sidebar-menu-item-icon"></i> Dashboard </a>
             </li>
-            <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Custom</li>
+            @role('Administrator')
+            <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Admin Menu</li>
             <li class="sidebar-menu-item has-dropdown">
                 <a href="#">
-                    <i class="ri-shield-user-line sidebar-menu-item-icon"></i> Users <i
+                    <i class="ri-shield-user-line sidebar-menu-item-icon"></i> Users, Roles & Permissions <i
                         class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
                 </a>
                 <ul class="sidebar-dropdown-menu">
-                    <li class="sidebar-dropdown-menu-item alert-button">
+                    {{-- <li class="sidebar-dropdown-menu-item alert-button">
                         <a href="/profile">
                             <i class="ri-user-line sidebar-menu-item-icon"></i> User Profile </a>
-                    </li>
+                    </li> --}}
                     <li class="sidebar-dropdown-menu-item">
                         <a href="/admin-panel">
-                            <i class="ri-settings-2-line sidebar-menu-item-icon"></i> User Management </a>
+                            <i class="ri-settings-2-line sidebar-menu-item-icon"></i> User Management
+                        </a>
+                    </li>
+
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="/role-list">
+                            <i class="ri-admin-line sidebar-menu-item-icon"></i> Role Management
+                        </a>
+                    </li>
+
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="/permission-list">
+                            <i class="ri-shield-keyhole-line sidebar-menu-item-icon"></i> Permission Management
+                        </a>
                     </li>
                 </ul>
             </li>
+            @endrole
             <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Pages</li>
             <li class="sidebar-menu-item has-dropdown">
                 <a href="#">
-                    <i class="ri-shield-user-line sidebar-menu-item-icon"></i> Table List <i
-                        class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
+                    <i class="ri-table-fill sidebar-menu-item-icon"></i>
+                    Table List
+                    <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
                 </a>
                 <ul class="sidebar-dropdown-menu">
                     <li class="sidebar-dropdown-menu-item alert-button">

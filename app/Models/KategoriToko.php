@@ -11,6 +11,7 @@ class KategoriToko extends Model
     use HasFactory;
     protected $table = 'kategoritoko';
     protected $primarykey='id';
+    protected $uniquekey='Kategori';
     protected $fillable = [
         'id',
         'Kategori'
