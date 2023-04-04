@@ -75,13 +75,15 @@ Route::middleware(['auth', 'revalidate'])->group(function () {
     Route::delete('/admin-panel/users/{id}', [UserController::class, 'destroy'])->name('admin.users.destroy');
 
     // table gedung routes
-    Route::get('/tabel/gedung', [GedungController::class, 'index']);
+    Route::get('/tabel/gedung', [GedungController::class, 'index'])->name('gedung.index');
 
     Route::post('/tabel/gedung/store', [GedungController::class, 'store'])->name('gedung.store');
 
     Route::put('/tabel/gedung/{gedungId}', [GedungController::class, 'update'])->name('gedung.update');
 
     Route::delete('/tabel/gedung/delete/{gedungId}', [GedungController::class, 'destroy'])->name('gedung.destroy');
+
+    Route::get('/tabel/sekolah/search', [GedungController::class, 'index'])->name('gedung.index');
 
     Route::get('/tabel/gedung/exportexcel', [GedungController::class,'exportexcel'])->name('gedung.exportexcel');
 
@@ -98,6 +100,10 @@ Route::middleware(['auth', 'revalidate'])->group(function () {
 
     Route::get('/tabel/sekolah/search', [SekolahController::class. 'index'])->name('sekolah.index');
 
+    Route::get('/tabel/sekolah/exportexcel', [SekolahController::class,'exportexcel'])->name('sekolah.exportexcel');
+
+    Route::post('/tabel/sekolah/importexcel', [SekolahController::class,'importexcel'])->name('sekolah.importexcel');
+
     // Route::delete('/tabel/sekolah/destroy/{sekolahId}', [SekolahController::class, 'delete'])->name('sekolah.delete');
 
 
@@ -112,6 +118,10 @@ Route::middleware(['auth', 'revalidate'])->group(function () {
 
     Route::get('/tabel/health/search', [HealthController::class, 'index'])->name('health.index');
 
+    Route::get('/tabel/health/exportexcel', [HealthController::class,'exportexcel'])->name('health.exportexcel');
+
+    Route::post('/tabel/health/importexcel', [HealthController::class,'importexcel'])->name('health.importexcel');
+
     // table kuliner routes
     Route::get('/tabel/kuliner', [KulinerController::class, 'index']);
 
@@ -122,6 +132,10 @@ Route::middleware(['auth', 'revalidate'])->group(function () {
     Route::delete('/tabel/kuliner/delete/{kulinerId}', [KulinerController::class, 'destroy'])->name('kuliner.destroy');
 
     Route::get('/tabel/kuliner/search', [HealthController::class, 'index'])->name('kuliner.index');
+
+    Route::get('/tabel/kuliner/exportexcel', [KulinerController::class,'exportexcel'])->name('kuliner.exportexcel');
+
+    Route::post('/tabel/kuliner/importexcel', [KulinerController::class,'importexcel'])->name('kuliner.importexcel');
 
 
     // table toko routes
@@ -135,6 +149,10 @@ Route::middleware(['auth', 'revalidate'])->group(function () {
 
     Route::get('/tabel/toko/search', [HealthController::class, 'index'])->name('toko.index');
 
+    Route::get('/tabel/toko/exportexcel', [TokoController::class,'exportexcel'])->name('toko.exportexcel');
+
+    Route::post('/tabel/toko/importexcel', [TokoController::class,'importexcel'])->name('toko.importexcel');
+
     // table office routes
     Route::get('/tabel/office', [OfficeController::class, 'index']);
 
@@ -145,6 +163,10 @@ Route::middleware(['auth', 'revalidate'])->group(function () {
     Route::delete('/tabel/office/delete/{officeId}', [OfficeController::class, 'destroy'])->name('office.destroy');
 
     Route::get('/tabel/office/search', [HealthController::class, 'index'])->name('office.index');
+
+    Route::get('/tabel/office/exportexcel', [OfficeController::class,'exportexcel'])->name('office.exportexcel');
+
+    Route::post('/tabel/office/importexcel', [OfficeController::class,'importexcel'])->name('office.importexcel');
 
     // table business center routes
     Route::get('/tabel/buscen', [BuscenController::class, 'index']);
@@ -157,6 +179,10 @@ Route::middleware(['auth', 'revalidate'])->group(function () {
 
     Route::get('/tabel/buscen/search', [HealthController::class, 'index'])->name('buscen.index');
 
+    Route::get('/tabel/buscen/exportexcel', [BuscenCOntroller::class,'exportexcel'])->name('buscen.exportexcel');
+
+    Route::post('/tabel/buscen/importexcel', [BuscenCOntroller::class,'importexcel'])->name('buscen.importexcel');
+
     // table tourism routes
     Route::get('/tabel/tourism', [TourismController::class, 'index']);
 
@@ -167,6 +193,10 @@ Route::middleware(['auth', 'revalidate'])->group(function () {
     Route::delete('/tabel/tourism/delete/{tourismId}', [TourismController::class, 'destroy'])->name('tourism.destroy');
 
     Route::get('/tabel/tourism/search', [HealthController::class, 'index'])->name('tourism.index');
+
+    Route::get('/tabel/tourism/exportexcel', [TourismController::class,'exportexcel'])->name('tourism.exportexcel');
+
+    Route::post('/tabel/tourism/importexcel', [TourismController::class,'importexcel'])->name('tourism.importexcel');
 
     Route::get('/imejcrop', function () {
         return view('pages.imej');
