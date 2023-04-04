@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use App\Models\KategoriToko;
 use App\Models\Toko ;
+use App\Exports\TokoExport;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\ToCollection;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class TokoController extends Controller
 {
@@ -122,4 +128,87 @@ class TokoController extends Controller
 
         return redirect()->back()->with('success', 'Toko deleted successfully.');
     }
+
+
+    public function exportexcel(){
+        return Excel::download(new TokoExport,'datatoko.xlsx');
+    }
+
+    public function importexcel(Request $request)
+    {
+            $request->validate([
+                'upexcel' => 'required|mimes:xlsx',
+            ]);
+
+            $file = $request->file('upexcel');
+
+            try {
+                $import = Excel::toCollection(null, $file)[0];
+
+                // Store the Excel file in the storage
+                $filename = $file->getClientOriginalName();
+                $file->storeAs('excel', $filename);
+
+                $tokos = new Collection();
+                $kategoris = new Collection();
+
+                // Get the headers
+                $headers = $import->shift()->toArray();
+
+                // Map the headers to database fields
+                $fieldMap = [
+                    'NAMA' => 'NAMA',
+                    'KATEGORI' => 'KATEGORI',
+                    'ALAMAT' => 'ALAMAT',
+                    'KOORDINAT' => 'KOORDINAT',
+                    'TEL_CUST' => 'TEL_CUST',
+                    'PIC_CUST' => 'PIC_CUST',
+                    'AM' => 'AM',
+                    'TEL_AM' => 'TEL_AM',
+                    'STO' => 'STO',
+                    'HERO' => 'HERO',
+                    'TEL_HERO' => 'TEL_HERO',
+                ];
+
+                foreach ($import as $row) {
+                    // Validate the row data
+                    if (!empty($row[0]) && is_string($row[0])) {
+
+                        // Map the row data to database fields
+                        $toko = [];
+                        foreach ($headers as $i => $header) {
+                            if (isset($fieldMap[$header])) {
+                                $toko[$fieldMap[$header]] = $row[$i];
+                            }
+                        }
+
+                        // Add the row data to the collection
+                        $tokos->push($toko);
+
+                        // Extract the category from the row data
+                        $kategori = [
+                            'Kategori' => isset($toko['KATEGORI']) ? $toko['KATEGORI'] : '',
+                        ];
+
+                        // Check if the category already exists in the database
+                        $existingKategori = KategoriToko::where('Kategori', $kategori['Kategori'])->first();
+                        if ($existingKategori) {
+                            // Use the existing category ID
+                            $toko['KATEGORI'] = $existingKategori->id;
+                        } else {
+                            // Add the category to the collection
+                            $kategoris->push($kategori);
+                        }
+                    }
+                }
+
+                // Insert the data into the database
+                KategoriToko::insert($kategoris->toArray()); // Insert new categories first
+                Toko::insert($tokos->toArray());
+
+                return redirect()->back()->with('success', 'Imported successfully.');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('error', $e->getMessage());
+            }
+        }
 }

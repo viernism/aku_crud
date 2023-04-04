@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use App\Models\KategoriBuscen;
 use App\Models\Buscen;
+use App\Exports\BuscenExport;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\ToCollection;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class BuscenController extends Controller
 {
@@ -122,4 +128,87 @@ class BuscenController extends Controller
 
         return redirect()->back()->with('success', 'Buscen deleted successfully.');
     }
+
+
+    public function exportexcel(){
+        return Excel::download(new BuscenExport,'databuscen.xlsx');
+    }
+
+    public function importexcel(Request $request)
+    {
+            $request->validate([
+                'upexcel' => 'required|mimes:xlsx',
+            ]);
+
+            $file = $request->file('upexcel');
+
+            try {
+                $import = Excel::toCollection(null, $file)[0];
+
+                // Store the Excel file in the storage
+                $filename = $file->getClientOriginalName();
+                $file->storeAs('excel', $filename);
+
+                $buscens = new Collection();
+                $kategoris = new Collection();
+
+                // Get the headers
+                $headers = $import->shift()->toArray();
+
+                // Map the headers to database fields
+                $fieldMap = [
+                    'NAMA' => 'NAMA',
+                    'KATEGORI' => 'KATEGORI',
+                    'ALAMAT' => 'ALAMAT',
+                    'KOORDINAT' => 'KOORDINAT',
+                    'TEL_CUST' => 'TEL_CUST',
+                    'PIC_CUST' => 'PIC_CUST',
+                    'AM' => 'AM',
+                    'TEL_AM' => 'TEL_AM',
+                    'STO' => 'STO',
+                    'HERO' => 'HERO',
+                    'TEL_HERO' => 'TEL_HERO',
+                ];
+
+                foreach ($import as $row) {
+                    // Validate the row data
+                    if (!empty($row[0]) && is_string($row[0])) {
+
+                        // Map the row data to database fields
+                        $buscen = [];
+                        foreach ($headers as $i => $header) {
+                            if (isset($fieldMap[$header])) {
+                                $buscen[$fieldMap[$header]] = $row[$i];
+                            }
+                        }
+
+                        // Add the row data to the collection
+                        $buscens->push($buscen);
+
+                        // Extract the category from the row data
+                        $kategori = [
+                            'Kategori' => isset($buscen['KATEGORI']) ? $buscen['KATEGORI'] : '',
+                        ];
+
+                        // Check if the category already exists in the database
+                        $existingKategori = KategoriBuscen::where('Kategori', $kategori['Kategori'])->first();
+                        if ($existingKategori) {
+                            // Use the existing category ID
+                            $buscen['KATEGORI'] = $existingKategori->id;
+                        } else {
+                            // Add the category to the collection
+                            $kategoris->push($kategori);
+                        }
+                    }
+                }
+
+                // Insert the data into the database
+                KategoriBuscen::insert($kategoris->toArray()); // Insert new categories first
+                Buscen::insert($buscens->toArray());
+
+                return redirect()->back()->with('success', 'Imported successfully.');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('error', $e->getMessage());
+            }
+        }
 }

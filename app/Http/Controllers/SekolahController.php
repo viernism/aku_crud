@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use App\Models\Sekolah;
 use App\Models\LevelSekolah;
+use App\Exports\SekolahExport;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\ToCollection;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class SekolahController extends Controller
 {
@@ -48,7 +54,7 @@ class SekolahController extends Controller
         // validate the form data
         $validatedData = $request->validate([
             'nama' => 'required',
-            'LEVEL_ID' => 'required',
+            'LEVEL' => 'required',
             'alamat' => 'required',
             'koordinat' => 'required',
             'tel_cust' => 'required',
@@ -63,7 +69,7 @@ class SekolahController extends Controller
         //  Create a new data in the db
         Sekolah::create ([
             'NAMA' => $validatedData['nama'],
-            'LEVEL_ID' => $validatedData['LEVEL_ID'],
+            'LEVEL' => $validatedData['LEVEL'],
             'ALAMAT' => $validatedData['alamat'],
             'KOORDINAT' => $validatedData['koordinat'],
             'TEL_CUST' => $validatedData['tel_cust'],
@@ -84,10 +90,9 @@ class SekolahController extends Controller
 
     public function update(Request $request, $sekolahId)
     {
-        // $sekolahId = $request->input('id');
         $validatedData = $request->validate([
             'NAMA' => 'required',
-            'LEVEL_ID' => 'required',
+            'LEVEL' => 'required',
             'ALAMAT' => 'required',
             'KOORDINAT' => 'required',
             'TEL_CUST' => 'required',
@@ -102,7 +107,7 @@ class SekolahController extends Controller
         $sekolah = new Sekolah;
         $sekolah = Sekolah::find($sekolahId);
         $sekolah->NAMA = $validatedData['NAMA'];
-        $sekolah->LEVEL_ID = $validatedData['LEVEL_ID'];
+        $sekolah->LEVEL = $validatedData['LEVEL'];
         $sekolah->ALAMAT = $validatedData['ALAMAT'];
         $sekolah->KOORDINAT = $validatedData['KOORDINAT'];
         $sekolah->TEL_CUST = $validatedData['TEL_CUST'];
@@ -129,5 +134,88 @@ class SekolahController extends Controller
 
         return redirect()->back()->with('success', 'Sekolah deleted successfully.');
     }
+
+
+    public function exportexcel(){
+        return Excel::download(new SekolahExport,'datasekolah.xlsx');
+    }
+
+    public function importexcel(Request $request)
+    {
+            $request->validate([
+                'upexcel' => 'required|mimes:xlsx',
+            ]);
+
+            $file = $request->file('upexcel');
+
+            try {
+                $import = Excel::toCollection(null, $file)[0];
+
+                // Store the Excel file in the storage
+                $filename = $file->getClientOriginalName();
+                $file->storeAs('excel', $filename);
+
+                $sekolahs = new Collection();
+                $levels = new Collection();
+
+                // Get the headers
+                $headers = $import->shift()->toArray();
+
+                // Map the headers to database fields
+                $fieldMap = [
+                    'NAMA' => 'NAMA',
+                    'LEVEL' => 'LEVEL',
+                    'ALAMAT' => 'ALAMAT',
+                    'KOORDINAT' => 'KOORDINAT',
+                    'TEL_CUST' => 'TEL_CUST',
+                    'PIC_CUST' => 'PIC_CUST',
+                    'AM' => 'AM',
+                    'TEL_AM' => 'TEL_AM',
+                    'STO' => 'STO',
+                    'HERO' => 'HERO',
+                    'TEL_HERO' => 'TEL_HERO',
+                ];
+
+                foreach ($import as $row) {
+                    // Validate the row data
+                    if (!empty($row[0]) && is_string($row[0])) {
+
+                        // Map the row data to database fields
+                        $sekolah = [];
+                        foreach ($headers as $i => $header) {
+                            if (isset($fieldMap[$header])) {
+                                $sekolah[$fieldMap[$header]] = $row[$i];
+                            }
+                        }
+
+                        // Add the row data to the collection
+                        $sekolahs->push($sekolah);
+
+                        // Extract the category from the row data
+                        $level = [
+                            'LEVEL' => isset($sekolah['LEVEL']) ? $sekolah['LEVEL'] : '',
+                        ];
+
+                        // Check if the category already exists in the database
+                        $existingLEVEL = LEVELSekolah::where('LEVEL', $level['LEVEL'])->first();
+                        if ($existingLEVEL) {
+                            // Use the existing category ID
+                            $sekolah['LEVEL'] = $existingLEVEL->id;
+                        } else {
+                            // Add the category to the collection
+                            $levels->push($level);
+                        }
+                    }
+                }
+
+                // Insert the data into the database
+                LEVELSekolah::insert($levels->toArray()); // Insert new categories first
+                Sekolah::insert($sekolahs->toArray());
+
+                return redirect()->back()->with('success', 'Imported successfully.');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('error', $e->getMessage());
+            }
+        }
 }
 
