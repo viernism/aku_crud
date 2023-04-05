@@ -188,7 +188,7 @@
                             <label for="kategori" class="form-label">Kategori</label><br>
                             <select name="kategori" class="form-select">
                                 @foreach ($kategoris as $kategori)
-                                    <option value="{{ $kategori->id }}">{{ $kategori->Kategori }}</option>
+                                    <option value="{{ $kategori->Kategori }}">{{ $kategori->Kategori }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -258,7 +258,7 @@
                             <label for="edit-kategori" class="form-label">Kategori</label><br>
                             <select name="KATEGORI" class="form-select" id="edit-kategori">
                                 @foreach ($kategoris as $kategori)
-                                    <option value="{{ $kategori->id }}">{{ $kategori->Kategori }}</option>
+                                    <option value="{{ $kategori->Kategori }}">{{ $kategori->Kategori }}</option>
                                 @endforeach
                             </select>
                         </div>
