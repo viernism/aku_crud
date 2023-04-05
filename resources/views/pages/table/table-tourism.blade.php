@@ -101,7 +101,7 @@
                             <td>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="selectAll"
-                                        onchange="updateCheckboxes()">
+                                        onchange="updateCheckboxes()" value="{{ $tourism->id }}">
                                     <label class="form-check-label" for="checkbox1"></label>
                                 </div>
                             </td>
@@ -153,14 +153,14 @@
         </div>
     </div>
     <!-- Add Modal HTML -->
-    <div class="modal fade" id="addTourismModal" tabindex="-1" role="dialog" aria-labelledby="addSekolahModalLabel"
+    <div class="modal fade" id="addTourismModal" tabindex="-1" role="dialog" aria-labelledby="addTourismModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form method="POST" action="{{ route('tourism.store')}}">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addSekolahModalLabel">Add tourism</h5>
+                        <h5 class="modal-title" id="addTourismModalLabel">Add tourism</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -315,4 +315,26 @@
             </div>
         </div>
     </div>
+            <!-- Delete Selected Modal HTML -->
+            <div class="modal fade" id="deleteSelectedTourismModal" tabindex="-1"
+            aria-labelledby="deleteSelectedTourismModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content text-white">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="deleteSelectedTourismModalLabel">Delete Tourism</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete these records?</p>
+                        <p class="text-warning"><small>This action cannot be undone.</small></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" id="deleteSelected" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Delete selected
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 @endsection

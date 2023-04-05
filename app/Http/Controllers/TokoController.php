@@ -129,6 +129,11 @@ class TokoController extends Controller
         return redirect()->back()->with('success', 'Toko deleted successfully.');
     }
 
+    public function deleteSelected(Request $request)
+    {
+        $ids = $request->input('id');
+        Toko::whereIn('id', $ids)->delete();
+    }
 
     public function exportexcel(){
         return Excel::download(new TokoExport,'datatoko.xlsx');

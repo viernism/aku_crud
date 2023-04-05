@@ -12,31 +12,38 @@
                         <div class="col-6">
                             <a href="#addGedungModal" class="btn btn-success" data-bs-toggle="modal"><i
                                     class="bi bi-plus-circle"></i><span>Add New Data</span></a>
-                            <a href="#deleteGedungModal" class="btn btn-danger" data-bs-toggle="modal"><i
+                            <a href="#deleteSelectedGedungModal" class="btn btn-danger" data-bs-toggle="modal"><i
                                     class="bi bi-trash"></i><span>Delete</span></a>
                             <a href="/tabel/gedung/exportexcel" class="btn btn-info">Export</a>
                             <!-- Button trigger modal -->
-                            <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-warning">Import</a>
+                            <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                class="btn btn-warning">Import</a>
                             <!-- Modal -->
-                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
                                         </div>
-                                        <form action="{{ route('gedung.importexcel') }}" method="post" enctype="multipart/form-data">
+                                        <form action="{{ route('gedung.importexcel') }}" method="post"
+                                            enctype="multipart/form-data">
                                             @csrf
                                             <div class="modal-body">
                                                 <div class="mb-3">
                                                     <label for="formFile" class="form-label">Insert File</label>
-                                                    <input class="form-control" type="file" id="formFile" name="upexcel"><br>
+                                                    <input class="form-control" type="file" id="formFile"
+                                                        name="upexcel"><br>
                                                     <p>Caution: only .XLSX files allowed</p>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-warning" data-bs-dismiss="modal">Import</button>
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-warning"
+                                                    data-bs-dismiss="modal">Import</button>
                                             </div>
                                         </form>
                                     </div>
@@ -59,9 +66,11 @@
                         <div class="col-md-3">
                             <span>Filter by AM:</span>
                             <select id="filter-am" name="filter-am" class="form-select">
-                                <option value="" {{ request()->input('filter-am') == '' ? 'selected' : '' }}>All AMs</option>
+                                <option value="" {{ request()->input('filter-am') == '' ? 'selected' : '' }}>All AMs
+                                </option>
                                 @foreach ($ams as $am)
-                                    <option value="{{ $am }}" {{ request()->input('filter-am') == $am ? 'selected' : '' }}>
+                                    <option value="{{ $am }}"
+                                        {{ request()->input('filter-am') == $am ? 'selected' : '' }}>
                                         {{ $am }}
                                     </option>
                                 @endforeach
@@ -70,7 +79,8 @@
                         <div class="col-md-3 pb-2 pt-2"></div>
                         <div class="col-md-3 form-inline">
                             <span>Search</span>
-                            <input type="text" class="form-control mr-sm-2" id="search" name="search" oninput="search()" placeholder="Search by Name or AMs">
+                            <input type="text" class="form-control mr-sm-2" id="search" name="search"
+                                oninput="search()" placeholder="Search by Name or AMs">
                         </div>
                     </div>
                     <thead>
@@ -97,40 +107,44 @@
                     </thead>
                     <tbody id="table-body">
                         @foreach ($gedungs as $gedung)
-                        <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="selectAll"
-                                        onchange="updateCheckboxes()">
-                                    <label class="form-check-label" for="checkbox1"></label>
-                                </div>
-                            </td>
-                            <td>{{$gedung->NAMA}}</td>
-                            <td>{{$gedung->KATEGORI}}</td>
-                            <td>{{$gedung->ALAMAT}}</td>
-                            <td>{{$gedung->KOORDINAT}}</td>
-                            <td>{{ $gedung->TEL_CUST}}</td>
-                            <td>{{$gedung->PIC_CUST}}</td>
-                            <td>{{$gedung->AM}}</td>
-                            <td>{{$gedung->TEL_AM}}</td>
-                            <td>{{$gedung->STO}} </td>
-                            <td>{{$gedung->HERO}}</td>
-                            <td>{{$gedung->TEL_HERO}}</td>
-                            <td>
-                                <a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#editGedungModal" data-gedung-id="{{ $gedung->id }}">
-                                    <i class="ri-pencil-line" data-bs-toggle="tooltip" title="Edit"></i>
-                                </a>
-                                <a href="#" class="delete" data-bs-toggle="modal" data-bs-target="#deleteGedungModal" data-gedung-id="{{ $gedung->id }}">
-                                    <i class="ri-delete-bin-line" data-bs-toggle="tooltip" title="Delete"></i>
-                                </a>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="selectAll"
+                                            onchange="updateCheckboxes()" value="{{ $gedung->id }}">
+                                        <label class="form-check-label" for="checkbox1"></label>
+                                    </div>
+                                </td>
+                                <td>{{ $gedung->NAMA }}</td>
+                                <td>{{ $gedung->KATEGORI }}</td>
+                                <td>{{ $gedung->ALAMAT }}</td>
+                                <td>{{ $gedung->KOORDINAT }}</td>
+                                <td>{{ $gedung->TEL_CUST }}</td>
+                                <td>{{ $gedung->PIC_CUST }}</td>
+                                <td>{{ $gedung->AM }}</td>
+                                <td>{{ $gedung->TEL_AM }}</td>
+                                <td>{{ $gedung->STO }} </td>
+                                <td>{{ $gedung->HERO }}</td>
+                                <td>{{ $gedung->TEL_HERO }}</td>
+                                <td>
+                                    <a href="#" class="edit" data-bs-toggle="modal"
+                                        data-bs-target="#editGedungModal" data-gedung-id="{{ $gedung->id }}">
+                                        <i class="ri-pencil-line" data-bs-toggle="tooltip" title="Edit"></i>
+                                    </a>
+                                    <a href="#" class="delete" data-bs-toggle="modal"
+                                        data-bs-target="#deleteGedungModal" data-gedung-id="{{ $gedung->id }}">
+                                        <i class="ri-delete-bin-line" data-bs-toggle="tooltip" title="Delete"></i>
+                                    </a>
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
                 <div class="clearfix">
-                    <div class="hint-text">Showing <b>{{ $gedungs->firstItem() }}</b> to <b>{{ $gedungs->lastItem() }}</b> of
-                        <b>{{ $gedungs->total() }}</b> entries</div>
+                    <div class="hint-text">Showing <b>{{ $gedungs->firstItem() }}</b> to
+                        <b>{{ $gedungs->lastItem() }}</b> of
+                        <b>{{ $gedungs->total() }}</b> entries
+                    </div>
                     <ul class="pagination">
                         @if ($gedungs->currentPage() > 1)
                             <li class="page-item">
@@ -153,14 +167,14 @@
         </div>
     </div>
     <!-- Add Modal HTML -->
-    <div class="modal fade modal-dialog-scrollable" id="addGedungModal" id="staticBackdrop" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="addSekolahModalLabel"
-        aria-hidden="true">
+    <div class="modal fade modal-dialog-scrollable" id="addGedungModal" id="staticBackdrop" data-bs-backdrop="static"
+        tabindex="-1" role="dialog" aria-labelledby="addGedungModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('gedung.store')}}">
+                <form method="POST" action="{{ route('gedung.store') }}">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addSekolahModalLabel">Add Gedung</h5>
+                        <h5 class="modal-title" id="addGedungModalLabel">Add Gedung</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -171,7 +185,7 @@
                         <div class="mb-3">
                             <label for="kategori" class="form-label">Kategori</label><br>
                             <select name="kategori" class="form-select">
-                                @foreach($kategoris as $kategori)
+                                @foreach ($kategoris as $kategori)
                                     <option value="{{ $kategori->Kategori }}">{{ $kategori->Kategori }}</option>
                                 @endforeach
                             </select>
@@ -222,75 +236,76 @@
         </div>
     </div>
     <!-- Edit Modal HTML -->
-     <div class="modal fade" id="editGedungModal" tabindex="-1" role="dialog"
-    aria-labelledby="editGedungModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form method="POST" action="{{ route('gedung.update', ':gedungId') }}">
-                @csrf
-                @method('PUT')
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editGedungModalLabel">Edit Gedung</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="edit-name" class="form-label">Nama Gedung</label>
-                        <input type="text" class="form-control" id="edit-name" name="NAMA" value=""  required>
+    <div class="modal fade" id="editGedungModal" tabindex="-1" role="dialog" aria-labelledby="editGedungModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form method="POST" action="{{ route('gedung.update', ':gedungId') }}">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editGedungModalLabel">Edit Gedung</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                  <div class="mb-3">
-                    <label for="edit-kategori" class="form-label">Kategori</label><br>
-                   <select name="KATEGORI" class="form-select" id="edit-kategori">
-                        @foreach($kategoris as $kategori)
-                            <option value="{{ $kategori->Kategori }}">{{ $kategori->Kategori }}</option>
-                        @endforeach
-                    </select>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="edit-name" class="form-label">Nama Gedung</label>
+                            <input type="text" class="form-control" id="edit-name" name="NAMA" value=""
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-kategori" class="form-label">Kategori</label><br>
+                            <select name="KATEGORI" class="form-select" id="edit-kategori">
+                                @foreach ($kategoris as $kategori)
+                                    <option value="{{ $kategori->Kategori }}">{{ $kategori->Kategori }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-address" class="form-label">Alamat</label>
+                            <textarea class="form-control" id="edit-address" name="ALAMAT" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-coor" class="form-label">Koordinat</label>
+                            <input type="text" class="form-control" id="edit-coor" name="KOORDINAT" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-telcust" class="form-label">Tel. Cust</label>
+                            <input type="text" class="form-control" id="edit-telcust" name="TEL_CUST" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-piccust" class="form-label">PIC Cust</label>
+                            <input type="text" class="form-control" id="edit-piccust" name="PIC_CUST" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-am" class="form-label">AM</label>
+                            <input type="text" class="form-control" id="edit-am" name="AM" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-telam" class="form-label">Tel. AM</label>
+                            <input type="text" class="form-control" id="edit-telam" name="TEL_AM" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-sto" class="form-label">STO</label>
+                            <input type="text" class="form-control" id="edit-sto" name="STO" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-hero" class="form-label">Hero</label>
+                            <input type="text" class="form-control" id="edit-hero" name="HERO" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-telhero" class="form-label">Tel. Hero</label>
+                            <input type="text" class="form-control" id="edit-telhero" name="TEL_HERO" required>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="edit-address" class="form-label">Alamat</label>
-                        <textarea class="form-control" id="edit-address" name="ALAMAT" required></textarea>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
-                    <div class="mb-3">
-                        <label for="edit-coor" class="form-label">Koordinat</label>
-                        <input type="text" class="form-control" id="edit-coor" name="KOORDINAT" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-telcust" class="form-label">Tel.  Cust</label>
-                        <input type="text" class="form-control" id="edit-telcust" name="TEL_CUST" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-piccust" class="form-label">PIC Cust</label>
-                        <input type="text" class="form-control" id="edit-piccust" name="PIC_CUST" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-am" class="form-label">AM</label>
-                        <input type="text" class="form-control" id="edit-am" name="AM" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-telam" class="form-label">Tel. AM</label>
-                        <input type="text" class="form-control" id="edit-telam" name="TEL_AM" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-sto" class="form-label">STO</label>
-                        <input type="text" class="form-control" id="edit-sto" name="STO" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-hero" class="form-label">Hero</label>
-                        <input type="text" class="form-control" id="edit-hero" name="HERO" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-telhero" class="form-label">Tel. Hero</label>
-                        <input type="text" class="form-control" id="edit-telhero" name="TEL_HERO" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
     <!-- Delete Modal HTML -->
     <div class="modal fade" id="deleteGedungModal" tabindex="-1" aria-labelledby="deleteGedungModalLabel"
         aria-hidden="true">
@@ -309,9 +324,31 @@
                     @method('DELETE')
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                         <button type="submit" class="btn btn-danger">Delete</button>
-                      </div>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    <!-- Delete Selected Modal HTML -->
+    <div class="modal fade" id="deleteSelectedGedungModal" tabindex="-1"
+        aria-labelledby="deleteSelectedGedungModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content text-white">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="deleteSelectedGedungModalLabel">Delete Gedung</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete these records?</p>
+                    <p class="text-warning"><small>This action cannot be undone.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" id="deleteSelected" class="btn btn-danger">
+                        <i class="bi bi-trash"></i> Delete selected
+                    </button>
+                </div>
             </div>
         </div>
     </div>

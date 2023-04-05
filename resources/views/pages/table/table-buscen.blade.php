@@ -12,7 +12,7 @@
                         <div class="col-6">
                             <a href="#addBuscenModal" class="btn btn-success" data-bs-toggle="modal"><i
                                     class="bi bi-plus-circle"></i><span>Add New Data</span></a>
-                            <a href="#deleteBuscenModal" class="btn btn-danger" data-bs-toggle="modal"><i
+                            <a href="#deleteSelectedBuscenModal" class="btn btn-danger" data-bs-toggle="modal"><i
                                     class="bi bi-trash"></i><span>Delete</span></a>
                             <a href="/tabel/buscen/exportexcel" class="btn btn-info">Export</a>
                             <!-- Button trigger modal -->
@@ -112,7 +112,7 @@
                                 <td>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="selectAll"
-                                            onchange="updateCheckboxes()">
+                                            onchange="updateCheckboxes()" value="{{ $buscen->id }}">
                                         <label class="form-check-label" for="checkbox1"></label>
                                     </div>
                                 </td>
@@ -328,6 +328,28 @@
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    <!-- Delete Selected Modal HTML -->
+    <div class="modal fade" id="deleteSelectedBuscenModal" tabindex="-1"
+        aria-labelledby="deleteSelectedBuscenModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content text-white">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="deleteSelectedBuscenModalLabel">Delete Buscen</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete these records?</p>
+                    <p class="text-warning"><small>This action cannot be undone.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" id="deleteSelected" class="btn btn-danger">
+                        <i class="bi bi-trash"></i> Delete selected
+                    </button>
+                </div>
             </div>
         </div>
     </div>

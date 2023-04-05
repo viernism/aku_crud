@@ -129,6 +129,12 @@ class BuscenController extends Controller
         return redirect()->back()->with('success', 'Buscen deleted successfully.');
     }
 
+    public function deleteSelected(Request $request)
+    {
+        $ids = $request->input('id');
+        Buscen::whereIn('id', $ids)->delete();
+    }
+
 
     public function exportexcel(){
         return Excel::download(new BuscenExport,'databuscen.xlsx');
