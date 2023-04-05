@@ -127,6 +127,12 @@ class KulinerController extends Controller
         return redirect()->back()->with('success', 'Kuliner deleted successfully.');
     }
 
+    public function deleteSelected(Request $request)
+    {
+        $ids = $request->input('id');
+        Kuliner::whereIn('id', $ids)->delete();
+    }
+
 
     public function exportexcel(){
         return Excel::download(new KulinerExport,'datakuliner.xlsx');

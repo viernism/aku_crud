@@ -131,6 +131,12 @@ class GedungController extends Controller
         return redirect()->back()->with('success', 'Gedung deleted successfully.');
     }
 
+    public function deleteSelected(Request $request)
+    {
+        $ids = $request->input('id');
+        Gedung::whereIn('id', $ids)->delete();
+    }
+
     public function exportexcel(){
         return Excel::download(new GedungExport,'datagedung.xlsx');
     }

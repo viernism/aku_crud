@@ -128,6 +128,12 @@ class HealthController extends Controller
         return redirect()->back()->with('success', 'Health deleted successfully.');
     }
 
+    public function deleteSelected(Request $request)
+    {
+        $ids = $request->input('id');
+        Health::whereIn('id', $ids)->delete();
+    }
+
     public function exportexcel(){
         return Excel::download(new HealthExport,'datahealth.xlsx');
     }

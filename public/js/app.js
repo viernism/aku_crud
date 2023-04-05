@@ -108,27 +108,6 @@ $(document).ready(function () {
     $('.sidebar:not(.collapsed)').hover(function () {
         $('.sidebar-logo .text').show();
     });
-     // Activate tooltip
-     $('[data-toggle="tooltip"]').tooltip();
-
-     // Select/Deselect checkboxes
-     var checkbox = $('table tbody input[type="checkbox"]');
-     $("#selectAll").click(function () {
-         if (this.checked) {
-             checkbox.each(function () {
-                 this.checked = true;
-             });
-         } else {
-             checkbox.each(function () {
-                 this.checked = false;
-             });
-         }
-     });
-     checkbox.click(function () {
-         if (!this.checked) {
-             $("#selectAll").prop("checked", false);
-         }
-     })
 });
 
 // end sidebar
@@ -154,7 +133,67 @@ $(document).ready(function () {
         if (!this.checked) {
             $("#selectAll").prop("checked", false);
         }
-    })
+    });
+
+    // Delete selected items
+    function deleteSelectedItems(url) {
+        var selectedItems = [];
+        $('table tbody input[type="checkbox"]:checked').each(function () {
+            selectedItems.push($(this).val());
+        });
+        if (selectedItems.length > 0) {
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+                data: { id: selectedItems },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function () {
+                    location.reload();
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                }
+            });
+        } else {
+            alert('Please select at least one item to delete.');
+        }
+    }
+
+    $('#deleteSelected').click(function () {
+        deleteSelectedItems('/tabel/gedung/deleteSelected'); //passing the url as parameter coz its way more flexible
+    });
+
+    $('#deleteSelected').click(function () {
+        deleteSelectedItems('/tabel/sekolah/deleteSelected');
+    });
+
+    $('#deleteSelected').click(function () {
+        deleteSelectedItems('/tabel/health/deleteSelected');
+    });
+
+    $('#deleteSelected').click(function () {
+        deleteSelectedItems('/tabel/kuliner/deleteSelected');
+    });
+
+    $('#deleteSelected').click(function () {
+        deleteSelectedItems('/tabel/toko/deleteSelected');
+    });
+
+    $('#deleteSelected').click(function () {
+        deleteSelectedItems('/tabel/office/deleteSelected');
+    });
+
+    $('#deleteSelected').click(function () {
+        deleteSelectedItems('/tabel/buscen/deleteSelected');
+    });
+
+    $('#deleteSelected').click(function () {
+        deleteSelectedItems('/tabel/tourism/deleteSelected');
+    });
+
+
 })
 
 $(document).ready(function () {

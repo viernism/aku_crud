@@ -129,6 +129,12 @@ class TourismController extends Controller
         return redirect()->back()->with('success', 'Tourism deleted successfully.');
     }
 
+    public function deleteSelected(Request $request)
+    {
+        $ids = $request->input('id');
+        Tourism::whereIn('id', $ids)->delete();
+    }
+
 
     public function exportexcel(){
         return Excel::download(new TourismExport,'datatourism.xlsx');

@@ -90,6 +90,8 @@ Route::middleware(['auth','revalidate','role:AM|Administrator'])->name('gedung.'
 
     Route::delete('/tabel/gedung/delete/{gedungId}', [GedungController::class, 'destroy'])->name('destroy');
 
+    Route::delete('/tabel/gedung/deleteSelected', [GedungController::class, 'deleteSelected']);
+
     Route::get('/tabel/gedung/exportexcel', [GedungController::class,'exportexcel'])->name('exportexcel');
 
     Route::post('/tabel/gedung/importexcel', [GedungController::class,'importexcel'])->name('importexcel');
@@ -104,6 +106,8 @@ Route::middleware(['auth', 'revalidate','role:AM|Administrator'])->name('sekolah
     Route::put('/tabel/sekolah/{sekolahId}', [SekolahController::class, 'update'])->name('update');
 
     Route::delete('/tabel/sekolah/delete/{sekolahId}', [SekolahController::class, 'destroy'])->name('destroy');
+
+    Route::delete('/tabel/sekolah/deleteSelected', [SekolahController::class, 'deleteSelected']);
 
     Route::get('/tabel/sekolah/search', [SekolahController::class, 'index'])->name('index');
 
@@ -122,6 +126,8 @@ Route::middleware(['auth', 'revalidate','role:AM|Administrator'])->name('health.
 
     Route::delete('/tabel/health/delete/{healthId}', [HealthController::class, 'destroy'])->name('destroy');
 
+    Route::delete('/tabel/health/deleteSelected', [HealthController::class, 'deleteSelected']);
+
     Route::get('/tabel/health/search', [HealthController::class, 'index'])->name('index');
 
     Route::get('/tabel/health/exportexcel', [HealthController::class,'exportexcel'])->name('exportexcel');
@@ -138,6 +144,8 @@ Route::middleware(['auth', 'revalidate','role:AM|Administrator'])->name('kuliner
     Route::put('/tabel/kuliner/{kulinerId}', [KulinerController::class, 'update'])->name('update');
 
     Route::delete('/tabel/kuliner/delete/{kulinerId}', [KulinerController::class, 'destroy'])->name('destroy');
+
+    Route::delete('/tabel/kuliner/deleteSelected', [KulinerController::class, 'deleteSelected']);
 
     Route::get('/tabel/kuliner/search', [KulinerController::class, 'index'])->name('index');
 
@@ -156,6 +164,8 @@ Route::middleware(['auth', 'revalidate','role:AM|Administrator'])->name('toko.')
 
     Route::delete('/tabel/toko/delete/{tokoId}', [TokoController::class, 'destroy'])->name('destroy');
 
+    Route::delete('/tabel/toko/deleteSelected', [TokoController::class, 'deleteSelected']);
+
     Route::get('/tabel/toko/search', [TokoController::class, 'index'])->name('index');
 
     Route::get('/tabel/toko/exportexcel', [TokoController::class,'exportexcel'])->name('exportexcel');
@@ -172,6 +182,8 @@ Route::middleware(['auth', 'revalidate','role:AM|Administrator'])->name('office.
     Route::put('/tabel/office/{officeId}', [OfficeController::class, 'update'])->name('update');
 
     Route::delete('/tabel/office/delete/{officeId}', [OfficeController::class, 'destroy'])->name('destroy');
+
+    Route::delete('/tabel/office/deleteSelected', [OfficeController::class, 'deleteSelected']);
 
     Route::get('/tabel/office/search', [OfficeController::class, 'index'])->name('index');
 
@@ -190,6 +202,8 @@ Route::middleware(['auth', 'revalidate','role:AM|Administrator'])->name('tourism
 
     Route::delete('/tabel/tourism/delete/{tourismId}', [TourismController::class, 'destroy'])->name('destroy');
 
+    Route::delete('/tabel/tourism/deleteSelected', [TourismController::class, 'deleteSelected']);
+
     Route::get('/tabel/tourism/search', [TourismController::class, 'index'])->name('index');
 
     Route::get('/tabel/tourism/exportexcel', [TourismController::class,'exportexcel'])->name('exportexcel');
@@ -206,6 +220,8 @@ Route::middleware(['auth', 'revalidate','role:AM|Administrator'])->name('buscen.
     Route::put('/tabel/buscen/{buscenId}', [BuscenController::class, 'update'])->name('update');
 
     Route::delete('/tabel/buscen/delete/{buscenId}', [BuscenController::class, 'destroy'])->name('destroy');
+
+    Route::delete('/tabel/buscen/deleteSelected', [BuscenController::class, 'deleteSelected']);
 
     Route::get('/tabel/buscen/search', [BuscenController::class, 'index'])->name('index');
 

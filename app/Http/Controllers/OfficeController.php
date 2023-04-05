@@ -129,6 +129,12 @@ class OfficeController extends Controller
         return redirect()->back()->with('success', 'Office deleted successfully.');
     }
 
+    public function deleteSelected(Request $request)
+    {
+        $ids = $request->input('id');
+        Office::whereIn('id', $ids)->delete();
+    }
+
 
     public function exportexcel(){
         return Excel::download(new OfficeExport,'dataoffice.xlsx');
