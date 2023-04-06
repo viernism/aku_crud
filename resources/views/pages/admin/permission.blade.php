@@ -7,12 +7,12 @@
                 <div class="table-title">
                     <div class="row">
                         <div class="col-6">
-                            <h2>Table <b> Buscen</b></h2>
+                            <h2>Table <b> Permission</b></h2>
                         </div>
                         <div class="col-6">
-                            <a href="#addBuscenModal" class="btn btn-success" data-bs-toggle="modal"><i
+                            <a href="#addPermissionModal" class="btn btn-success" data-bs-toggle="modal"><i
                                     class="bi bi-plus-circle"></i><span>Add New Data</span></a>
-                            <a href="#deleteBuscenModal" class="btn btn-danger" data-bs-toggle="modal"><i
+                            <a href="#deletePermissionModal" class="btn btn-danger" data-bs-toggle="modal"><i
                                     class="bi bi-trash"></i><span>Delete</span></a>
                         </div>
                     </div>
@@ -22,10 +22,10 @@
                         <div class="col-md-3">
                             <span>Rows per page:</span>
                             <select class="custom-select" onchange="changePaginationLength(this.value)">
-                                <option value="10" {{ $buscens->perPage() == 10 ? 'selected' : '' }}>10</option>
-                                <option value="25" {{ $buscens->perPage() == 25 ? 'selected' : '' }}>25</option>
-                                <option value="50" {{ $buscens->perPage() == 50 ? 'selected' : '' }}>50</option>
-                                <option value="100" {{ $buscens->perPage() == 100 ? 'selected' : '' }}>100</option>
+                                <option value="10" {{ $permissions->perPage() == 10 ? 'selected' : '' }}>10</option>
+                                <option value="25" {{ $permissions->perPage() == 25 ? 'selected' : '' }}>25</option>
+                                <option value="50" {{ $permissions->perPage() == 50 ? 'selected' : '' }}>50</option>
+                                <option value="100" {{ $permissions->perPage() == 100 ? 'selected' : '' }}>100</option>
                             </select>
                         </div>
                         <div class="col-md-3">
@@ -67,7 +67,7 @@
                         </tr>
                     </thead>
                     <tbody id="table-body">
-                        @foreach ($buscens as $buscen)
+                        @foreach ($permissions as $permission)
                         <tr>
                             <td>
                                 <div class="form-check">
@@ -76,22 +76,22 @@
                                     <label class="form-check-label" for="checkbox1"></label>
                                 </div>
                             </td>
-                            <td>{{$buscen->NAMA}}</td>
-                            <td>{{$buscen->kategoribuscen->Kategori}}</td>
-                            <td>{{$buscen->ALAMAT}}</td>
-                            <td>{{$buscen->KOORDINAT}}</td>
-                            <td>{{$buscen->TEL_CUST}}</td>
-                            <td>{{$buscen->PIC_CUST}}</td>
-                            <td>{{$buscen->AM}}</td>
-                            <td>{{$buscen->TEL_AM}}</td>
-                            <td>{{$buscen->STO}} </td>
-                            <td>{{$buscen->HERO}}</td>
-                            <td>{{$buscen->TEL_HERO}}</td>
+                            <td>{{$permission->NAMA}}</td>
+                            <td>{{$permission->kategoripermission->Kategori}}</td>
+                            <td>{{$permission->ALAMAT}}</td>
+                            <td>{{$permission->KOORDINAT}}</td>
+                            <td>{{$permission->TEL_CUST}}</td>
+                            <td>{{$permission->PIC_CUST}}</td>
+                            <td>{{$permission->AM}}</td>
+                            <td>{{$permission->TEL_AM}}</td>
+                            <td>{{$permission->STO}} </td>
+                            <td>{{$permission->HERO}}</td>
+                            <td>{{$permission->TEL_HERO}}</td>
                             <td>
-                                <a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#editBuscenModal" data-buscen-id="{{ $buscen->id }}">
+                                <a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#editPermissionModal" data-permission-id="{{ $permission->id }}">
                                     <i class="ri-pencil-line" data-bs-toggle="tooltip" title="Edit"></i>
                                 </a>
-                                <a href="#" class="delete" data-bs-toggle="modal" data-bs-target="#deleteBuscenModal" data-buscen-id="{{ $buscen->id }}">
+                                <a href="#" class="delete" data-bs-toggle="modal" data-bs-target="#deletePermissionModal" data-permission-id="{{ $permission->id }}">
                                     <i class="ri-delete-bin-line" data-bs-toggle="tooltip" title="Delete"></i>
                                 </a>
                             </td>
@@ -100,22 +100,22 @@
                     </tbody>
                 </table>
                 <div class="clearfix">
-                    <div class="hint-text">Showing <b>{{ $buscens->firstItem() }}</b> to <b>{{ $buscens->lastItem() }}</b> of
-                        <b>{{ $buscens->total() }}</b> entries</div>
+                    <div class="hint-text">Showing <b>{{ $permissions->firstItem() }}</b> to <b>{{ $permissions->lastItem() }}</b> of
+                        <b>{{ $permissions->total() }}</b> entries</div>
                     <ul class="pagination">
-                        @if ($buscens->currentPage() > 1)
+                        @if ($permissions->currentPage() > 1)
                             <li class="page-item">
-                                <a href="{{ $buscens->previousPageUrl() }}" class="page-link">Previous</a>
+                                <a href="{{ $permissions->previousPageUrl() }}" class="page-link">Previous</a>
                             </li>
                         @endif
-                        @for ($i = 1; $i <= $buscens->lastPage(); $i++)
-                            <li class="page-item{{ $buscens->currentPage() == $i ? ' active' : '' }}">
-                                <a href="{{ $buscens->url($i) }}" class="page-link">{{ $i }}</a>
+                        @for ($i = 1; $i <= $permissions->lastPage(); $i++)
+                            <li class="page-item{{ $permissions->currentPage() == $i ? ' active' : '' }}">
+                                <a href="{{ $permissions->url($i) }}" class="page-link">{{ $i }}</a>
                             </li>
                         @endfor
-                        @if ($buscens->currentPage() < $buscens->lastPage())
+                        @if ($permissions->currentPage() < $permissions->lastPage())
                             <li class="page-item">
-                                <a href="{{ $buscens->nextPageUrl() }}" class="page-link">Next</a>
+                                <a href="{{ $permissions->nextPageUrl() }}" class="page-link">Next</a>
                             </li>
                         @endif
                     </ul>
@@ -124,14 +124,14 @@
         </div>
     </div>
     <!-- Add Modal HTML -->
-    <div class="modal fade" id="addBuscenModal" tabindex="-1" role="dialog" aria-labelledby="addBuscenModalLabel"
+    <div class="modal fade" id="addPermissionModal" tabindex="-1" role="dialog" aria-labelledby="addPermissionModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content text-white">
-                <form method="POST" action="{{ route('buscen.store')}}">
+                <form method="POST" action="{{ route('permission.store')}}">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addBuscenModalLabel">Add buscen</h5>
+                        <h5 class="modal-title" id="addPermissionModalLabel">Add permission</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -186,27 +186,27 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-success">Add buscen</button>
+                        <button type="submit" class="btn btn-success">Add permission</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
     <!-- Edit Modal HTML -->
-     <div class="modal fade" id="editBuscenModal" tabindex="-1" role="dialog"
-    aria-labelledby="editBuscenModalLabel" aria-hidden="true">
+     <div class="modal fade" id="editPermissionModal" tabindex="-1" role="dialog"
+    aria-labelledby="editPermissionModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content text-white">
-            <form method="POST" action="{{ route('buscen.update', ':buscenId') }}">
+            <form method="POST" action="{{ route('permission.update', ':permissionId') }}">
                 @csrf
                 @method('PUT')
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editBuscenModalLabel">Edit Buscen</h5>
+                    <h5 class="modal-title" id="editPermissionModalLabel">Edit Permission</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="edit-name" class="form-label">Nama Buscen</label>
+                        <label for="edit-name" class="form-label">Nama Permission</label>
                         <input type="text" class="form-control" id="edit-name" name="NAMA" required>
                     </div>
                   <div class="mb-3">
@@ -263,19 +263,19 @@
     </div>
 </div>
     <!-- Delete Modal HTML -->
-    <div class="modal fade" id="deleteBuscenModal" tabindex="-1" aria-labelledby="deleteBuscenModalLabel"
+    <div class="modal fade" id="deletePermissionModal" tabindex="-1" aria-labelledby="deletePermissionModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content text-white">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="deleteBuscenModalLabel">Delete Buscen</h4>
+                    <h4 class="modal-title" id="deletePermissionModalLabel">Delete Permission</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <p>Are you sure you want to delete these records?</p>
                     <p class="text-warning"><small>This action cannot be undone.</small></p>
                 </div>
-                <form action="{{ route('buscen.destroy', ':buscenId') }}" method="POST">
+                <form action="{{ route('permission.destroy', ':permissionId') }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="modal-footer">
