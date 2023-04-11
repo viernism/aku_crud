@@ -86,36 +86,39 @@ class OfficeController extends Controller
     public function update(Request $request, $officeId){
 
 
-        $validatedData=$request->validate([
-            'NAMA' => 'required',
-            'KATEGORI' =>'required',
-            'ALAMAT' => 'required',
-            'KOORDINAT' => 'required',
-            'TEL_CUST' => 'required',
-            'PIC_CUST' => 'required',
-            'AM' => 'required',
-            'TEL_AM' => 'required',
-            'STO' => 'required',
-            'HERO' => 'required',
-            'TEL_HERO' => 'required'
-        ]);
+        // $validatedData=$request->validate([
+        //     'NAMA' => 'required',
+        //     'KATEGORI' =>'required',
+        //     'ALAMAT' => 'required',
+        //     'KOORDINAT' => 'required',
+        //     'TEL_CUST' => 'required',
+        //     'PIC_CUST' => 'required',
+        //     'AM' => 'required',
+        //     'TEL_AM' => 'required',
+        //     'STO' => 'required',
+        //     'HERO' => 'required',
+        //     'TEL_HERO' => 'required'
+        // ]);
 
-        $office = new Office;
-        $office=Office::findorfail($officeId);
-        $office->NAMA=$validatedData['NAMA'];
-        $office->KATEGORI=$validatedData['KATEGORI'];
-        $office->ALAMAT=$validatedData['ALAMAT'];
-        $office->KOORDINAT=$validatedData['KOORDINAT'];
-        $office->TEL_CUST=$validatedData['TEL_CUST'];
-        $office->PIC_CUST=$validatedData['PIC_CUST'];
-        $office->AM=$validatedData['AM'];
-        $office->TEL_AM=$validatedData['TEL_AM'];
-        $office->STO=$validatedData['STO'];
-        $office->HERO=$validatedData['HERO'];
-        $office->TEL_HERO=$validatedData['TEL_HERO'];
-        $office->save();
+        if ($request->isMethod('post')) {
+            $data=$request->all();
+            $office = Office::find($officeId);
+            $office->NAMA = $data['NAMA'];
+            $office->ALAMAT = $data['ALAMAT'];
+            $office->KOORDINAT = $data['KOORDINAT'];
+            $office->TEL_CUST = $data['TEL_CUST'];
+            $office->PIC_CUST = $data['PIC_CUST'];
+            $office->AM = $data['AM'];
+            $office->TEL_AM = $data['TEL_AM'];
+            $office->STO = $data['STO'];
+            $office->HERO = $data['HERO'];
+            $office->TEL_HERO = $data['TEL_HERO'];
+            $kategorioffice=KategoriOffice::where('Kategori',$data['KATEGORI'])->first();
+            $office->kategorioffice()->associate($kategorioffice);
+            $office->update();
 
-        return redirect()->back()->with('success', 'Office updated successfully.');
+            return redirect()->back()->with('success', 'Office updated successfully.');
+           }
     }
 
     public function destroy( $officeId){

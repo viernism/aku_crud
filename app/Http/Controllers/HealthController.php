@@ -85,36 +85,39 @@ class HealthController extends Controller
 
     public function update(Request $request, $healthId)
     {
-        $validatedData=$request->validate([
-            'NAMA' => 'required',
-            'KATEGORI' =>'required',
-            'ALAMAT' => 'required',
-            'KOORDINAT' => 'required',
-            'TEL_CUST' => 'required',
-            'PIC_CUST' => 'required',
-            'AM' => 'required',
-            'TEL_AM' => 'required',
-            'STO' => 'required',
-            'HERO' => 'required',
-            'TEL_HERO' => 'required'
-        ]);
+        // $validatedData=$request->validate([
+        //     'NAMA' => 'required',
+        //     'KATEGORI' =>'required',
+        //     'ALAMAT' => 'required',
+        //     'KOORDINAT' => 'required',
+        //     'TEL_CUST' => 'required',
+        //     'PIC_CUST' => 'required',
+        //     'AM' => 'required',
+        //     'TEL_AM' => 'required',
+        //     'STO' => 'required',
+        //     'HERO' => 'required',
+        //     'TEL_HERO' => 'required'
+        // ]);
 
-        $health = new Health;
-        $health = Health::find($healthId);
-        $health->NAMA=$validatedData['NAMA'];
-        $health->KATEGORI=$validatedData['KATEGORI'];
-        $health->ALAMAT=$validatedData['ALAMAT'];
-        $health->KOORDINAT=$validatedData['KOORDINAT'];
-        $health->TEL_CUST=$validatedData['TEL_CUST'];
-        $health->PIC_CUST=$validatedData['PIC_CUST'];
-        $health->AM=$validatedData['AM'];
-        $health->TEL_AM=$validatedData['TEL_AM'];
-        $health->STO=$validatedData['STO'];
-        $health->HERO=$validatedData['HERO'];
-        $health->TEL_HERO=$validatedData['TEL_HERO'];
-        $health->save();
+        if ($request->isMethod('post')) {
+            $data=$request->all();
+            $health = Health::find($healthId);
+            $health->NAMA = $data['NAMA'];
+            $health->ALAMAT = $data['ALAMAT'];
+            $health->KOORDINAT = $data['KOORDINAT'];
+            $health->TEL_CUST = $data['TEL_CUST'];
+            $health->PIC_CUST = $data['PIC_CUST'];
+            $health->AM = $data['AM'];
+            $health->TEL_AM = $data['TEL_AM'];
+            $health->STO = $data['STO'];
+            $health->HERO = $data['HERO'];
+            $health->TEL_HERO = $data['TEL_HERO'];
+            $kategorihealth=KategoriHealth::where('Kategori',$data['KATEGORI'])->first();
+            $health->kategorihealth()->associate($kategorihealth);
+            $health->update();
 
-        return redirect()->back()->with('success', 'Health updated successfully.');
+            return redirect()->back()->with('success', 'Health updated successfully.');
+           }
     }
 
     public function destroy( $healthId){

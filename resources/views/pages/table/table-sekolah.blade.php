@@ -128,9 +128,7 @@
                                 <td>{{ $sekolah->HERO }}</td>
                                 <td>{{ $sekolah->TEL_HERO }}</td>
                                 <td>
-                                    <a href="#" class="edit" data-bs-toggle="modal"
-                                        data-bs-target="#editSekolahModal" data-sekolah-id="{{ $sekolah->id }}"
-                                        onclick="editSekolah(event, {{ $sekolah->id }})">
+                                    <a href="#" class="edit" data-bs-toggle="modal"data-bs-target="#editSekolahModal-{{ $sekolah->id }}" onclick="editSekolah(event, '{{ $sekolah->id }}')">
                                         <i class="ri-pencil-line" data-bs-toggle="tooltip" title="Edit"></i>
                                     </a>
                                     <a href="#" class="delete" data-bs-toggle="modal"
@@ -240,100 +238,79 @@
         </div>
     </div>
     <!-- Edit Modal HTML -->
-    <div class="modal fade" id="editSekolahModal" tabindex="-1" role="dialog" aria-labelledby="editSekolahModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content text-white">
-                <form method="POST" action="{{ route('sekolah.update', ':sekolahId') }}" id="edit-sekolah-form">
-                    @csrf
-                    @method('PUT')
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editSekolahModalLabel">Edit Sekolah</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="edit-name" class="form-label">Nama Sekolah</label>
-                            <input type="text" class="form-control" id="edit-name" name="NAMA" value=""
-                                required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="LEVEL" class="form-label">Level</label><br>
-                            <select name="LEVEL" class="form-select" id="edit-kategori">
-                                @foreach ($levels as $level)
-                                    <option value="{{ $level->LEVEL }}">{{ $level->LEVEL }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-address" class="form-label">Alamat</label>
-                            <textarea class="form-control" id="edit-address" name="ALAMAT" required></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-coor" class="form-label">Koordinat</label>
-                            <input type="text" class="form-control" id="edit-coor" name="KOORDINAT" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-telcust" class="form-label">Tel. Cust</label>
-                            <input type="text" class="form-control" id="edit-telcust" name="TEL_CUST" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-piccust" class="form-label">PIC Cust</label>
-                            <input type="text" class="form-control" id="edit-piccust" name="PIC_CUST" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-am" class="form-label">AM</label>
-                            <input type="text" class="form-control" id="edit-am" name="AM" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-telam" class="form-label">Tel. AM</label>
-                            <input type="text" class="form-control" id="edit-telam" name="TEL_AM" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-sto" class="form-label">STO</label>
-                            <input type="text" class="form-control" id="edit-sto" name="STO" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-hero" class="form-label">Hero</label>
-                            <input type="text" class="form-control" id="edit-hero" name="HERO" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-telhero" class="form-label">Tel. Hero</label>
-                            <input type="text" class="form-control" id="edit-telhero" name="TEL_HERO" required>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- Delete Modal HTML -->
-    <div class="modal fade" id="deleteSekolahModal" tabindex="-1" aria-labelledby="deleteSekolahModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content text-white">
+    @foreach ($sekolahs as $sekolah)
+    <div class="modal fade" id="editSekolahModal-{{ $sekolah->id }}" tabindex="-1" role="dialog" aria-labelledby="editSekolahModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content text-white">
+            <form method="POST" action="{{ url('/tabel/sekolah/edit/'.$sekolah->id) }}" id="edit-sekolah-form">
+                @csrf
+                {{-- @method('PUT') --}}
                 <div class="modal-header">
-                    <h4 class="modal-title" id="deleteSekolahModalLabel">Delete Sekolah</h4>
+                    <h5 class="modal-title" id="editSekolahModalLabel">Edit Sekolah</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you want to delete these records?</p>
-                    <p class="text-warning"><small>This action cannot be undone.</small></p>
-                </div>
-                <form action="{{ route('sekolah.destroy', ':sekolahId') }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                    <div class="mb-3">
+                        <label for="edit-name" class="form-label">Nama Sekolah</label>
+                        <input type="text" class="form-control" id="edit-name" name="NAMA" value="{{ $sekolah->NAMA }}"
+                            required>
                     </div>
-                </form>
-            </div>
+                    <div class="mb-3">
+                        <label for="LEVEL" class="form-label">Level</label><br>
+                        <select name="LEVEL[]" class="form-select" id="edit-kategori">
+                            @foreach ($levels as $level)
+                            <option @selected($level->LEVEL == $sekolah->LEVEL) value="{{ $level->LEVEL }}">{{ $level->LEVEL }}</option>
+
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-address" class="form-label">Alamat</label>
+                        <textarea class="form-control" id="edit-address" name="ALAMAT" required>{{ $sekolah->ALAMAT }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-coor" class="form-label">Koordinat</label>
+                        <input type="text" class="form-control" id="edit-coor" name="KOORDINAT" value="{{ $sekolah->KOORDINAT }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-telcust" class="form-label">Tel. Cust</label>
+                        <input type="text" class="form-control" id="edit-telcust" name="TEL_CUST" value="{{ $sekolah->TEL_CUST }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-piccust" class="form-label">PIC Cust</label>
+                        <input type="text" class="form-control" id="edit-piccust" name="PIC_CUST" value="{{ $sekolah->PIC_CUST }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-am" class="form-label">AM</label>
+                        <input type="text" class="form-control" id="edit-am" name="AM" value="{{ $sekolah->AM }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-telam" class="form-label">Tel. AM</label>
+                        <input type="text" class="form-control" id="edit-telam" name="TEL_AM" value="{{ $sekolah->TEL_AM }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-sto" class="form-label">STO</label>
+                        <input type="text" class="form-control" id="edit-sto" name="STO" value="{{ $sekolah->STO }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-hero" class="form-label">Hero</label>
+                        <input type="text" class="form-control" id="edit-hero" name="HERO" value="{{ $sekolah->HERO }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-telhero" class="form-label">Tel. Hero</label>
+                        <input type="text" class="form-control" id="edit-telhero" name="TEL_HERO" value="{{ $sekolah->TEL_HERO }}" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
+    @endforeach
     <!-- Delete Selected Modal HTML -->
     <div class="modal fade" id="deleteSelectedSekolahModal" tabindex="-1"
         aria-labelledby="deleteSelectedSekolahModalLabel" aria-hidden="true">

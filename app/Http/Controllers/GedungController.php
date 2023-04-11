@@ -87,36 +87,39 @@ class GedungController extends Controller
 
     public function update(Request $request, $gedungId)
     {
-        $validatedData = $request->validate([
-            'NAMA' => 'required',
-            'KATEGORI' => 'required',
-            'ALAMAT' => 'nullable',
-            'KOORDINAT' => 'nullable',
-            'TEL_CUST' => 'nullable',
-            'PIC_CUST' => 'nullable',
-            'AM' => 'nullable',
-            'TEL_AM' => 'nullable',
-            'STO' => 'nullable',
-            'HERO' => 'nullable',
-            'TEL_HERO' => 'nullable',
-        ]);
+        // $validatedData = $request->validate([
+        //     'NAMA' => 'required',
+        //     'KATEGORI' => 'required',
+        //     'ALAMAT' => 'nullable',
+        //     'KOORDINAT' => 'nullable',
+        //     'TEL_CUST' => 'nullable',
+        //     'PIC_CUST' => 'nullable',
+        //     'AM' => 'nullable',
+        //     'TEL_AM' => 'nullable',
+        //     'STO' => 'nullable',
+        //     'HERO' => 'nullable',
+        //     'TEL_HERO' => 'nullable',
+        // ]);
 
-        $gedung = new Gedung;
+       if ($request->isMethod('post')) {
+        $data=$request->all();
         $gedung = Gedung::find($gedungId);
-        $gedung->NAMA = $validatedData['NAMA'];
-        $gedung->KATEGORI = $validatedData['KATEGORI'];
-        $gedung->ALAMAT = $validatedData['ALAMAT'];
-        $gedung->KOORDINAT = $validatedData['KOORDINAT'];
-        $gedung->TEL_CUST = $validatedData['TEL_CUST'];
-        $gedung->PIC_CUST = $validatedData['PIC_CUST'];
-        $gedung->AM = $validatedData['AM'];
-        $gedung->TEL_AM = $validatedData['TEL_AM'];
-        $gedung->STO = $validatedData['STO'];
-        $gedung->HERO = $validatedData['HERO'];
-        $gedung->TEL_HERO = $validatedData['TEL_HERO'];
-        $gedung->save();
+        $gedung->NAMA = $data['NAMA'];
+        $gedung->ALAMAT = $data['ALAMAT'];
+        $gedung->KOORDINAT = $data['KOORDINAT'];
+        $gedung->TEL_CUST = $data['TEL_CUST'];
+        $gedung->PIC_CUST = $data['PIC_CUST'];
+        $gedung->AM = $data['AM'];
+        $gedung->TEL_AM = $data['TEL_AM'];
+        $gedung->STO = $data['STO'];
+        $gedung->HERO = $data['HERO'];
+        $gedung->TEL_HERO = $data['TEL_HERO'];
+        $kategorigedung=KategoriGedung::where('Kategori',$data['KATEGORI'])->first();
+        $gedung->kategorigedung()->associate($kategorigedung);
+        $gedung->update();
 
         return redirect()->back()->with('success', 'Gedung updated successfully.');
+       }
     }
 
     public function destroy ($gedungId)
@@ -295,7 +298,7 @@ class GedungController extends Controller
     // public function importexcel(Request $request){
     //     if ($request->hasFile('upexcel')) {
     //         $data=$request->file('upexcel');
-    //         $validatedData = $request->validate([
+    //         $data = $request->validate([
     //             'upexcel' => 'required|mimes:xlsx',
     //         ]);
 

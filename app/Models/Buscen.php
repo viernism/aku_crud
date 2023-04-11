@@ -27,6 +27,6 @@ class Buscen extends Model
 
     public function kategoribuscen()
     {
-        return $this->belongsTo(KategoriBuscen::class,'KATEGORI');
+        return $this->belongsTo(KategoriBuscen::class,'KATEGORI','Kategori');
     }
 }

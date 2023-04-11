@@ -28,7 +28,7 @@ class Sekolah extends Model
 
     public function sekolahlevels()
     {
-        return $this->belongsTo(LevelSekolah::class,'LEVEL');
+        return $this->belongsTo(LevelSekolah::class,'LEVEL','LEVEL');
     }
 }
 

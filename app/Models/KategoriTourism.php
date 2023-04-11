@@ -19,6 +19,6 @@ class KategoriTourism extends Model
 
     public function tourism()
     {
-        return $this->hasMany(Tourism::class,'KATEGORI');
+        return $this->hasMany(Tourism::class,'KATEGORI','Kategori');
     }
 }

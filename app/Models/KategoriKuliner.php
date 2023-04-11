@@ -19,6 +19,6 @@ class KategoriKuliner extends Model
 
     public function kuliner()
     {
-        return $this->hasMany(Kuliner::class,'KATEGORI');
+        return $this->hasMany(Kuliner::class,'KATEGORI','Kategori');
     }
 }

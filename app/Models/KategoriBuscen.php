@@ -19,6 +19,6 @@ class KategoriBuscen extends Model
 
     public function buscen()
     {
-        return $this->hasMany(Buscen::class,'KATEGORI');
+        return $this->hasMany(Buscen::class,'KATEGORI','Kategori');
     }
 }

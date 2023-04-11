@@ -19,6 +19,6 @@ class KategoriOffice extends Model
 
     public function office()
     {
-        return $this->hasMany(Office::class,'KATEGORI');
+        return $this->hasMany(Office::class,'KATEGORI','Kategori');
     }
 }

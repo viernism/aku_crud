@@ -45,6 +45,8 @@ class SekolahController extends Controller
         // Call the firstItem() method on the $sekolahs variable
         $firstItem = $sekolahs->firstItem();
 
+        // $levelskuls=LevelSekolah::distinct('LEVEL')->pluck('LEVEL')->toArray();
+
         $ams = Sekolah::distinct('AM')->pluck('AM')->toArray();
         return view('pages.table.table-sekolah', compact('sekolahs', 'firstItem', 'levels', 'ams'));
     }
@@ -90,36 +92,32 @@ class SekolahController extends Controller
 
     public function update(Request $request, $sekolahId)
     {
-        $validatedData = $request->validate([
-            'NAMA' => 'required',
-            'LEVEL' => 'required',
-            'ALAMAT' => 'required',
-            'KOORDINAT' => 'required',
-            'TEL_CUST' => 'required',
-            'PIC_CUST' => 'required',
-            'AM' => 'required',
-            'TEL_AM' => 'required',
-            'STO' => 'required',
-            'HERO' => 'required',
-            'TEL_HERO' => 'required',
-        ]);
 
-        $sekolah = new Sekolah;
-        $sekolah = Sekolah::find($sekolahId);
-        $sekolah->NAMA = $validatedData['NAMA'];
-        $sekolah->LEVEL = $validatedData['LEVEL'];
-        $sekolah->ALAMAT = $validatedData['ALAMAT'];
-        $sekolah->KOORDINAT = $validatedData['KOORDINAT'];
-        $sekolah->TEL_CUST = $validatedData['TEL_CUST'];
-        $sekolah->PIC_CUST = $validatedData['PIC_CUST'];
-        $sekolah->AM = $validatedData['AM'];
-        $sekolah->TEL_AM = $validatedData['TEL_AM'];
-        $sekolah->STO = $validatedData['STO'];
-        $sekolah->HERO = $validatedData['HERO'];
-        $sekolah->TEL_HERO = $validatedData['TEL_HERO'];
-        $sekolah->save();
+        // return redirect()->back()->with('success', 'Sekolah updated successfully.');
 
-        return redirect()->back()->with('success', 'Sekolah updated successfully.');
+        if ($request->isMethod('post')) {
+            $data=$request->all();
+
+            $sekolah = Sekolah::find($sekolahId);
+            $sekolah->NAMA = $data['NAMA'];
+            $sekolah->ALAMAT = $data['ALAMAT'];
+            $sekolah->KOORDINAT = $data['KOORDINAT'];
+            $sekolah->TEL_CUST = $data['TEL_CUST'];
+            $sekolah->PIC_CUST = $data['PIC_CUST'];
+            $sekolah->AM = $data['AM'];
+            $sekolah->TEL_AM = $data['TEL_AM'];
+            $sekolah->STO = $data['STO'];
+            $sekolah->HERO = $data['HERO'];
+            $sekolah->TEL_HERO = $data['TEL_HERO'];
+            $sekolahlevels = LevelSekolah::where('LEVEL', $data['LEVEL'])->first();
+            $sekolah->sekolahlevels()->associate($sekolahlevels);
+            $sekolah->update();
+
+            // dd($sekolah);
+
+            return redirect()->back();
+        }
+
     }
 
 

@@ -129,7 +129,7 @@
                                 <td>{{ $buscen->TEL_HERO }}</td>
                                 <td>
                                     <a href="#" class="edit" data-bs-toggle="modal"
-                                        data-bs-target="#editBuscenModal" data-buscen-id="{{ $buscen->id }}">
+                                        data-bs-target="#editBuscenModal-{{ $buscen->id }}" data-buscen-id="{{ $buscen->id }}">
                                         <i class="ri-pencil-line" data-bs-toggle="tooltip" title="Edit"></i>
                                     </a>
                                     <a href="#" class="delete" data-bs-toggle="modal"
@@ -238,13 +238,13 @@
         </div>
     </div>
     <!-- Edit Modal HTML -->
-    <div class="modal fade" id="editBuscenModal" tabindex="-1" role="dialog" aria-labelledby="editBuscenModalLabel"
+    @foreach ($buscens as $buscen)
+    <div class="modal fade" id="editBuscenModal-{{ $buscen->id }}" tabindex="-1" role="dialog" aria-labelledby="editBuscenModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content text-white">
-                <form method="POST" action="{{ route('buscen.update', ':buscenId') }}">
+                <form method="POST" action="{{ url('/tabel/buscen/edit/'.$buscen->id) }}">
                     @csrf
-                    @method('PUT')
                     <div class="modal-header">
                         <h5 class="modal-title" id="editBuscenModalLabel">Edit Buscen</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -252,51 +252,51 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="edit-name" class="form-label">Nama Buscen</label>
-                            <input type="text" class="form-control" id="edit-name" name="NAMA" required>
+                            <input type="text" class="form-control" id="edit-name" name="NAMA" value="{{ $buscen->NAMA }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-kategori" class="form-label">Kategori</label><br>
                             <select name="KATEGORI" class="form-select" id="edit-kategori">
                                 @foreach ($kategoris as $kategori)
-                                    <option value="{{ $kategori->Kategori }}">{{ $kategori->Kategori }}</option>
+                                    <option @selected($kategori->Kategori == $buscen->KATEGORI) value="{{ $kategori->Kategori }}">{{ $kategori->Kategori }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="edit-address" class="form-label">Alamat</label>
-                            <textarea class="form-control" id="edit-address" name="ALAMAT" required></textarea>
+                            <textarea class="form-control" id="edit-address" name="ALAMAT" required>{{ $buscen->ALAMAT }}</textarea>
                         </div>
                         <div class="mb-3">
                             <label for="edit-coor" class="form-label">Koordinat</label>
-                            <input type="text" class="form-control" id="edit-coor" name="KOORDINAT" required>
+                            <input type="text" class="form-control" id="edit-coor" name="KOORDINAT" value="{{ $buscen->KOORDINAT }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-telcust" class="form-label">Tel. Cust</label>
-                            <input type="text" class="form-control" id="edit-telcust" name="TEL_CUST" required>
+                            <input type="text" class="form-control" id="edit-telcust" name="TEL_CUST" value="{{ $buscen->TEL_CUST }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-piccust" class="form-label">PIC Cust</label>
-                            <input type="text" class="form-control" id="edit-piccust" name="PIC_CUST" required>
+                            <input type="text" class="form-control" id="edit-piccust" name="PIC_CUST" value="{{ $buscen->PIC_CUST }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-am" class="form-label">AM</label>
-                            <input type="text" class="form-control" id="edit-am" name="AM" required>
+                            <input type="text" class="form-control" id="edit-am" name="AM" value="{{ $buscen->AM }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-telam" class="form-label">Tel. AM</label>
-                            <input type="text" class="form-control" id="edit-telam" name="TEL_AM" required>
+                            <input type="text" class="form-control" id="edit-telam" name="TEL_AM" value="{{ $buscen->TEL_AM }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-sto" class="form-label">STO</label>
-                            <input type="text" class="form-control" id="edit-sto" name="STO" required>
+                            <input type="text" class="form-control" id="edit-sto" name="STO" value="{{ $buscen->STO }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-hero" class="form-label">Hero</label>
-                            <input type="text" class="form-control" id="edit-hero" name="HERO" required>
+                            <input type="text" class="form-control" id="edit-hero" name="HERO" value="{{ $buscen->HERO }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-telhero" class="form-label">Tel. Hero</label>
-                            <input type="text" class="form-control" id="edit-telhero" name="TEL_HERO" required>
+                            <input type="text" class="form-control" id="edit-telhero" name="TEL_HERO" value="{{ $buscen->TEL_HERO }}" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -307,6 +307,7 @@
             </div>
         </div>
     </div>
+    @endforeach
     <!-- Delete Modal HTML -->
     <div class="modal fade" id="deleteBuscenModal" tabindex="-1" aria-labelledby="deleteBuscenModalLabel"
         aria-hidden="true">

@@ -128,7 +128,7 @@
                                 <td>{{ $kuliner->TEL_HERO }}</td>
                                 <td>
                                     <a href="#" class="edit" data-bs-toggle="modal"
-                                        data-bs-target="#editKulinerModal" data-kuliner-id="{{ $kuliner->id }}">
+                                        data-bs-target="#editKulinerModal-{{$kuliner->id}}" data-kuliner-id="{{ $kuliner->id }}">
                                         <i class="ri-pencil-line" data-bs-toggle="tooltip" title="Edit"></i>
                                     </a>
                                     <a href="#" class="delete" data-bs-toggle="modal"
@@ -236,13 +236,13 @@
         </div>
     </div>
     <!-- Edit Modal HTML -->
-    <div class="modal fade" id="editKulinerModal" tabindex="-1" role="dialog" aria-labelledby="editKulinerModalLabel"
+    @foreach ($kuliners as $kuliner)
+    <div class="modal fade modal-dialog-scrollable" id="editKulinerModal-{{ $kuliner->id }}" id="staticBackdrop" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="editKulinerModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content text-white">
-                <form method="POST" action="{{ route('kuliner.update', ':kulinerId') }}">
+            <div class="modal-content">
+                <form method="POST" action="{{ url('/tabel/kuliner/edit/'.$kuliner->id) }}">
                     @csrf
-                    @method('PUT')
                     <div class="modal-header">
                         <h5 class="modal-title" id="editKulinerModalLabel">Edit Kuliner</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -250,51 +250,51 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="edit-name" class="form-label">Nama Kuliner</label>
-                            <input type="text" class="form-control" id="edit-name" name="NAMA" required>
+                            <input type="text" class="form-control" id="edit-name" name="NAMA" value="{{ $kuliner->NAMA }}" required>
                         </div>
-                        <div class="mb-3 ">
+                        <div class="mb-3">
                             <label for="edit-kategori" class="form-label">Kategori</label><br>
                             <select name="KATEGORI" class="form-select" id="edit-kategori">
                                 @foreach ($kategoris as $kategori)
-                                    <option value="{{ $kategori->Kategori }}">{{ $kategori->Kategori }}</option>
+                                    <option @selected($kategori->Kategori == $kuliner->KATEGORI) value="{{ $kategori->Kategori }}">{{ $kategori->Kategori }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="edit-address" class="form-label">Alamat</label>
-                            <textarea class="form-control" id="edit-address" name="ALAMAT" required></textarea>
+                            <textarea class="form-control" id="edit-address" name="ALAMAT" required>{{ $kuliner->ALAMAT }}</textarea>
                         </div>
                         <div class="mb-3">
                             <label for="edit-coor" class="form-label">Koordinat</label>
-                            <input type="text" class="form-control" id="edit-coor" name="KOORDINAT" required>
+                            <input type="text" class="form-control" id="edit-coor" name="KOORDINAT" value="{{ $kuliner->KOORDINAT }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-telcust" class="form-label">Tel. Cust</label>
-                            <input type="text" class="form-control" id="edit-telcust" name="TEL_CUST" required>
+                            <input type="text" class="form-control" id="edit-telcust" name="TEL_CUST" value="{{ $kuliner->TEL_CUST }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-piccust" class="form-label">PIC Cust</label>
-                            <input type="text" class="form-control" id="edit-piccust" name="PIC_CUST" required>
+                            <input type="text" class="form-control" id="edit-piccust" name="PIC_CUST" value="{{ $kuliner->PIC_CUST }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-am" class="form-label">AM</label>
-                            <input type="text" class="form-control" id="edit-am" name="AM" required>
+                            <input type="text" class="form-control" id="edit-am" name="AM" value="{{ $kuliner->AM }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-telam" class="form-label">Tel. AM</label>
-                            <input type="text" class="form-control" id="edit-telam" name="TEL_AM" required>
+                            <input type="text" class="form-control" id="edit-telam" name="TEL_AM" value="{{ $kuliner->TEL_AM }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-sto" class="form-label">STO</label>
-                            <input type="text" class="form-control" id="edit-sto" name="STO" required>
+                            <input type="text" class="form-control" id="edit-sto" name="STO" value="{{ $kuliner->STO }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-hero" class="form-label">Hero</label>
-                            <input type="text" class="form-control" id="edit-hero" name="HERO" required>
+                            <input type="text" class="form-control" id="edit-hero" name="HERO" value="{{ $kuliner->HERO }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-telhero" class="form-label">Tel. Hero</label>
-                            <input type="text" class="form-control" id="edit-telhero" name="TEL_HERO" required>
+                            <input type="text" class="form-control" id="edit-telhero" name="TEL_HERO" value="{{ $kuliner->TEL_HERO }}" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -305,6 +305,7 @@
             </div>
         </div>
     </div>
+    @endforeach
     <!-- Delete Modal HTML -->
     <div class="modal fade" id="deleteKulinerModal" tabindex="-1" aria-labelledby="deleteKulinerModalLabel"
         aria-hidden="true">

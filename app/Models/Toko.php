@@ -27,6 +27,6 @@ class Toko extends Model
 
     public function kategoritoko()
     {
-        return $this->belongsTo(KategoriToko::class,'KATEGORI');
+        return $this->belongsTo(KategoriToko::class,'KATEGORI','Kategori');
     }
 }

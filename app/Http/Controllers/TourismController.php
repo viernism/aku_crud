@@ -85,37 +85,25 @@ class TourismController extends Controller
 
     public function update(Request $request, $tourismId){
 
+        if ($request->isMethod('post')) {
+            $data=$request->all();
+            $tourism = Tourism::find($tourismId);
+            $tourism->NAMA = $data['NAMA'];
+            $tourism->ALAMAT = $data['ALAMAT'];
+            $tourism->KOORDINAT = $data['KOORDINAT'];
+            $tourism->TEL_CUST = $data['TEL_CUST'];
+            $tourism->PIC_CUST = $data['PIC_CUST'];
+            $tourism->AM = $data['AM'];
+            $tourism->TEL_AM = $data['TEL_AM'];
+            $tourism->STO = $data['STO'];
+            $tourism->HERO = $data['HERO'];
+            $tourism->TEL_HERO = $data['TEL_HERO'];
+            $kategoritourism=KategoriTourism::where('Kategori',$data['KATEGORI'])->first();
+            $tourism->kategoritourism()->associate($kategoritourism);
+            $tourism->update();
 
-        $validatedData=$request->validate([
-            'NAMA' => 'required',
-            'KATEGORI' =>'required',
-            'ALAMAT' => 'required',
-            'KOORDINAT' => 'required',
-            'TEL_CUST' => 'required',
-            'PIC_CUST' => 'required',
-            'AM' => 'required',
-            'TEL_AM' => 'required',
-            'STO' => 'required',
-            'HERO' => 'required',
-            'TEL_HERO' => 'required'
-        ]);
-
-        $tourism = new Tourism;
-        $tourism=Tourism::findorfail($tourismId);
-        $tourism->NAMA=$validatedData['NAMA'];
-        $tourism->KATEGORI=$validatedData['KATEGORI'];
-        $tourism->ALAMAT=$validatedData['ALAMAT'];
-        $tourism->KOORDINAT=$validatedData['KOORDINAT'];
-        $tourism->TEL_CUST=$validatedData['TEL_CUST'];
-        $tourism->PIC_CUST=$validatedData['PIC_CUST'];
-        $tourism->AM=$validatedData['AM'];
-        $tourism->TEL_AM=$validatedData['TEL_AM'];
-        $tourism->STO=$validatedData['STO'];
-        $tourism->HERO=$validatedData['HERO'];
-        $tourism->TEL_HERO=$validatedData['TEL_HERO'];
-        $tourism->save();
-
-        return redirect()->back()->with('success', 'Tourism updated successfully.');
+            return redirect()->back()->with('success', 'Tourism updated successfully.');
+           }
     }
 
     public function destroy( $tourismId){

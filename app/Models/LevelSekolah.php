@@ -19,6 +19,6 @@ class LevelSekolah extends Model
 
     public function sekolah()
     {
-        return $this->hasMany(Sekolah::class,'LEVEL');
+        return $this->hasMany(Sekolah::class,'LEVEL','LEVEL');
     }
 }

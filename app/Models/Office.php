@@ -27,6 +27,6 @@ class Office extends Model
 
     public function kategorioffice()
     {
-        return $this->belongsTo(KategoriOffice::class,'KATEGORI');
+        return $this->belongsTo(KategoriOffice::class,'KATEGORI','Kategori');
     }
 }

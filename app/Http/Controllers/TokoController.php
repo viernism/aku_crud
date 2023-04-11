@@ -86,36 +86,25 @@ class TokoController extends Controller
     public function update(Request $request, $tokoId){
 
 
-        $validatedData=$request->validate([
-            'NAMA' => 'required',
-            'KATEGORI' =>'required',
-            'ALAMAT' => 'required',
-            'KOORDINAT' => 'required',
-            'TEL_CUST' => 'required',
-            'PIC_CUST' => 'required',
-            'AM' => 'required',
-            'TEL_AM' => 'required',
-            'STO' => 'required',
-            'HERO' => 'required',
-            'TEL_HERO' => 'required'
-        ]);
+        if ($request->isMethod('post')) {
+            $data=$request->all();
+            $toko = Toko::find($tokoId);
+            $toko->NAMA = $data['NAMA'];
+            $toko->ALAMAT = $data['ALAMAT'];
+            $toko->KOORDINAT = $data['KOORDINAT'];
+            $toko->TEL_CUST = $data['TEL_CUST'];
+            $toko->PIC_CUST = $data['PIC_CUST'];
+            $toko->AM = $data['AM'];
+            $toko->TEL_AM = $data['TEL_AM'];
+            $toko->STO = $data['STO'];
+            $toko->HERO = $data['HERO'];
+            $toko->TEL_HERO = $data['TEL_HERO'];
+            $kategoritoko=KategoriToko::where('Kategori',$data['KATEGORI'])->first();
+            $toko->kategoritoko()->associate($kategoritoko);
+            $toko->update();
 
-        $toko = new Toko;
-        $toko=Toko::findorfail($tokoId);
-        $toko->NAMA=$validatedData['NAMA'];
-        $toko->KATEGORI=$validatedData['KATEGORI'];
-        $toko->ALAMAT=$validatedData['ALAMAT'];
-        $toko->KOORDINAT=$validatedData['KOORDINAT'];
-        $toko->TEL_CUST=$validatedData['TEL_CUST'];
-        $toko->PIC_CUST=$validatedData['PIC_CUST'];
-        $toko->AM=$validatedData['AM'];
-        $toko->TEL_AM=$validatedData['TEL_AM'];
-        $toko->STO=$validatedData['STO'];
-        $toko->HERO=$validatedData['HERO'];
-        $toko->TEL_HERO=$validatedData['TEL_HERO'];
-        $toko->save();
-
-        return redirect()->back()->with('success', 'Tourism updated successfully.');
+            return redirect()->back()->with('success', 'Toko updated successfully.');
+           }
     }
 
     public function destroy( $tokoId){

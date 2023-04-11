@@ -19,6 +19,6 @@ class KategoriToko extends Model
 
     public function toko()
     {
-        return $this->hasMany(Toko::class,'KATEGORI');
+        return $this->hasMany(Toko::class,'KATEGORI','Kategori');
     }
 }
