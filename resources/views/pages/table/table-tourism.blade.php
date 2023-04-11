@@ -12,7 +12,7 @@
                         <div class="col-6">
                             <a href="#addTourismModal" class="btn btn-success" data-bs-toggle="modal"><i
                                     class="bi bi-plus-circle"></i><span>Add New Data</span></a>
-                            <a href="#deleteTourismModal" class="btn btn-danger" data-bs-toggle="modal"><i
+                            <a href="#deleteSelectedTourismModal" class="btn btn-danger" data-bs-toggle="modal"><i
                                     class="bi bi-trash"></i><span>Delete</span></a>
                                     <a href="/tabel/tourism/exportexcel" class="btn btn-info">Export</a>
                                     <!-- Button trigger modal -->
@@ -317,25 +317,25 @@
         </div>
     </div>
             <!-- Delete Selected Modal HTML -->
-            <div class="modal fade" id="deleteSelectedTourismModal" tabindex="-1"
-            aria-labelledby="deleteSelectedTourismModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content text-white">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="deleteSelectedTourismModalLabel">Delete Tourism</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Are you sure you want to delete these records?</p>
-                        <p class="text-warning"><small>This action cannot be undone.</small></p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" id="deleteSelected" class="btn btn-danger">
-                            <i class="bi bi-trash"></i> Delete selected
-                        </button>
-                    </div>
-                </div>
+    <div class="modal fade" id="deleteSelectedTourismModal" tabindex="-1"
+    aria-labelledby="deleteSelectedTourismModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content text-white">
+            <div class="modal-header">
+                <h4 class="modal-title" id="deleteSelectedTourismModalLabel">Delete Tourism</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete these records?</p>
+                <p class="text-warning"><small>This action cannot be undone.</small></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" id="deleteSelected" class="btn btn-danger">
+                    <i class="bi bi-trash"></i> Delete selected
+                </button>
             </div>
         </div>
+    </div>
+</div>
 @endsection
