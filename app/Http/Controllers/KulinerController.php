@@ -84,36 +84,25 @@ class KulinerController extends Controller
 
     public function update(Request $request, $kulinerId)
     {
-        $validatedData=$request->validate([
-            'NAMA' => 'required',
-            'KATEGORI' =>'required',
-            'ALAMAT' => 'required',
-            'KOORDINAT' => 'required',
-            'TEL_CUST' => 'required',
-            'PIC_CUST' => 'required',
-            'AM' => 'required',
-            'TEL_AM' => 'required',
-            'STO' => 'required',
-            'HERO' => 'required',
-            'TEL_HERO' => 'required'
-        ]);
+        if ($request->isMethod('post')) {
+            $data=$request->all();
+            $kuliner = Kuliner::find($kulinerId);
+            $kuliner->NAMA = $data['NAMA'];
+            $kuliner->ALAMAT = $data['ALAMAT'];
+            $kuliner->KOORDINAT = $data['KOORDINAT'];
+            $kuliner->TEL_CUST = $data['TEL_CUST'];
+            $kuliner->PIC_CUST = $data['PIC_CUST'];
+            $kuliner->AM = $data['AM'];
+            $kuliner->TEL_AM = $data['TEL_AM'];
+            $kuliner->STO = $data['STO'];
+            $kuliner->HERO = $data['HERO'];
+            $kuliner->TEL_HERO = $data['TEL_HERO'];
+            $kategorikuliner=KategoriKuliner::where('Kategori',$data['KATEGORI'])->first();
+            $kuliner->kategorikuliner()->associate($kategorikuliner);
+            $kuliner->update();
 
-        $kuliner = new Kuliner;
-        $kuliner = Kuliner::find($kulinerId);
-        $kuliner->NAMA=$validatedData['NAMA'];
-        $kuliner->KATEGORI=$validatedData['KATEGORI'];
-        $kuliner->ALAMAT=$validatedData['ALAMAT'];
-        $kuliner->KOORDINAT=$validatedData['KOORDINAT'];
-        $kuliner->TEL_CUST=$validatedData['TEL_CUST'];
-        $kuliner->PIC_CUST=$validatedData['PIC_CUST'];
-        $kuliner->AM=$validatedData['AM'];
-        $kuliner->TEL_AM=$validatedData['TEL_AM'];
-        $kuliner->STO=$validatedData['STO'];
-        $kuliner->HERO=$validatedData['HERO'];
-        $kuliner->TEL_HERO=$validatedData['TEL_HERO'];
-        $kuliner->save();
-
-        return redirect()->back()->with('success', 'Kuliner updated successfully.');
+            return redirect()->back()->with('success', 'Kuliner updated successfully.');
+           }
     }
 
     public function destroy( $kulinerId){

@@ -19,6 +19,6 @@ class KategoriGedung extends Model
 
     public function gedung()
     {
-        return $this->hasMany(Gedung::class,'KATEGORI');
+        return $this->hasMany(Gedung::class,'KATEGORI','Kategori');
     }
 }

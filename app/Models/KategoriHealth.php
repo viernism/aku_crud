@@ -19,6 +19,6 @@ class KategoriHealth extends Model
 
     public function health()
     {
-        return $this->hasMany(Health::class,'KATEGORI');
+        return $this->hasMany(Health::class,'KATEGORI','Kategori');
     }
 }

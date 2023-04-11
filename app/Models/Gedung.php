@@ -27,6 +27,6 @@ class Gedung extends Model
 
     public function kategorigedung()
     {
-        return $this->belongsTo(KategoriGedung::class,'KATEGORI');
+        return $this->belongsTo(KategoriGedung::class,'KATEGORI','Kategori');
     }
 }

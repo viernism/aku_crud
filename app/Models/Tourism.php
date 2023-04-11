@@ -27,6 +27,6 @@ class Tourism extends Model
 
     public function kategoritourism()
     {
-        return $this->belongsTo(KategoriTourism::class,'KATEGORI');
+        return $this->belongsTo(KategoriTourism::class,'KATEGORI','Kategori');
     }
 }

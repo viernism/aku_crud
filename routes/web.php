@@ -86,7 +86,7 @@ Route::middleware(['auth','revalidate','role:AM|Administrator'])->name('gedung.'
 
     Route::post('/tabel/gedung/store', [GedungController::class, 'store'])->name('store');
 
-    Route::put('/tabel/gedung/{gedungId}', [GedungController::class, 'update'])->name('update');
+    Route::match(['get', 'post'], '/tabel/gedung/edit/{gedungId}', [GedungController::class, 'update'])->name('update');
 
     Route::delete('/tabel/gedung/delete/{gedungId}', [GedungController::class, 'destroy'])->name('destroy');
 
@@ -103,7 +103,7 @@ Route::middleware(['auth', 'revalidate','role:AM|Administrator'])->name('sekolah
 
     Route::post('/tabel/sekolah/store', [SekolahController::class, 'store'])->name('store');
 
-    Route::put('/tabel/sekolah/{sekolahId}', [SekolahController::class, 'update'])->name('update');
+    Route::match(['get', 'post'], '/tabel/sekolah/edit/{sekolahId}', [SekolahController::class, 'update'])->name('update');
 
     Route::delete('/tabel/sekolah/delete/{sekolahId}', [SekolahController::class, 'destroy'])->name('destroy');
 
@@ -122,7 +122,7 @@ Route::middleware(['auth', 'revalidate','role:AM|Administrator'])->name('health.
 
     Route::post('/tabel/health/store', [HealthController::class, 'store'])->name('store');
 
-    Route::put('/tabel/health/{healthId}', [HealthController::class, 'update'])->name('update');
+    Route::match(['get', 'post'], '/tabel/health/edit/{healthId}', [HealthController::class, 'update'])->name('update');
 
     Route::delete('/tabel/health/delete/{healthId}', [HealthController::class, 'destroy'])->name('destroy');
 
@@ -141,7 +141,7 @@ Route::middleware(['auth', 'revalidate','role:AM|Administrator'])->name('kuliner
 
     Route::post('/tabel/kuliner/store', [KulinerController::class, 'store'])->name('store');
 
-    Route::put('/tabel/kuliner/{kulinerId}', [KulinerController::class, 'update'])->name('update');
+    Route::match(['get', 'post'], '/tabel/kuliner/edit/{kulinerId}', [KulinerController::class, 'update'])->name('update');
 
     Route::delete('/tabel/kuliner/delete/{kulinerId}', [KulinerController::class, 'destroy'])->name('destroy');
 
@@ -160,7 +160,7 @@ Route::middleware(['auth', 'revalidate','role:AM|Administrator'])->name('toko.')
 
     Route::post('/tabel/toko/store', [TokoController::class, 'store'])->name('store');
 
-    Route::put('/tabel/toko/{tokoId}', [TokoController::class, 'update'])->name('update');
+    Route::match(['get', 'post'], '/tabel/toko/edit/{tokoId}', [TokoController::class, 'update'])->name('update');
 
     Route::delete('/tabel/toko/delete/{tokoId}', [TokoController::class, 'destroy'])->name('destroy');
 
@@ -179,7 +179,7 @@ Route::middleware(['auth', 'revalidate','role:AM|Administrator'])->name('office.
 
     Route::post('/tabel/office/store', [OfficeController::class, 'store'])->name('store');
 
-    Route::put('/tabel/office/{officeId}', [OfficeController::class, 'update'])->name('update');
+    Route::match(['get', 'post'], '/tabel/office/edit/{officeId}', [OfficeController::class, 'update'])->name('update');
 
     Route::delete('/tabel/office/delete/{officeId}', [OfficeController::class, 'destroy'])->name('destroy');
 
@@ -198,7 +198,7 @@ Route::middleware(['auth', 'revalidate','role:AM|Administrator'])->name('tourism
 
     Route::post('/tabel/tourism/store', [TourismController::class, 'store'])->name('store');
 
-    Route::put('/tabel/tourism/{tourismId}', [TourismController::class, 'update'])->name('update');
+    Route::match(['get', 'post'], '/tabel/tourism/edit/{tourismId}', [TourismController::class, 'update'])->name('update');
 
     Route::delete('/tabel/tourism/delete/{tourismId}', [TourismController::class, 'destroy'])->name('destroy');
 
@@ -217,7 +217,7 @@ Route::middleware(['auth', 'revalidate','role:AM|Administrator'])->name('buscen.
 
     Route::post('/tabel/buscen/store', [BuscenController::class, 'store'])->name('store');
 
-    Route::put('/tabel/buscen/{buscenId}', [BuscenController::class, 'update'])->name('update');
+    Route::match(['get', 'post'], '/tabel/buscen/edit/{buscenId}', [BuscenController::class, 'update'])->name('update');
 
     Route::delete('/tabel/buscen/delete/{buscenId}', [BuscenController::class, 'destroy'])->name('destroy');
 

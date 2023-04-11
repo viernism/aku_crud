@@ -85,36 +85,39 @@ class BuscenController extends Controller
 
     public function update(Request $request, $buscenId)
     {
-        $validatedData=$request->validate([
-            'NAMA' => 'required',
-            'KATEGORI' =>'required',
-            'ALAMAT' => 'required',
-            'KOORDINAT' => 'required',
-            'TEL_CUST' => 'required',
-            'PIC_CUST' => 'required',
-            'AM' => 'required',
-            'TEL_AM' => 'required',
-            'STO' => 'required',
-            'HERO' => 'required',
-            'TEL_HERO' => 'required'
-        ]);
+        // $validatedData=$request->validate([
+        //     'NAMA' => 'required',
+        //     'KATEGORI' =>'required',
+        //     'ALAMAT' => 'required',
+        //     'KOORDINAT' => 'required',
+        //     'TEL_CUST' => 'required',
+        //     'PIC_CUST' => 'required',
+        //     'AM' => 'required',
+        //     'TEL_AM' => 'required',
+        //     'STO' => 'required',
+        //     'HERO' => 'required',
+        //     'TEL_HERO' => 'required'
+        // ]);
 
-        $buscen = new Buscen;
-        $buscen = Buscen::find($buscenId);
-        $buscen->NAMA=$validatedData['NAMA'];
-        $buscen->KATEGORI=$validatedData['KATEGORI'];
-        $buscen->ALAMAT=$validatedData['ALAMAT'];
-        $buscen->KOORDINAT=$validatedData['KOORDINAT'];
-        $buscen->TEL_CUST=$validatedData['TEL_CUST'];
-        $buscen->PIC_CUST=$validatedData['PIC_CUST'];
-        $buscen->AM=$validatedData['AM'];
-        $buscen->TEL_AM=$validatedData['TEL_AM'];
-        $buscen->STO=$validatedData['STO'];
-        $buscen->HERO=$validatedData['HERO'];
-        $buscen->TEL_HERO=$validatedData['TEL_HERO'];
-        $buscen->save();
+        if ($request->isMethod('post')) {
+            $data=$request->all();
+            $buscen = Buscen::find($buscenId);
+            $buscen->NAMA = $data['NAMA'];
+            $buscen->ALAMAT = $data['ALAMAT'];
+            $buscen->KOORDINAT = $data['KOORDINAT'];
+            $buscen->TEL_CUST = $data['TEL_CUST'];
+            $buscen->PIC_CUST = $data['PIC_CUST'];
+            $buscen->AM = $data['AM'];
+            $buscen->TEL_AM = $data['TEL_AM'];
+            $buscen->STO = $data['STO'];
+            $buscen->HERO = $data['HERO'];
+            $buscen->TEL_HERO = $data['TEL_HERO'];
+            $kategoribuscen=KategoriBuscen::where('Kategori',$data['KATEGORI'])->first();
+            $buscen->kategoribuscen()->associate($kategoribuscen);
+            $buscen->update();
 
-        return redirect()->back()->with('success', 'Buscen updated successfully.');
+            return redirect()->back()->with('success', 'Buscen updated successfully.');
+           }
     }
 
     public function destroy( $buscenId)

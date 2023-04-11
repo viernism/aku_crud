@@ -95,8 +95,8 @@
                             <th>Kategori</th>
                             <th>Alamat</th>
                             <th>Koordinat</th>
-                            <th>Tel. Cust</th>
                             <th>PIC Cust</th>
+                            <th>Tel. Cust</th>
                             <th>AM</th>
                             <th>Tel. AM</th>
                             <th>STO</th>
@@ -119,8 +119,8 @@
                                 <td>{{ $health->KATEGORI }}</td>
                                 <td>{{ $health->ALAMAT }}</td>
                                 <td>{{ $health->KOORDINAT }}</td>
-                                <td>{{ $health->TEL_CUST }}</td>
                                 <td>{{ $health->PIC_CUST }}</td>
+                                <td>{{ $health->TEL_CUST }}</td>
                                 <td>{{ $health->AM }}</td>
                                 <td>{{ $health->TEL_AM }}</td>
                                 <td>{{ $health->STO }} </td>
@@ -128,7 +128,7 @@
                                 <td>{{ $health->TEL_HERO }}</td>
                                 <td>
                                     <a href="#" class="edit" data-bs-toggle="modal"
-                                        data-bs-target="#editHealthModal" data-health-id="{{ $health->id }}">
+                                        data-bs-target="#editHealthModal-{{ $health->id }}" data-health-id="{{ $health->id }}">
                                         <i class="ri-pencil-line" data-bs-toggle="tooltip" title="Edit"></i>
                                     </a>
                                     <a href="#" class="delete" data-bs-toggle="modal"
@@ -167,7 +167,7 @@
         </div>
     </div>
     <!-- Add Modal HTML -->
-    <div class="modal fade" id="addHealthModal" tabindex="-1" role="dialog" aria-labelledby="addHealthModalLabel"
+    <div class="modal fade" id="addHealthModal" id="staticBackdrop" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="addHealthModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -199,12 +199,12 @@
                             <input type="text" class="form-control" id="koordinat" name="koordinat" required>
                         </div>
                         <div class="mb-3">
-                            <label for="tel_cust" class="form-label">Tel. Cust</label>
-                            <input type="text" class="form-control" id="tel_cust" name="tel_cust" required>
-                        </div>
-                        <div class="mb-3">
                             <label for="pic_cust" class="form-label">PIC Cust</label>
                             <input type="text" class="form-control" id="pic_cust" name="pic_cust" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tel_cust" class="form-label">Tel. Cust</label>
+                            <input type="number" class="form-control" id="tel_cust" name="tel_cust" required>
                         </div>
                         <div class="mb-3">
                             <label for="am" class="form-label">AM</label>
@@ -212,7 +212,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="tel_am" class="form-label">Tel. AM</label>
-                            <input type="text" class="form-control" id="tel_am" name="tel_am" required>
+                            <input type="number" class="form-control" id="tel_am" name="tel_am" required>
                         </div>
                         <div class="mb-3">
                             <label for="sto" class="form-label">STO</label>
@@ -224,7 +224,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="tel_hero" class="form-label">Tel. Hero</label>
-                            <input type="text" class="form-control" id="tel_hero" name="tel_hero" required>
+                            <input type="number" class="form-control" id="tel_hero" name="tel_hero" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -236,13 +236,13 @@
         </div>
     </div>
     <!-- Edit Modal HTML -->
-    <div class="modal fade" id="editHealthModal" tabindex="-1" role="dialog" aria-labelledby="editHealthModalLabel"
+    @foreach ($healths as $health)
+    <div class="modal fade" id="editHealthModal-{{ $health->id }}" id="staticBackdrop" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="editHealthModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content text-white">
-                <form method="POST" action="{{ route('health.update', ':healthId') }}">
+            <div class="modal-content">
+                <form method="POST" action="{{ url('/tabel/health/edit/'.$health->id) }}">
                     @csrf
-                    @method('PUT')
                     <div class="modal-header">
                         <h5 class="modal-title" id="editHealthModalLabel">Edit Health</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -250,51 +250,51 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="edit-name" class="form-label">Nama Health</label>
-                            <input type="text" class="form-control" id="edit-name" name="NAMA" required>
+                            <input type="text" class="form-control" id="edit-name" name="NAMA" value="{{ $health->NAMA }}" required>
                         </div>
-                        <div class="mb-3 ">
+                        <div class="mb-3">
                             <label for="edit-kategori" class="form-label">Kategori</label><br>
                             <select name="KATEGORI" class="form-select" id="edit-kategori">
                                 @foreach ($kategoris as $kategori)
-                                    <option value="{{ $kategori->Kategori }}">{{ $kategori->Kategori }}</option>
+                                    <option @selected($kategori->Kategori == $health->KATEGORI) value="{{ $kategori->Kategori }}">{{ $kategori->Kategori }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="edit-address" class="form-label">Alamat</label>
-                            <textarea class="form-control" id="edit-address" name="ALAMAT" required></textarea>
+                            <textarea class="form-control" id="edit-address" name="ALAMAT" required>{{ $health->ALAMAT }}</textarea>
                         </div>
                         <div class="mb-3">
                             <label for="edit-coor" class="form-label">Koordinat</label>
-                            <input type="text" class="form-control" id="edit-coor" name="KOORDINAT" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-telcust" class="form-label">Tel. Cust</label>
-                            <input type="text" class="form-control" id="edit-telcust" name="TEL_CUST" required>
+                            <input type="text" class="form-control" id="edit-coor" name="KOORDINAT" value="{{ $health->KOORDINAT }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-piccust" class="form-label">PIC Cust</label>
-                            <input type="text" class="form-control" id="edit-piccust" name="PIC_CUST" required>
+                            <input type="text" class="form-control" id="edit-piccust" name="PIC_CUST" value="{{ $health->PIC_CUST }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-telcust" class="form-label">Tel. Cust</label>
+                            <input type="number" class="form-control" id="edit-telcust" name="TEL_CUST" value="{{ $health->TEL_CUST }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-am" class="form-label">AM</label>
-                            <input type="text" class="form-control" id="edit-am" name="AM" required>
+                            <input type="text" class="form-control" id="edit-am" name="AM" value="{{ $health->AM }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-telam" class="form-label">Tel. AM</label>
-                            <input type="text" class="form-control" id="edit-telam" name="TEL_AM" required>
+                            <input type="number" class="form-control" id="edit-telam" name="TEL_AM" value="{{ $health->TEL_AM }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-sto" class="form-label">STO</label>
-                            <input type="text" class="form-control" id="edit-sto" name="STO" required>
+                            <input type="text" class="form-control" id="edit-sto" name="STO" value="{{ $health->STO }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-hero" class="form-label">Hero</label>
-                            <input type="text" class="form-control" id="edit-hero" name="HERO" required>
+                            <input type="text" class="form-control" id="edit-hero" name="HERO" value="{{ $health->HERO }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-telhero" class="form-label">Tel. Hero</label>
-                            <input type="text" class="form-control" id="edit-telhero" name="TEL_HERO" required>
+                            <input type="number" class="form-control" id="edit-telhero" name="TEL_HERO" value="{{ $health->TEL_HERO }}" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -305,6 +305,7 @@
             </div>
         </div>
     </div>
+    @endforeach
     <!-- Delete Modal HTML -->
     <div class="modal fade" id="deleteHealthModal" tabindex="-1" aria-labelledby="deleteHealthModalLabel"
         aria-hidden="true">

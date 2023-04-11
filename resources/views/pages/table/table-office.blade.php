@@ -128,7 +128,7 @@
                                 <td>{{ $office->TEL_HERO }}</td>
                                 <td>
                                     <a href="#" class="edit" data-bs-toggle="modal"
-                                        data-bs-target="#editOfficeModal" data-office-id="{{ $office->id }}">
+                                        data-bs-target="#editOfficeModal-{{ $office->id }}" data-office-id="{{ $office->id }}">
                                         <i class="ri-pencil-line" data-bs-toggle="tooltip" title="Edit"></i>
                                     </a>
                                     <a href="#" class="delete" data-bs-toggle="modal"
@@ -167,14 +167,14 @@
         </div>
     </div>
     <!-- Add Modal HTML -->
-    <div class="modal fade" id="addOfficeModal" tabindex="-1" role="dialog" aria-labelledby="addOfficeModalLabel"
-        aria-hidden="true">
+    <div class="modal fade modal-dialog-scrollable" id="addOfficeModal" id="staticBackdrop" data-bs-backdrop="static"
+        tabindex="-1" role="dialog" aria-labelledby="addOfficeModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content text-white">
+            <div class="modal-content">
                 <form method="POST" action="{{ route('office.store') }}">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addOfficeModalLabel">Add office</h5>
+                        <h5 class="modal-title" id="addOfficeModalLabel">Add Office</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -182,7 +182,7 @@
                             <label for="nama" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="nama" name="nama" required>
                         </div>
-                        <div class="mb-3 ">
+                        <div class="mb-3">
                             <label for="kategori" class="form-label">Kategori</label><br>
                             <select name="kategori" class="form-select">
                                 @foreach ($kategoris as $kategori)
@@ -199,12 +199,12 @@
                             <input type="text" class="form-control" id="koordinat" name="koordinat" required>
                         </div>
                         <div class="mb-3">
-                            <label for="tel_cust" class="form-label">Tel. Cust</label>
-                            <input type="text" class="form-control" id="tel_cust" name="tel_cust" required>
-                        </div>
-                        <div class="mb-3">
                             <label for="pic_cust" class="form-label">PIC Cust</label>
                             <input type="text" class="form-control" id="pic_cust" name="pic_cust" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tel_cust" class="form-label">Tel. Cust</label>
+                            <input type="text" class="form-control" id="tel_cust" name="tel_cust" required>
                         </div>
                         <div class="mb-3">
                             <label for="am" class="form-label">AM</label>
@@ -229,20 +229,20 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-success">Add office</button>
+                        <button type="submit" class="btn btn-success">Add Office</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
     <!-- Edit Modal HTML -->
-    <div class="modal fade" id="editOfficeModal" tabindex="-1" role="dialog" aria-labelledby="editOfficeModalLabel"
+    @foreach ($offices as $office)
+    <div class="modal fade modal-dialog-scrollable" id="editOfficeModal-{{ $office->id }}" id="staticBackdrop" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="editOfficeModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content text-white">
-                <form method="POST" action="{{ route('office.update', ':officeId') }}">
+            <div class="modal-content">
+                <form method="POST" action="{{ url('/tabel/office/edit/'.$office->id) }}">
                     @csrf
-                    @method('PUT')
                     <div class="modal-header">
                         <h5 class="modal-title" id="editOfficeModalLabel">Edit Office</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -250,51 +250,51 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="edit-name" class="form-label">Nama Office</label>
-                            <input type="text" class="form-control" id="edit-name" name="NAMA" required>
+                            <input type="text" class="form-control" id="edit-name" name="NAMA" value="{{ $office->NAMA }}" required>
                         </div>
-                        <div class="mb-3 ">
+                        <div class="mb-3">
                             <label for="edit-kategori" class="form-label">Kategori</label><br>
                             <select name="KATEGORI" class="form-select" id="edit-kategori">
                                 @foreach ($kategoris as $kategori)
-                                    <option value="{{ $kategori->Kategori }}">{{ $kategori->Kategori }}</option>
+                                    <option @selected($kategori->Kategori == $office->KATEGORI) value="{{ $kategori->Kategori }}">{{ $kategori->Kategori }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="edit-address" class="form-label">Alamat</label>
-                            <textarea class="form-control" id="edit-address" name="ALAMAT" required></textarea>
+                            <textarea class="form-control" id="edit-address" name="ALAMAT" required>{{ $office->ALAMAT }}</textarea>
                         </div>
                         <div class="mb-3">
                             <label for="edit-coor" class="form-label">Koordinat</label>
-                            <input type="text" class="form-control" id="edit-coor" name="KOORDINAT" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-telcust" class="form-label">Tel. Cust</label>
-                            <input type="text" class="form-control" id="edit-telcust" name="TEL_CUST" required>
+                            <input type="text" class="form-control" id="edit-coor" name="KOORDINAT" value="{{ $office->KOORDINAT }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-piccust" class="form-label">PIC Cust</label>
-                            <input type="text" class="form-control" id="edit-piccust" name="PIC_CUST" required>
+                            <input type="text" class="form-control" id="edit-piccust" name="PIC_CUST" value="{{ $office->PIC_CUST }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-telcust" class="form-label">Tel. Cust</label>
+                            <input type="text" class="form-control" id="edit-telcust" name="TEL_CUST" value="{{ $office->TEL_CUST }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-am" class="form-label">AM</label>
-                            <input type="text" class="form-control" id="edit-am" name="AM" required>
+                            <input type="text" class="form-control" id="edit-am" name="AM" value="{{ $office->AM }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-telam" class="form-label">Tel. AM</label>
-                            <input type="text" class="form-control" id="edit-telam" name="TEL_AM" required>
+                            <input type="text" class="form-control" id="edit-telam" name="TEL_AM" value="{{ $office->TEL_AM }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-sto" class="form-label">STO</label>
-                            <input type="text" class="form-control" id="edit-sto" name="STO" required>
+                            <input type="text" class="form-control" id="edit-sto" name="STO" value="{{ $office->STO }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-hero" class="form-label">Hero</label>
-                            <input type="text" class="form-control" id="edit-hero" name="HERO" required>
+                            <input type="text" class="form-control" id="edit-hero" name="HERO" value="{{ $office->HERO }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-telhero" class="form-label">Tel. Hero</label>
-                            <input type="text" class="form-control" id="edit-telhero" name="TEL_HERO" required>
+                            <input type="text" class="form-control" id="edit-telhero" name="TEL_HERO" value="{{ $office->TEL_HERO }}" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -305,6 +305,7 @@
             </div>
         </div>
     </div>
+    @endforeach
     <!-- Delete Modal HTML -->
     <div class="modal fade" id="deleteOfficeModal" tabindex="-1" aria-labelledby="deleteOfficeModalLabel"
         aria-hidden="true">

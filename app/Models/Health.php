@@ -27,6 +27,6 @@ class Health extends Model
 
     public function kategorihealth()
     {
-        return $this->belongsTo(KategoriHealth::class,'KATEGORI');
+        return $this->belongsTo(KategoriHealth::class,'KATEGORI','Kategori');
     }
 }

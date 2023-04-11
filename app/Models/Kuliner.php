@@ -27,6 +27,6 @@ class Kuliner extends Model
 
     public function kategorikuliner()
     {
-        return $this->belongsTo(KategoriKuliner::class,'KATEGORI');
+        return $this->belongsTo(KategoriKuliner::class,'KATEGORI','Kategori');
     }
 }
