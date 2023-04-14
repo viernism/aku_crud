@@ -32,7 +32,7 @@
                             <th>Username</th>
                             <th>Email</th>
                             <th>Phone</th>
-                            <th>Bio</th>
+                            <th>Roles</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -51,9 +51,16 @@
                                 <td>{{ $user->username }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->phone }}</td>
-                                <td>{{ $user->bio }}</td>
                                 <td>
-                                    <a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#editUserModal" data-user-id="{{ $user->id }}">
+                                    @foreach ($user->roles as $usro)
+                                    {{ $usro->name}}
+                                    @if (!$loop->last)
+                                    ,
+                                    @endif
+                                    @endforeach
+                                </td>
+                                <td>
+                                    <a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#editUserModal-{{ $user->id }}" data-user-id="{{ $user->id }}">
                                         <i class="ri-pencil-line" data-bs-toggle="tooltip" title="Edit"></i>
                                     </a>
                                     <a href="#" class="delete" data-bs-toggle="modal" data-bs-target="#deleteUserModal" data-user-id="{{ $user->id }}">
@@ -116,6 +123,14 @@
                         <label for="pwd" class="form-label">Password</label>
                         <input type="password" class="form-control" id="pwd" name="password" required>
                       </div>
+                      <div class="mb-3">
+                        <label for="role" class="form-label">Role</label>
+                        <select name="role" id="role" class="form-select">
+                            @foreach ($roles as $role)
+                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                            @endforeach
+                        </select>
+                      </div>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -126,13 +141,12 @@
         </div>
     </div>
     <!-- Edit Modal HTML -->
-    <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog"
-        aria-labelledby="editUserModalLabel" aria-hidden="true">
+    @foreach ($users as $user)
+    <div class="modal fade" id="editUserModal-{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content text-white">
-                <form id="editUserForm" method="POST" action="{{ route('admin.users.update', ':userId') }}">
+                <form id="editUserForm" method="POST" action="{{ url('/admin/users-list/update/'.$user->id) }}">
                     @csrf
-                    @method('PUT')
                     <div class="modal-header">
                         <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -140,19 +154,32 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="edit-name" class="form-label">Nama</label>
-                            <input type="text" class="form-control" name="name"  id="edit-name" required>
+                            <input type="text" class="form-control" name="name"  id="edit-name" value="{{ $user->name }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-username" class="form-label">Username</label>
-                            <input type="text" class="form-control" name="username"  id="edit-username" required>
+                            <input type="text" class="form-control" name="username"  id="edit-username" value="{{ $user->username }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-address" class="form-label">Email</label>
-                            <input type="email" class="form-control"name="email"  id="edit-address" required>
+                            <input type="email" class="form-control"name="email"  id="edit-address" value="{{ $user->email }}" required>
                         </div>
                         <div class="mb-3">
-                            <label for="edit-phone" class="form-label">Password</label>
-                            <input type="password" class="form-control" name="password" id="edit-password">
+                            <label for="role" class="form-label">Role</label>
+                            <select name="role" id="role" class="form-select">
+                                @foreach ($roles as $role)
+                                    <option value="{{ $role->id }}"
+                                        @if ($user->hasRole($role->name))
+                                            selected
+                                        @endif
+                                    >
+                                        {{ $role->name }}
+                                        @if ($user->hasRole($role->name))
+                                            (Assigned)
+                                        @endif
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -163,6 +190,7 @@
             </div>
         </div>
     </div>
+    @endforeach
     <!-- Delete Modal HTML -->
     <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel"
         aria-hidden="true">

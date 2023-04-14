@@ -82,6 +82,18 @@ class KulinerController extends Controller
         return redirect('/tabel/kuliner')->with('success', 'Kuliner facility added successfully.');
     }
 
+    public function addKategori(Request $request){
+        $validatedKategori=$request->validate([
+            'Kategori'=>'required'
+        ]);
+
+        KategoriKuliner::create([
+            'Kategori'=>$validatedKategori['Kategori']
+        ]);
+
+        return redirect()->back()->with('success', 'Kategori successfully added');
+    }
+
     public function update(Request $request, $kulinerId)
     {
         if ($request->isMethod('post')) {

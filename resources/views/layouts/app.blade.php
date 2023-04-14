@@ -11,16 +11,11 @@
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     <!-- Bootstrap CSS CDN  -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <!-- Font Awesome Icons CDN -->
-    <link href="<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer">
-    <!-- Box Icons CDN -->
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <!-- Remix Icons CDN -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    {{-- Select2 CSS --}}
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
     <title>{{ $title ?? 'app-name' }}</title>
 </head>
 
@@ -51,22 +46,22 @@
                             <i class="ri-user-line sidebar-menu-item-icon"></i> User Profile </a>
                     </li> --}}
                     <li class="sidebar-dropdown-menu-item">
-                        <a href="/admin-panel">
+                        <a href="/admin/users-list">
                             <i class="ri-settings-2-line sidebar-menu-item-icon"></i> User Management
                         </a>
                     </li>
 
                     <li class="sidebar-dropdown-menu-item">
-                        <a href="/role-list">
+                        <a href="/admin/rolepermission">
                             <i class="ri-admin-line sidebar-menu-item-icon"></i> Role Management
                         </a>
                     </li>
 
-                    <li class="sidebar-dropdown-menu-item">
+                    {{-- <li class="sidebar-dropdown-menu-item">
                         <a href="/permission-list">
                             <i class="ri-shield-keyhole-line sidebar-menu-item-icon"></i> Permission Management
                         </a>
-                    </li>
+                    </li> --}}
                 </ul>
             </li>
             @endrole
@@ -119,8 +114,11 @@
             <div class="dropdown pb-4">
                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                     id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="{{ asset(Auth::user()->photo ?? 'https://i.pinimg.com/564x/11/fa/5c/11fa5ca25a562adefabd37cdfd037136.jpg' )}}" alt="nobitches"
-                        width="30" height="30" class="rounded-circle">
+                    @if (Auth::user()->photo)
+                    <img  src="{{ asset(Auth::user()->photo)}}" alt="profile_image" width="30" height="30" class="rounded-circle">
+                    @else
+                    <img  src="https://i.pinimg.com/564x/11/fa/5c/11fa5ca25a562adefabd37cdfd037136.jpg" alt="profile_image" width="30" height="30" class="rounded-circle">
+                    @endif
                     <div class="sidebar-logo p-2">
                         <div class="text text-white h5 mb-0">{{ Auth::user()->username }}</div>
                     </div>
@@ -162,7 +160,8 @@
     <!-- Local JS -->
     <script src="{{ asset('js/app.js') }}"></script>
 
-
+    {{-- Select2 js --}}
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
     <!-- End JS -->
 </body>
 </html>

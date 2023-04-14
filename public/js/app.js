@@ -193,26 +193,34 @@ $(document).ready(function () {
         deleteSelectedItems('/tabel/tourism/deleteSelected');
     });
 
+    $('#deleteSelected').click(function () {
+        deleteSelectedItems('/admin/rolepermission/deleteSelected');
+    });
+
+    $('#deleteSelectedP').click(function () {
+        deleteSelectedItems('/admin/permission/deleteSelected');
+    });
+
 
 })
 
 $(document).ready(function () {
     // Updates the form action URL with the usesr ID when submitted
-    $('a.edit').click(function (event) {
-        var userId = $(this).data('user-id');
-        var form = $('#editUserForm');
-        var actionUrl = form.attr('action').replace('1', userId);
-        form.attr('action', actionUrl);
-    });
+    // $('a.edit').click(function (event) {
+    //     var userId = $(this).data('user-id');
+    //     var form = $('#editUserForm');
+    //     var actionUrl = form.attr('action').replace('1', userId);
+    //     form.attr('action', actionUrl);
+    // });
 
-    // Update the action attribute of the edit user form when the modal is shown
-    $('#editUserModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var userId = button.data('user-id');
-        var form = $(this).find('form');
-        var action = form.attr('action').replace(':userId', userId);
-        form.attr('action', action);
-    });
+    // // Update the action attribute of the edit user form when the modal is shown
+    // $('#editUserModal').on('show.bs.modal', function (event) {
+    //     var button = $(event.relatedTarget);
+    //     var userId = button.data('user-id');
+    //     var form = $(this).find('form');
+    //     var action = form.attr('action').replace(':userId', userId);
+    //     form.attr('action', action);
+    // });
 
     // Update the action attribute of the delete user form when the modal is shown
     $('#deleteUserModal').on('show.bs.modal', function (event) {
@@ -318,6 +326,24 @@ $(document).ready(function () {
         form.find('#tourismId').val(tourismId);
     });
 
+    $('#editRoleModal, #deleteRoleModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var roleId = button.data('role-id');
+        var form = $(this).find('form');
+        var action = form.attr('action').replace(':roleId', roleId);
+        form.attr('action', action);
+        form.find('#roleId').val(roleId);
+    });
+
+    $('#editPermissionModal, #deletePermissionModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var permissionId = button.data('permission-id');
+        var form = $(this).find('form');
+        var action = form.attr('action').replace(':permissionId', permissionId);
+        form.attr('action', action);
+        form.find('#permissionId').val(permissionId);
+    });
+
     // user pagination length function
     function changePaginationLength(length) {
         const url = new URL(window.location.href);
@@ -369,6 +395,10 @@ $(document).ready(function () {
         });
     });
 });
+
+// $(".multiple-js").select2({
+// //   theme: "classic"
+// });
 // finally used ajax, i lowkey understand how to use it now grahhhhhhhhhhhhhhhhhhhhhhhhhhhhh
 
 

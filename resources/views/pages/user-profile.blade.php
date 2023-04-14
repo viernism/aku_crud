@@ -9,8 +9,11 @@
                         enctype="multipart/form-data">
                         @csrf
                         <div class="avatar avatar-xl position-relative">
-                            <img  src="{{ asset(Auth::user()->photo ?? 'https://i.pinimg.com/564x/11/fa/5c/11fa5ca25a562adefabd37cdfd037136.jpg' )}}" alt="profile_image"
-                                class="w-100 img-border-radius shadow-sm">
+                            @if (Auth::user()->photo)
+                            <img  src="{{ asset(Auth::user()->photo)}}" alt="profile_image" class="w-100 img-border-radius shadow-sm">
+                            @else
+                            <img  src="https://i.pinimg.com/564x/11/fa/5c/11fa5ca25a562adefabd37cdfd037136.jpg" alt="profile_image" class="w-100 img-border-radius shadow-sm">
+                            @endif
                             <div class="text-avatar">
                                 <label for="profile_image" class="cursor-pointer"><i class="fa-solid fa-image"></i></label>
                                 <input type="file" name="photo" id="profile_image" class="d-none"
@@ -21,7 +24,7 @@
                 </div>
                 <div class="col-auto my-auto">
                     <h5 class="mb-1 text-white">{{ Auth::user()->username }}</h5>
-                    <p class="mb-0 font-weight-normal text-sm text-white">Creator</p>
+                    <p class="mb-0 font-weight-normal text-sm text-white">{{ Auth::user()->getRoleNames()->implode(', ') }}</p>
                 </div>
                 <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3 text-end">
                     <button type="button" class="btn btn-primary mb-0 py-1 actove edit-profile-button" data-bs-toggle="modal"
