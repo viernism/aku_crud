@@ -311,6 +311,30 @@
     </div>
 </div>
     @endforeach
+     <!-- Delete Modal HTML -->
+     <div class="modal fade" id="deleteSekolahModal" tabindex="-1" aria-labelledby="deleteSekolahModalLabel"
+     aria-hidden="true">
+     <div class="modal-dialog">
+         <div class="modal-content text-white">
+             <div class="modal-header">
+                 <h4 class="modal-title" id="deleteSekolahModalLabel">Delete Sekolah</h4>
+                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-body">
+                 <p>Are you sure you want to delete these records?</p>
+                 <p class="text-warning"><small>This action cannot be undone.</small></p>
+             </div>
+             <form action="{{ route('sekolah.destroy', ':sekolahId') }}" method="POST">
+                 @csrf
+                 @method('DELETE')
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                     <button type="submit" class="btn btn-danger">Delete</button>
+                 </div>
+             </form>
+         </div>
+     </div>
+ </div>
     <!-- Delete Selected Modal HTML -->
     <div class="modal fade" id="deleteSelectedSekolahModal" tabindex="-1"
         aria-labelledby="deleteSelectedSekolahModalLabel" aria-hidden="true">

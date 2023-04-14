@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomRegisterController;
 use App\Http\Controllers\CustomLoginController;
 use App\Http\Controllers\CustomLogoutController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\GedungController;
 use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\HealthController;
@@ -50,184 +50,198 @@ Route::middleware(['auth', 'revalidate'])->group(function () {
 
     Route::put('/profile', [UserProfileController::class, 'EditProfile'])->name('edit.profile');
 
-    // End Profile Routes
-
     // Logout Routes
     Route::post('/logout', CustomLogoutController::class);
 });
 
 Route::middleware(['auth','revalidate','role:Administrator'])->group(function () {
-    //admin routes
-    Route::get('/admin-panel', [UserController::class, 'index']);
+    Route::controller(AdminController::class)->group(function () {
+        //admin routes
+        Route::get('/admin/users-list', 'index');
 
-    Route::get('users/{id}', [UserController::class, 'show'])->name('users.show');
+        Route::get('/admin/users-list/{id}', 'show')->name('users.show');
 
-    // Route to display the form for creating a new user
-    Route::get('/admin-panel/create', [UserController::class, 'create'])->name('users.create');
+        // Route to display the form for creating a new user
+        Route::get('/admin/users-list/create', 'create')->name('users.create');
 
-    // Route to store the new user in the database
-    Route::post('/admin-panel', [UserController::class, 'store'])->name('users.store');
+        // Route to store the new user in the database
+        Route::post('/admin/users-list/store', 'store')->name('users.store');
 
-    // Route to update the user in the database
-    Route::put('/admin/users/{id}', [UserController::class, 'update'])->name('admin.users.update');
+        // Route to update the user in the database
 
-    // Route to delete the user in the database
-    Route::delete('/admin-panel/users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
+        Route::match(['get', 'post'], '/admin/users-list/update/{id}', 'update')->name('admin.users.update');
 
-    Route::delete('/admin-panel/users/{id}', [UserController::class, 'destroy'])->name('admin.users.destroy');
+        // Route to delete the user in the database
+        Route::delete('/admin/users-list/delete/{user}', 'destroy')->name('admin.users.destroy');
 
-    //role hell
-    Route::get('/role-list',[RolePermissionController::class,'indexrole']);
+        Route::delete('/admin/users-list/delete/{id}', 'destroy')->name('admin.users.destroy');
+    });
+
+    Route::controller(RolePermissionController::class)->group(function(){
+        //role hell
+        Route::get('/admin/rolepermission','index')->name('role.index');
+
+        Route::post('/admin/rolepermission/store','store')->name('role.store');
+
+        Route::match(['get', 'post'], '/admin/rolepermission/edit/{roleId}', 'update')->name('role.update');
+
+        Route::delete('/admin/rolepermission/delete/{roleId}', 'destroy')->name('role.destroy');
+
+        Route::delete('/admin/rolepermission/deleteSelected', 'deleteSelected');
+
+        //permission hell
+
+        Route::post('/admin/permission/store','storeP')->name('permission.store');
+
+        Route::match(['get', 'post'], '/admin/permission/edit/{permissionId}', 'updateP')->name('permission.update');
+
+        Route::delete('/admin/permission/delete/{permissionId}', 'destroyP')->name('permission.destroy');
+
+        Route::delete('/admin/permission/deleteSelected', 'deleteSelectedP');
+    });
+
+
 });
 
-Route::middleware(['auth','revalidate','role:AM|Administrator'])->name('gedung.')->group(function () {
+Route::controller(GedungController::class)->middleware(['auth','revalidate','role:AM|Administrator'])->name('gedung.')->group(function () {
     // table gedung routes
-    Route::get('/tabel/gedung', [GedungController::class, 'index']);
+    Route::get('/tabel/gedung', 'index');
 
-    Route::post('/tabel/gedung/store', [GedungController::class, 'store'])->name('store');
+    Route::post('/tabel/gedung/store', 'store')->name('store');
 
-    Route::match(['get', 'post'], '/tabel/gedung/edit/{gedungId}', [GedungController::class, 'update'])->name('update');
+    Route::match(['get', 'post'], '/tabel/gedung/edit/{gedungId}', 'update')->name('update');
 
-    Route::delete('/tabel/gedung/delete/{gedungId}', [GedungController::class, 'destroy'])->name('destroy');
+    Route::delete('/tabel/gedung/delete/{gedungId}', 'destroy')->name('destroy');
 
-    Route::delete('/tabel/gedung/deleteSelected', [GedungController::class, 'deleteSelected']);
+    Route::delete('/tabel/gedung/deleteSelected', 'deleteSelected');
 
-    Route::get('/tabel/gedung/exportexcel', [GedungController::class,'exportexcel'])->name('exportexcel');
+    Route::get('/tabel/gedung/exportexcel', 'exportexcel')->name('exportexcel');
 
-    Route::post('/tabel/gedung/importexcel', [GedungController::class,'importexcel'])->name('importexcel');
+    Route::post('/tabel/gedung/importexcel', 'importexcel')->name('importexcel');
 });
 
-Route::middleware(['auth', 'revalidate','role:AM|Administrator'])->name('sekolah.')->group(function () {
+Route::controller(SekolahController::class)->middleware(['auth', 'revalidate','role:AM|Administrator'])->name('sekolah.')->group(function () {
     // table sekolah routes
-    Route::get('/tabel/sekolah', [SekolahController::class, 'index']);
+    Route::get('/tabel/sekolah', 'index');
 
-    Route::post('/tabel/sekolah/store', [SekolahController::class, 'store'])->name('store');
+    Route::post('/tabel/sekolah/store', 'store')->name('store');
 
-    Route::match(['get', 'post'], '/tabel/sekolah/edit/{sekolahId}', [SekolahController::class, 'update'])->name('update');
+    Route::match(['get', 'post'], '/tabel/sekolah/edit/{sekolahId}', 'update')->name('update');
 
-    Route::delete('/tabel/sekolah/delete/{sekolahId}', [SekolahController::class, 'destroy'])->name('destroy');
+    Route::delete('/tabel/sekolah/delete/{sekolahId}', 'destroy')->name('destroy');
 
-    Route::delete('/tabel/sekolah/deleteSelected', [SekolahController::class, 'deleteSelected']);
+    Route::delete('/tabel/sekolah/deleteSelected', 'deleteSelected');
 
-    Route::get('/tabel/sekolah/search', [SekolahController::class, 'index'])->name('index');
+    Route::get('/tabel/sekolah/exportexcel', 'exportexcel')->name('exportexcel');
 
-    Route::get('/tabel/sekolah/exportexcel', [SekolahController::class,'exportexcel'])->name('exportexcel');
-
-    Route::post('/tabel/sekolah/importexcel', [SekolahController::class,'importexcel'])->name('importexcel');
+    Route::post('/tabel/sekolah/importexcel', 'importexcel')->name('importexcel');
 });
 
-Route::middleware(['auth', 'revalidate','role:AM|Administrator'])->name('health.')->group(function () {
+Route::controller(HealthController::class)->middleware(['auth','revalidate','role:AM|Administrator'])->name('health.')->group(function () {
     // table health routes
-    Route::get('/tabel/health', [HealthController::class, 'index'])->name('index');
+    Route::get('/tabel/health', 'index');
 
-    Route::post('/tabel/health/store', [HealthController::class, 'store'])->name('store');
+    Route::post('/tabel/health/store', 'store')->name('store');
 
-    Route::match(['get', 'post'], '/tabel/health/edit/{healthId}', [HealthController::class, 'update'])->name('update');
+    Route::match(['get', 'post'], '/tabel/health/edit/{healthId}', 'update')->name('update');
 
-    Route::delete('/tabel/health/delete/{healthId}', [HealthController::class, 'destroy'])->name('destroy');
+    Route::delete('/tabel/health/delete/{healthId}', 'destroy')->name('destroy');
 
-    Route::delete('/tabel/health/deleteSelected', [HealthController::class, 'deleteSelected']);
+    Route::delete('/tabel/health/deleteSelected', 'deleteSelected');
 
-    Route::get('/tabel/health/search', [HealthController::class, 'index'])->name('index');
+    Route::get('/tabel/health/exportexcel', 'exportexcel')->name('exportexcel');
 
-    Route::get('/tabel/health/exportexcel', [HealthController::class,'exportexcel'])->name('exportexcel');
-
-    Route::post('/tabel/health/importexcel', [HealthController::class,'importexcel'])->name('importexcel');
+    Route::post('/tabel/health/importexcel', 'importexcel')->name('importexcel');
 });
 
-Route::middleware(['auth', 'revalidate','role:AM|Administrator'])->name('kuliner.')->group(function () {
+Route::controller(KulinerController::class)->middleware(['auth', 'revalidate','role:AM|Administrator'])->name('kuliner.')->group(function () {
     // table kuliner routes
-    Route::get('/tabel/kuliner', [KulinerController::class, 'index']);
+    Route::get('/tabel/kuliner', 'index');
 
-    Route::post('/tabel/kuliner/store', [KulinerController::class, 'store'])->name('store');
+    Route::post('/tabel/kuliner/store', 'store')->name('store');
 
-    Route::match(['get', 'post'], '/tabel/kuliner/edit/{kulinerId}', [KulinerController::class, 'update'])->name('update');
+    Route::match(['get', 'post'], '/tabel/kuliner/edit/{kulinerId}', 'update')->name('update');
 
-    Route::delete('/tabel/kuliner/delete/{kulinerId}', [KulinerController::class, 'destroy'])->name('destroy');
+    Route::delete('/tabel/kuliner/delete/{kulinerId}', 'destroy')->name('destroy');
 
-    Route::delete('/tabel/kuliner/deleteSelected', [KulinerController::class, 'deleteSelected']);
+    Route::delete('/tabel/kuliner/deleteSelected', 'deleteSelected');
 
-    Route::get('/tabel/kuliner/search', [KulinerController::class, 'index'])->name('index');
+    Route::get('/tabel/kuliner/search', 'index')->name('index');
 
-    Route::get('/tabel/kuliner/exportexcel', [KulinerController::class,'exportexcel'])->name('exportexcel');
+    Route::get('/tabel/kuliner/exportexcel', 'exportexcel')->name('exportexcel');
 
-    Route::post('/tabel/kuliner/importexcel', [KulinerController::class,'importexcel'])->name('importexcel');
+    Route::post('/tabel/kuliner/importexcel', 'importexcel')->name('importexcel');
+
+    Route::post('/tabel/kuliner/addkategori', 'addKategori')->name('addkategori');
 });
 
-Route::middleware(['auth', 'revalidate','role:AM|Administrator'])->name('toko.')->group(function () {
+Route::controller(TokoController::class)->middleware(['auth','revalidate','role:AM|Administrator'])->name('toko.')->group(function () {
     // table toko routes
-    Route::get('/tabel/toko', [TokoController::class, 'index']);
+    Route::get('/tabel/toko', 'index');
 
-    Route::post('/tabel/toko/store', [TokoController::class, 'store'])->name('store');
+    Route::post('/tabel/toko/store', 'store')->name('store');
 
-    Route::match(['get', 'post'], '/tabel/toko/edit/{tokoId}', [TokoController::class, 'update'])->name('update');
+    Route::match(['get', 'post'], '/tabel/toko/edit/{tokoId}', 'update')->name('update');
 
-    Route::delete('/tabel/toko/delete/{tokoId}', [TokoController::class, 'destroy'])->name('destroy');
+    Route::delete('/tabel/toko/delete/{tokoId}', 'destroy')->name('destroy');
 
-    Route::delete('/tabel/toko/deleteSelected', [TokoController::class, 'deleteSelected']);
+    Route::delete('/tabel/toko/deleteSelected', 'deleteSelected');
 
-    Route::get('/tabel/toko/search', [TokoController::class, 'index'])->name('index');
+    Route::get('/tabel/toko/exportexcel', 'exportexcel')->name('exportexcel');
 
-    Route::get('/tabel/toko/exportexcel', [TokoController::class,'exportexcel'])->name('exportexcel');
-
-    Route::post('/tabel/toko/importexcel', [TokoController::class,'importexcel'])->name('importexcel');
+    Route::post('/tabel/toko/importexcel', 'importexcel')->name('importexcel');
 });
 
-Route::middleware(['auth', 'revalidate','role:AM|Administrator'])->name('office.')->group(function () {
+Route::controller(OfficeController::class)->middleware(['auth','revalidate','role:AM|Administrator'])->name('office.')->group(function () {
     // table office routes
-    Route::get('/tabel/office', [OfficeController::class, 'index']);
+    Route::get('/tabel/office', 'index');
 
-    Route::post('/tabel/office/store', [OfficeController::class, 'store'])->name('store');
+    Route::post('/tabel/office/store', 'store')->name('store');
 
-    Route::match(['get', 'post'], '/tabel/office/edit/{officeId}', [OfficeController::class, 'update'])->name('update');
+    Route::match(['get', 'post'], '/tabel/office/edit/{officeId}', 'update')->name('update');
 
-    Route::delete('/tabel/office/delete/{officeId}', [OfficeController::class, 'destroy'])->name('destroy');
+    Route::delete('/tabel/office/delete/{officeId}', 'destroy')->name('destroy');
 
-    Route::delete('/tabel/office/deleteSelected', [OfficeController::class, 'deleteSelected']);
+    Route::delete('/tabel/office/deleteSelected', 'deleteSelected');
 
-    Route::get('/tabel/office/search', [OfficeController::class, 'index'])->name('index');
+    Route::get('/tabel/office/exportexcel', 'exportexcel')->name('exportexcel');
 
-    Route::get('/tabel/office/exportexcel', [OfficeController::class,'exportexcel'])->name('exportexcel');
-
-    Route::post('/tabel/office/importexcel', [OfficeController::class,'importexcel'])->name('importexcel');
+    Route::post('/tabel/office/importexcel', 'importexcel')->name('importexcel');
 });
 
-Route::middleware(['auth', 'revalidate','role:AM|Administrator'])->name('tourism.')->group(function () {
+Route::controller(TourismController::class)->middleware(['auth','revalidate','role:AM|Administrator'])->name('tourism.')->group(function () {
     // table tourism routes
-    Route::get('/tabel/tourism', [TourismController::class, 'index']);
+    Route::get('/tabel/tourism', 'index');
 
-    Route::post('/tabel/tourism/store', [TourismController::class, 'store'])->name('store');
+    Route::post('/tabel/tourism/store', 'store')->name('store');
 
-    Route::match(['get', 'post'], '/tabel/tourism/edit/{tourismId}', [TourismController::class, 'update'])->name('update');
+    Route::match(['get', 'post'], '/tabel/tourism/edit/{tourismId}', 'update')->name('update');
 
-    Route::delete('/tabel/tourism/delete/{tourismId}', [TourismController::class, 'destroy'])->name('destroy');
+    Route::delete('/tabel/tourism/delete/{tourismId}', 'destroy')->name('destroy');
 
-    Route::delete('/tabel/tourism/deleteSelected', [TourismController::class, 'deleteSelected']);
+    Route::delete('/tabel/tourism/deleteSelected', 'deleteSelected');
 
-    Route::get('/tabel/tourism/search', [TourismController::class, 'index'])->name('index');
+    Route::get('/tabel/tourism/exportexcel', 'exportexcel')->name('exportexcel');
 
-    Route::get('/tabel/tourism/exportexcel', [TourismController::class,'exportexcel'])->name('exportexcel');
-
-    Route::post('/tabel/tourism/importexcel', [TourismController::class,'importexcel'])->name('importexcel');
+    Route::post('/tabel/tourism/importexcel', 'importexcel')->name('importexcel');
 });
 
-Route::middleware(['auth', 'revalidate','role:AM|Administrator'])->name('buscen.')->group(function () {
-    // table business center routes
-    Route::get('/tabel/buscen', [BuscenController::class, 'index']);
+Route::controller(BuscenController::class)->middleware(['auth','revalidate','role:AM|Administrator'])->name('buscen.')->group(function () {
+    // table buscen routes
+    Route::get('/tabel/buscen', 'index');
 
-    Route::post('/tabel/buscen/store', [BuscenController::class, 'store'])->name('store');
+    Route::post('/tabel/buscen/store', 'store')->name('store');
 
-    Route::match(['get', 'post'], '/tabel/buscen/edit/{buscenId}', [BuscenController::class, 'update'])->name('update');
+    Route::match(['get', 'post'], '/tabel/buscen/edit/{buscenId}', 'update')->name('update');
 
-    Route::delete('/tabel/buscen/delete/{buscenId}', [BuscenController::class, 'destroy'])->name('destroy');
+    Route::delete('/tabel/buscen/delete/{buscenId}', 'destroy')->name('destroy');
 
-    Route::delete('/tabel/buscen/deleteSelected', [BuscenController::class, 'deleteSelected']);
+    Route::delete('/tabel/buscen/deleteSelected', 'deleteSelected');
 
-    Route::get('/tabel/buscen/search', [BuscenController::class, 'index'])->name('index');
+    Route::get('/tabel/buscen/exportexcel', 'exportexcel')->name('exportexcel');
 
-    Route::get('/tabel/buscen/exportexcel', [BuscenController::class,'exportexcel'])->name('exportexcel');
-
-    Route::post('/tabel/buscen/importexcel', [BuscenController::class,'importexcel'])->name('importexcel');
+    Route::post('/tabel/buscen/importexcel', 'importexcel')->name('importexcel');
 });
 
 Route::redirect('/', '/profile');
+

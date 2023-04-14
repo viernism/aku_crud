@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 
-class UserController extends Controller
+class AdminController extends Controller
 {
     public function index()
     {
         $users = User::paginate();
 
-        return view('pages.admin.admin', compact('users'));
+        $roles=Role::all();
+
+        return view('pages.admin.admin', compact('users','roles'));
     }
 
 
@@ -32,35 +35,30 @@ class UserController extends Controller
         $user->email = $validatedData['email'];
         // $user->name = $validatedData['phone'];
         $user->password = bcrypt($validatedData['password']); // Add password hashing
+        $role=$request->input('role');
+        $user->syncRoles($role);
         $user->save();
 
         // Redirect the user back to the admin panel with a success message
-        return redirect('/admin-panel')->with('success', 'User created successfully.');
+        return redirect()->back()->with('success', 'User created successfully.');
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $userId)
     {
-    $user = User::findOrFail($id);
-
-    // Validate the form data
-    $validatedData = $request->validate([
-        'name' => 'required',
-        'username' => 'required|unique:users,username,'. $user->id,
-        'email' => 'required|email|unique:users,email,' . $user->id,
-        'password' => 'nullable|min:8',
-    ]);
-
-    // Update the user in the database
-    $user->name = $validatedData['name'];
-    $user->username = $validatedData['username'];
-    $user->email = $validatedData['email'];
-    if (!empty($validatedData['password'])) {
-        $user->password = bcrypt($validatedData['password']);
-    }
-    $user->save();
+        if ($request->isMethod('post')) {
+            $data=$request->all();
+            $user = User::find($userId);
+            $user->name = $data['name'];
+            $user->username = $data['username'];
+            $user->email = $data['email'];
+            $role=$request->input('role');
+            $user->syncRoles($role);
+            // $user->bio=$data['bio'];
+            $user->update();
+        }
 
     // Redirect the user back to the admin panel with a success message
-    return redirect('/admin-panel')->with('success', 'User updated successfully.');
+        return redirect()->back()->with('success', 'User updated successfully.');
     }
 
     public function destroy(User $user)
@@ -69,6 +67,6 @@ class UserController extends Controller
         $user->delete();
 
         // Redirect the user back to the admin panel with a sucess message
-        return redirect('/admin-panel')->with('success', 'User deleted successfully.');
+        return redirect()->back()->with('success', 'User deleted successfully.');
     } // ok this stupid delete method took me an hour to figure out... well same with the rest...
 }
