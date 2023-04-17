@@ -13,7 +13,7 @@ nothing, we just can't explain it because its an inside jokes. it took 12 years 
 
 ## You may ask what the hell is this
 <p align="justify">
-    Made by two 16yo who have only learned 5 days worth of laravel before starting this project. It's a basic Laravel CRUD with quite the features.
+    Made by two teenagers who have only learned 5 days worth of laravel before starting this project. It's a basic Laravel CRUD with quite the features.
     <p align="justify">
     This project can handle CRUD operations through random methods, some use ajax, some I dont even know how I made it but it works.
     </p>
