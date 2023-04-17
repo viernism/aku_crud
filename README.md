@@ -73,7 +73,7 @@ nothing, we just can't explain it because its an inside jokes. it took 12 years 
 
 ## F A Q
 
-1.  Q: Why is the methods are so inconsistent?
+1.  Q: Why is the methods so inconsistent?
     <br>A: 🤓
     
 2.  Q: Why is the code so messy?
