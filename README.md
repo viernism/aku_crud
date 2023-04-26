@@ -94,7 +94,7 @@ nothing, we just can't explain it because its an inside jokes. it took 12 years 
     <br>A: heck yeah, we are newbie and managing code is hard -rhnn
 
 2. Q: Why is the database is so unorganized?
-    <br>A: Well, you can organize it yourself by separating the database for each function, like auth database, tables database and etc. But, since i'm a bit lazy to do that, so i just let it like this. -rhnn
+    <br>A: Well, you can organize it yourself if you want to, by separating the database for each function, like auth database, tables database and etc. But, since i'm a bit lazy to do that, so i just let it like this. -rhnn
 
 3. Q: Why i cant add more tables from the page?
     <br>A: Because it's only a basic CRUD app and have several hard things to do without changing the backend and things by yourself. I mean like, it has a lot of junkie tables relation, laravel-excel method and etc. - rhnn
@@ -110,3 +110,6 @@ nothing, we just can't explain it because its an inside jokes. it took 12 years 
 
 7.  Q: what does libir stands for?
     <br>A: I PUT NEW FORGIS ON THE JEEP
+
+
+(this is rly rude im really sorry...)
