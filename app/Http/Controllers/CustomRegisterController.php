@@ -18,10 +18,11 @@ class CustomRegisterController extends Controller
         return view('auth.register');
     }
 
-    public function registerUser(RegisterRequest $request){
+    public function registerUser(Request $request){
         $attributes=$request->all();
         $attributes['password']=Hash::make($request->password);
-        User::create($attributes);
+        $user=User::create($attributes);
+        $user->assignRole('AM');
 
         return redirect('/home');
         // $user=new User();
