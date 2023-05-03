@@ -25,21 +25,5 @@ class CustomRegisterController extends Controller
         $user->assignRole('AM');
 
         return redirect('/home');
-        // $user=new User();
-        // $user->name=$request->name;
-        // $user->username=$request->username;
-        // $user->password=Hash::make($request->password);
-        // $user->email=$request->email;
-        // $res=$user->save();
-
-        // if ($res) {
-        //     return redirect('login');
-        // } else {
-        //     return back()->back('fail','Unfortunately, you are not registered. Please try again');
-        // }
     }
-
-
-
-
 }

@@ -85,19 +85,6 @@ class BuscenController extends Controller
 
     public function update(Request $request, $buscenId)
     {
-        // $validatedData=$request->validate([
-        //     'NAMA' => 'required',
-        //     'KATEGORI' =>'required',
-        //     'ALAMAT' => 'required',
-        //     'KOORDINAT' => 'required',
-        //     'TEL_CUST' => 'required',
-        //     'PIC_CUST' => 'required',
-        //     'AM' => 'required',
-        //     'TEL_AM' => 'required',
-        //     'STO' => 'required',
-        //     'HERO' => 'required',
-        //     'TEL_HERO' => 'required'
-        // ]);
 
         if ($request->isMethod('post')) {
             $data=$request->all();
@@ -117,7 +104,7 @@ class BuscenController extends Controller
             $buscen->update();
 
             return redirect()->back()->with('success', 'Buscen updated successfully.');
-           }
+        }
     }
 
     public function destroy( $buscenId)
@@ -136,6 +123,18 @@ class BuscenController extends Controller
     {
         $ids = $request->input('id');
         Buscen::whereIn('id', $ids)->delete();
+    }
+
+    public function addKategori(Request $request){
+        $validatedKategori=$request->validate([
+            'Kategori'=>'required'
+        ]);
+
+        KategoriBuscen::create([
+            'Kategori'=>$validatedKategori['Kategori']
+        ]);
+
+        return redirect()->back()->with('success', 'Kategori successfully added');
     }
 
 

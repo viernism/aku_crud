@@ -84,22 +84,6 @@ class OfficeController extends Controller
     }
 
     public function update(Request $request, $officeId){
-
-
-        // $validatedData=$request->validate([
-        //     'NAMA' => 'required',
-        //     'KATEGORI' =>'required',
-        //     'ALAMAT' => 'required',
-        //     'KOORDINAT' => 'required',
-        //     'TEL_CUST' => 'required',
-        //     'PIC_CUST' => 'required',
-        //     'AM' => 'required',
-        //     'TEL_AM' => 'required',
-        //     'STO' => 'required',
-        //     'HERO' => 'required',
-        //     'TEL_HERO' => 'required'
-        // ]);
-
         if ($request->isMethod('post')) {
             $data=$request->all();
             $office = Office::find($officeId);
@@ -136,6 +120,18 @@ class OfficeController extends Controller
     {
         $ids = $request->input('id');
         Office::whereIn('id', $ids)->delete();
+    }
+
+    public function addKategori(Request $request){
+        $validatedKategori=$request->validate([
+            'Kategori'=>'required'
+        ]);
+
+        KategoriOffice::create([
+            'Kategori'=>$validatedKategori['Kategori']
+        ]);
+
+        return redirect()->back()->with('success', 'Kategori successfully added');
     }
 
 

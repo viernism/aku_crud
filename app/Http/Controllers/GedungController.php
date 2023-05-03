@@ -87,19 +87,6 @@ class GedungController extends Controller
 
     public function update(Request $request, $gedungId)
     {
-        // $validatedData = $request->validate([
-        //     'NAMA' => 'required',
-        //     'KATEGORI' => 'required',
-        //     'ALAMAT' => 'nullable',
-        //     'KOORDINAT' => 'nullable',
-        //     'TEL_CUST' => 'nullable',
-        //     'PIC_CUST' => 'nullable',
-        //     'AM' => 'nullable',
-        //     'TEL_AM' => 'nullable',
-        //     'STO' => 'nullable',
-        //     'HERO' => 'nullable',
-        //     'TEL_HERO' => 'nullable',
-        // ]);
 
        if ($request->isMethod('post')) {
         $data=$request->all();
@@ -138,6 +125,18 @@ class GedungController extends Controller
     {
         $ids = $request->input('id');
         Gedung::whereIn('id', $ids)->delete();
+    }
+
+    public function addKategori(Request $request){
+        $validatedKategori=$request->validate([
+            'Kategori'=>'required'
+        ]);
+
+        KategoriGedung::create([
+            'Kategori'=>$validatedKategori['Kategori']
+        ]);
+
+        return redirect()->back()->with('success', 'Kategori successfully added');
     }
 
     public function exportexcel(){

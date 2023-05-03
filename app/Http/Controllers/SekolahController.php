@@ -139,6 +139,18 @@ class SekolahController extends Controller
         Sekolah::whereIn('id', $ids)->delete();
     }
 
+    public function addLevel(Request $request){
+        $validatedLevel=$request->validate([
+            'LEVEL'=>'required'
+        ]);
+
+        LevelSekolah::create([
+            'LEVEL'=>$validatedLevel['LEVEL']
+        ]);
+
+        return redirect()->back()->with('success', 'Level successfully added');
+    }
+
 
     public function exportexcel(){
         return Excel::download(new SekolahExport,'datasekolah.xlsx');
