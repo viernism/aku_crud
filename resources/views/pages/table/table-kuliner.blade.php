@@ -64,8 +64,8 @@
                             <th>Kategori</th>
                             <th>Alamat</th>
                             <th>Koordinat</th>
-                            <th>Tel. Cust</th>
                             <th>PIC Cust</th>
+                            <th>Tel. Cust</th>
                             <th>AM</th>
                             <th>Tel. AM</th>
                             <th>STO</th>
@@ -88,8 +88,8 @@
                                 <td>{{ $kuliner->KATEGORI }}</td>
                                 <td>{{ $kuliner->ALAMAT }}</td>
                                 <td>{{ $kuliner->KOORDINAT }}</td>
-                                <td>{{ $kuliner->TEL_CUST }}</td>
                                 <td>{{ $kuliner->PIC_CUST }}</td>
+                                <td>{{ $kuliner->TEL_CUST }}</td>
                                 <td>{{ $kuliner->AM }}</td>
                                 <td>{{ $kuliner->TEL_AM }}</td>
                                 <td>{{ $kuliner->STO }} </td>
@@ -139,7 +139,7 @@
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content text-white">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -209,7 +209,7 @@
                         </div>
                         <div class="mb-3 ">
                             <label for="kategori" class="form-label select-label">Kategori</label>
-                            <select name="kategori" class="form-select" multiple>
+                            <select name="kategori" class="form-select">
                                 @foreach ($kategoris as $kategori)
                                     <option value="{{ $kategori->Kategori }}">{{ $kategori->Kategori }}</option>
                                 @endforeach
@@ -224,12 +224,12 @@
                             <input type="text" class="form-control" id="koordinat" name="koordinat" required>
                         </div>
                         <div class="mb-3">
-                            <label for="tel_cust" class="form-label">Tel. Cust</label>
-                            <input type="text" class="form-control" id="tel_cust" name="tel_cust" required>
-                        </div>
-                        <div class="mb-3">
                             <label for="pic_cust" class="form-label">PIC Cust</label>
                             <input type="text" class="form-control" id="pic_cust" name="pic_cust" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tel_cust" class="form-label">Tel. Cust</label>
+                            <input type="number" class="form-control" id="tel_cust" name="tel_cust" required>
                         </div>
                         <div class="mb-3">
                             <label for="am" class="form-label">AM</label>
@@ -237,7 +237,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="tel_am" class="form-label">Tel. AM</label>
-                            <input type="text" class="form-control" id="tel_am" name="tel_am" required>
+                            <input type="number" class="form-control" id="tel_am" name="tel_am" required>
                         </div>
                         <div class="mb-3">
                             <label for="sto" class="form-label">STO</label>
@@ -249,7 +249,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="tel_hero" class="form-label">Tel. Hero</label>
-                            <input type="text" class="form-control" id="tel_hero" name="tel_hero" required>
+                            <input type="number" class="form-control" id="tel_hero" name="tel_hero" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -265,7 +265,7 @@
     <div class="modal fade modal-dialog-scrollable" id="editKulinerModal-{{ $kuliner->id }}" id="staticBackdrop" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="editKulinerModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div class="modal-content text-white">
                 <form method="POST" action="{{ url('/tabel/kuliner/edit/'.$kuliner->id) }}">
                     @csrf
                     <div class="modal-header">
@@ -294,12 +294,12 @@
                             <input type="text" class="form-control" id="edit-coor" name="KOORDINAT" value="{{ $kuliner->KOORDINAT }}" required>
                         </div>
                         <div class="mb-3">
-                            <label for="edit-telcust" class="form-label">Tel. Cust</label>
-                            <input type="text" class="form-control" id="edit-telcust" name="TEL_CUST" value="{{ $kuliner->TEL_CUST }}" required>
-                        </div>
-                        <div class="mb-3">
                             <label for="edit-piccust" class="form-label">PIC Cust</label>
                             <input type="text" class="form-control" id="edit-piccust" name="PIC_CUST" value="{{ $kuliner->PIC_CUST }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-telcust" class="form-label">Tel. Cust</label>
+                            <input type="number" class="form-control" id="edit-telcust" name="TEL_CUST" value="{{ $kuliner->TEL_CUST }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-am" class="form-label">AM</label>
@@ -307,7 +307,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="edit-telam" class="form-label">Tel. AM</label>
-                            <input type="text" class="form-control" id="edit-telam" name="TEL_AM" value="{{ $kuliner->TEL_AM }}" required>
+                            <input type="number" class="form-control" id="edit-telam" name="TEL_AM" value="{{ $kuliner->TEL_AM }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-sto" class="form-label">STO</label>
@@ -319,7 +319,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="edit-telhero" class="form-label">Tel. Hero</label>
-                            <input type="text" class="form-control" id="edit-telhero" name="TEL_HERO" value="{{ $kuliner->TEL_HERO }}" required>
+                            <input type="number" class="form-control" id="edit-telhero" name="TEL_HERO" value="{{ $kuliner->TEL_HERO }}" required>
                         </div>
                     </div>
                     <div class="modal-footer">

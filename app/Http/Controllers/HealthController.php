@@ -85,19 +85,6 @@ class HealthController extends Controller
 
     public function update(Request $request, $healthId)
     {
-        // $validatedData=$request->validate([
-        //     'NAMA' => 'required',
-        //     'KATEGORI' =>'required',
-        //     'ALAMAT' => 'required',
-        //     'KOORDINAT' => 'required',
-        //     'TEL_CUST' => 'required',
-        //     'PIC_CUST' => 'required',
-        //     'AM' => 'required',
-        //     'TEL_AM' => 'required',
-        //     'STO' => 'required',
-        //     'HERO' => 'required',
-        //     'TEL_HERO' => 'required'
-        // ]);
 
         if ($request->isMethod('post')) {
             $data=$request->all();
@@ -135,6 +122,18 @@ class HealthController extends Controller
     {
         $ids = $request->input('id');
         Health::whereIn('id', $ids)->delete();
+    }
+
+    public function addKategori(Request $request){
+        $validatedKategori=$request->validate([
+            'Kategori'=>'required'
+        ]);
+
+        KategoriHealth::create([
+            'Kategori'=>$validatedKategori['Kategori']
+        ]);
+
+        return redirect()->back()->with('success', 'Kategori successfully added');
     }
 
     public function exportexcel(){

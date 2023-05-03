@@ -10,45 +10,14 @@
                             <h2>Table <b> Sekolah</b></h2>
                         </div>
                         <div class="col-6">
-                            <a href="#addSekolahModal" class="btn btn-success" data-bs-toggle="modal"><i
-                                    class="bi bi-plus-circle"></i><span>Add New Data</span></a>
-                            <a href="#deleteSelectedSekolahModal" class="btn btn-danger" data-bs-toggle="modal"><i
-                                    class="bi bi-trash"></i><span>Delete</span></a>
+                            <a href="#addSekolahModal" class="btn btn-success" data-bs-toggle="modal">Add New Data</a>
+                            <a href="#deleteSelectedSekolahModal" class="btn btn-danger" data-bs-toggle="modal">Delete</a>
                             <a href="/tabel/sekolah/exportexcel" class="btn btn-info">Export</a>
                             <!-- Button trigger modal -->
                             <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                                 class="btn btn-warning">Import</a>
-                            <!-- Modal -->
-                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <form action="{{ route('sekolah.importexcel') }}" method="post"
-                                            enctype="multipart/form-data">
-                                            @csrf
-                                            <div class="modal-body">
-                                                <div class="mb-3">
-                                                    <label for="formFile" class="form-label">Insert File</label>
-                                                    <input class="form-control" type="file" id="formFile"
-                                                        name="upexcel"><br>
-                                                    <p>Caution: only .XLSX files allowed</p>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-warning"
-                                                    data-bs-dismiss="modal">Import</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+
+                            <a href="#addLevelModal" class="btn btn-secondary" data-bs-toggle="modal">Add Level</a>
                         </div>
                     </div>
                 </div>
@@ -96,8 +65,8 @@
                             <th>Level</th>
                             <th>Alamat</th>
                             <th>Koordinat</th>
-                            <th>Tel. Cust</th>
                             <th>PIC Cust</th>
+                            <th>Tel. Cust</th>
                             <th>AM</th>
                             <th>Tel. AM</th>
                             <th>STO</th>
@@ -120,8 +89,8 @@
                                 <td>{{ $sekolah->LEVEL }}</td>
                                 <td>{{ $sekolah->ALAMAT }}</td>
                                 <td>{{ $sekolah->KOORDINAT }}</td>
-                                <td>{{ $sekolah->TEL_CUST }}</td>
                                 <td>{{ $sekolah->PIC_CUST }}</td>
+                                <td>{{ $sekolah->TEL_CUST }}</td>
                                 <td>{{ $sekolah->AM }}</td>
                                 <td>{{ $sekolah->TEL_AM }}</td>
                                 <td>{{ $sekolah->STO }} </td>
@@ -145,26 +114,80 @@
                         <b>{{ $sekolahs->lastItem() }}</b> of
                         <b>{{ $sekolahs->total() }}</b> entries
                     </div>
-                    <div class="pagination">
-                        <ul class="pagination mt-3">
-                            @if ($sekolahs->currentPage() > 1)
-                                <li class="page-item">
-                                    <a href="{{ $sekolahs->previousPageUrl() }}" class="page-link">Previous</a>
-                                </li>
-                            @endif
-                            @for ($i = 1; $i <= $sekolahs->lastPage(); $i++)
-                                <li class="page-item{{ $sekolahs->currentPage() == $i ? ' active' : '' }}">
-                                    <a href="{{ $sekolahs->url($i) }}" class="page-link">{{ $i }}</a>
-                                </li>
-                            @endfor
-                            @if ($sekolahs->currentPage() < $sekolahs->lastPage())
-                                <li class="page-item">
-                                    <a href="{{ $sekolahs->nextPageUrl() }}" class="page-link">Next</a>
-                                </li>
-                            @endif
-                        </ul>
-                    </div>
+                    <ul class="pagination">
+                        @if ($sekolahs->currentPage() > 1)
+                            <li class="page-item">
+                                <a href="{{ $sekolahs->previousPageUrl() }}" class="page-link">Previous</a>
+                            </li>
+                        @endif
+                        @for ($i = 1; $i <= $sekolahs->lastPage(); $i++)
+                            <li class="page-item{{ $sekolahs->currentPage() == $i ? ' active' : '' }}">
+                                <a href="{{ $sekolahs->url($i) }}" class="page-link">{{ $i }}</a>
+                            </li>
+                        @endfor
+                        @if ($sekolahs->currentPage() < $sekolahs->lastPage())
+                            <li class="page-item">
+                                <a href="{{ $sekolahs->nextPageUrl() }}" class="page-link">Next</a>
+                            </li>
+                        @endif
+                    </ul>
                 </div>
+            </div>
+        </div>
+    </div>
+        <!-- Modal import -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content text-white">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <form action="{{ route('sekolah.importexcel') }}" method="post"
+                    enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Insert File</label>
+                            <input class="form-control" type="file" id="formFile"
+                                name="upexcel"><br>
+                            <p>Caution: only .XLSX files allowed</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-warning"
+                            data-bs-dismiss="modal">Import</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{-- modal add level --}}
+    <div class="modal fade" id="addLevelModal" tabindex="-1" role="dialog" aria-labelledby="addLevelModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content text-white">
+                <form method="POST" action="{{ route('sekolah.addlevel') }}">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addLevelModalLabel">Add Level</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="LEVEL" class="form-label">Nama Level</label>
+                            <input type="text" class="form-control" id="LEVEL" name="LEVEL" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success">Add sekolah</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -173,20 +196,20 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content text-white">
-                <form method="POST" action="{{ url('/tabel/sekolah/store') }}">
+                <form method="POST" action="{{ route('sekolah.store') }}">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addSekolahModalLabel">Add Sekolah</h5>
+                        <h5 class="modal-title" id="addSekolahModalLabel">Add sekolah</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="nama" class="form-label">Nama</label>
-                            <input type="text" class="form-control" id="nama" name="nama"required>
+                            <input type="text" class="form-control" id="nama" name="nama" required>
                         </div>
-                        <div class="mb-3">
-                            <label for="LEVEL" class="form-label">Level</label><br>
-                            <select name="LEVEL" class="form-select">
+                        <div class="mb-3 ">
+                            <label for="level" class="form-label select-label">Level</label>
+                            <select name="level" class="form-select">
                                 @foreach ($levels as $level)
                                     <option value="{{ $level->LEVEL }}">{{ $level->LEVEL }}</option>
                                 @endforeach
@@ -201,12 +224,12 @@
                             <input type="text" class="form-control" id="koordinat" name="koordinat" required>
                         </div>
                         <div class="mb-3">
-                            <label for="tel_cust" class="form-label">Tel. Cust</label>
-                            <input type="text" class="form-control" id="tel_cust" name="tel_cust" required>
-                        </div>
-                        <div class="mb-3">
                             <label for="pic_cust" class="form-label">PIC Cust</label>
                             <input type="text" class="form-control" id="pic_cust" name="pic_cust" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tel_cust" class="form-label">Tel. Cust</label>
+                            <input type="number" class="form-control" id="tel_cust" name="tel_cust" required>
                         </div>
                         <div class="mb-3">
                             <label for="am" class="form-label">AM</label>
@@ -214,7 +237,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="tel_am" class="form-label">Tel. AM</label>
-                            <input type="text" class="form-control" id="tel_am" name="tel_am" required>
+                            <input type="number" class="form-control" id="tel_am" name="tel_am" required>
                         </div>
                         <div class="mb-3">
                             <label for="sto" class="form-label">STO</label>
@@ -226,12 +249,12 @@
                         </div>
                         <div class="mb-3">
                             <label for="tel_hero" class="form-label">Tel. Hero</label>
-                            <input type="text" class="form-control" id="tel_hero" name="tel_hero" required>
+                            <input type="number" class="form-control" id="tel_hero" name="tel_hero" required>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-success">Add Sekolah</button>
+                        <button type="submit" class="btn btn-success">Add sekolah</button>
                     </div>
                 </form>
             </div>
@@ -239,102 +262,99 @@
     </div>
     <!-- Edit Modal HTML -->
     @foreach ($sekolahs as $sekolah)
-    <div class="modal fade" id="editSekolahModal-{{ $sekolah->id }}" tabindex="-1" role="dialog" aria-labelledby="editSekolahModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content text-white">
-            <form method="POST" action="{{ url('/tabel/sekolah/edit/'.$sekolah->id) }}" id="edit-sekolah-form">
-                @csrf
-                {{-- @method('PUT') --}}
+    <div class="modal fade modal-dialog-scrollable" id="editSekolahModal-{{ $sekolah->id }}" id="staticBackdrop" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="editSekolahModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content text-white">
+                <form method="POST" action="{{ url('/tabel/sekolah/edit/'.$sekolah->id) }}">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editSekolahModalLabel">Edit Sekolah</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="edit-name" class="form-label">Nama Sekolah</label>
+                            <input type="text" class="form-control" id="edit-name" name="NAMA" value="{{ $sekolah->NAMA }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-level" class="form-label select-label">Level</label><br>
+                            <select name="KATEGORI" class="form-select" id="edit-level">
+                                @foreach ($levels as $level)
+                                    <option @selected($level->LEVEL == $sekolah->LEVEL) value="{{ $level->LEVEL }}">{{ $level->LEVEL }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-address" class="form-label">Alamat</label>
+                            <textarea class="form-control" id="edit-address" name="ALAMAT" required>{{ $sekolah->ALAMAT }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-coor" class="form-label">Koordinat</label>
+                            <input type="text" class="form-control" id="edit-coor" name="KOORDINAT" value="{{ $sekolah->KOORDINAT }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-piccust" class="form-label">PIC Cust</label>
+                            <input type="text" class="form-control" id="edit-piccust" name="PIC_CUST" value="{{ $sekolah->PIC_CUST }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-telcust" class="form-label">Tel. Cust</label>
+                            <input type="number" class="form-control" id="edit-telcust" name="TEL_CUST" value="{{ $sekolah->TEL_CUST }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-am" class="form-label">AM</label>
+                            <input type="text" class="form-control" id="edit-am" name="AM" value="{{ $sekolah->AM }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-telam" class="form-label">Tel. AM</label>
+                            <input type="number" class="form-control" id="edit-telam" name="TEL_AM" value="{{ $sekolah->TEL_AM }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-sto" class="form-label">STO</label>
+                            <input type="text" class="form-control" id="edit-sto" name="STO" value="{{ $sekolah->STO }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-hero" class="form-label">Hero</label>
+                            <input type="text" class="form-control" id="edit-hero" name="HERO" value="{{ $sekolah->HERO }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-telhero" class="form-label">Tel. Hero</label>
+                            <input type="number" class="form-control" id="edit-telhero" name="TEL_HERO" value="{{ $sekolah->TEL_HERO }}" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @endforeach
+    <!-- Delete Modal HTML -->
+    <div class="modal fade" id="deleteSekolahModal" tabindex="-1" aria-labelledby="deleteSekolahModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content text-white">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editSekolahModalLabel">Edit Sekolah</h5>
+                    <h4 class="modal-title" id="deleteSekolahModalLabel">Delete Sekolah</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="edit-name" class="form-label">Nama Sekolah</label>
-                        <input type="text" class="form-control" id="edit-name" name="NAMA" value="{{ $sekolah->NAMA }}"
-                            required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="LEVEL" class="form-label">Level</label><br>
-                        <select name="LEVEL[]" class="form-select" id="edit-kategori">
-                            @foreach ($levels as $level)
-                            <option @selected($level->LEVEL == $sekolah->LEVEL) value="{{ $level->LEVEL }}">{{ $level->LEVEL }}</option>
-
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-address" class="form-label">Alamat</label>
-                        <textarea class="form-control" id="edit-address" name="ALAMAT" required>{{ $sekolah->ALAMAT }}</textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-coor" class="form-label">Koordinat</label>
-                        <input type="text" class="form-control" id="edit-coor" name="KOORDINAT" value="{{ $sekolah->KOORDINAT }}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-telcust" class="form-label">Tel. Cust</label>
-                        <input type="text" class="form-control" id="edit-telcust" name="TEL_CUST" value="{{ $sekolah->TEL_CUST }}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-piccust" class="form-label">PIC Cust</label>
-                        <input type="text" class="form-control" id="edit-piccust" name="PIC_CUST" value="{{ $sekolah->PIC_CUST }}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-am" class="form-label">AM</label>
-                        <input type="text" class="form-control" id="edit-am" name="AM" value="{{ $sekolah->AM }}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-telam" class="form-label">Tel. AM</label>
-                        <input type="text" class="form-control" id="edit-telam" name="TEL_AM" value="{{ $sekolah->TEL_AM }}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-sto" class="form-label">STO</label>
-                        <input type="text" class="form-control" id="edit-sto" name="STO" value="{{ $sekolah->STO }}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-hero" class="form-label">Hero</label>
-                        <input type="text" class="form-control" id="edit-hero" name="HERO" value="{{ $sekolah->HERO }}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-telhero" class="form-label">Tel. Hero</label>
-                        <input type="text" class="form-control" id="edit-telhero" name="TEL_HERO" value="{{ $sekolah->TEL_HERO }}" required>
-                    </div>
+                    <p>Are you sure you want to delete these records?</p>
+                    <p class="text-warning"><small>This action cannot be undone.</small></p>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </form>
+                <form action="{{ route('sekolah.destroy', ':sekolahId') }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-    @endforeach
-     <!-- Delete Modal HTML -->
-     <div class="modal fade" id="deleteSekolahModal" tabindex="-1" aria-labelledby="deleteSekolahModalLabel"
-     aria-hidden="true">
-     <div class="modal-dialog">
-         <div class="modal-content text-white">
-             <div class="modal-header">
-                 <h4 class="modal-title" id="deleteSekolahModalLabel">Delete Sekolah</h4>
-                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-             </div>
-             <div class="modal-body">
-                 <p>Are you sure you want to delete these records?</p>
-                 <p class="text-warning"><small>This action cannot be undone.</small></p>
-             </div>
-             <form action="{{ route('sekolah.destroy', ':sekolahId') }}" method="POST">
-                 @csrf
-                 @method('DELETE')
-                 <div class="modal-footer">
-                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                     <button type="submit" class="btn btn-danger">Delete</button>
-                 </div>
-             </form>
-         </div>
-     </div>
- </div>
     <!-- Delete Selected Modal HTML -->
     <div class="modal fade" id="deleteSelectedSekolahModal" tabindex="-1"
         aria-labelledby="deleteSelectedSekolahModalLabel" aria-hidden="true">

@@ -118,6 +118,8 @@ Route::controller(GedungController::class)->middleware(['auth','revalidate','rol
     Route::get('/tabel/gedung/exportexcel', 'exportexcel')->name('exportexcel');
 
     Route::post('/tabel/gedung/importexcel', 'importexcel')->name('importexcel');
+
+    Route::post('/tabel/gedung/addkategori', 'addKategori')->name('addkategori');
 });
 
 Route::controller(SekolahController::class)->middleware(['auth', 'revalidate','role:AM|Administrator'])->name('sekolah.')->group(function () {
@@ -135,6 +137,8 @@ Route::controller(SekolahController::class)->middleware(['auth', 'revalidate','r
     Route::get('/tabel/sekolah/exportexcel', 'exportexcel')->name('exportexcel');
 
     Route::post('/tabel/sekolah/importexcel', 'importexcel')->name('importexcel');
+
+    Route::post('/tabel/sekolah/addlevel', 'addLevel')->name('addlevel');
 });
 
 Route::controller(HealthController::class)->middleware(['auth','revalidate','role:AM|Administrator'])->name('health.')->group(function () {
@@ -152,6 +156,8 @@ Route::controller(HealthController::class)->middleware(['auth','revalidate','rol
     Route::get('/tabel/health/exportexcel', 'exportexcel')->name('exportexcel');
 
     Route::post('/tabel/health/importexcel', 'importexcel')->name('importexcel');
+
+    Route::post('/tabel/health/addkategori', 'addKategori')->name('addkategori');
 });
 
 Route::controller(KulinerController::class)->middleware(['auth', 'revalidate','role:AM|Administrator'])->name('kuliner.')->group(function () {
@@ -190,6 +196,8 @@ Route::controller(TokoController::class)->middleware(['auth','revalidate','role:
     Route::get('/tabel/toko/exportexcel', 'exportexcel')->name('exportexcel');
 
     Route::post('/tabel/toko/importexcel', 'importexcel')->name('importexcel');
+
+    Route::post('/tabel/toko/addkategori', 'addKategori')->name('addkategori');
 });
 
 Route::controller(OfficeController::class)->middleware(['auth','revalidate','role:AM|Administrator'])->name('office.')->group(function () {
@@ -207,6 +215,8 @@ Route::controller(OfficeController::class)->middleware(['auth','revalidate','rol
     Route::get('/tabel/office/exportexcel', 'exportexcel')->name('exportexcel');
 
     Route::post('/tabel/office/importexcel', 'importexcel')->name('importexcel');
+
+    Route::post('/tabel/office/addkategori', 'addKategori')->name('addkategori');
 });
 
 Route::controller(TourismController::class)->middleware(['auth','revalidate','role:AM|Administrator'])->name('tourism.')->group(function () {
@@ -224,6 +234,8 @@ Route::controller(TourismController::class)->middleware(['auth','revalidate','ro
     Route::get('/tabel/tourism/exportexcel', 'exportexcel')->name('exportexcel');
 
     Route::post('/tabel/tourism/importexcel', 'importexcel')->name('importexcel');
+
+    Route::post('/tabel/tourism/addkategori', 'addKategori')->name('addkategori');
 });
 
 Route::controller(BuscenController::class)->middleware(['auth','revalidate','role:AM|Administrator'])->name('buscen.')->group(function () {
@@ -241,6 +253,8 @@ Route::controller(BuscenController::class)->middleware(['auth','revalidate','rol
     Route::get('/tabel/buscen/exportexcel', 'exportexcel')->name('exportexcel');
 
     Route::post('/tabel/buscen/importexcel', 'importexcel')->name('importexcel');
+
+    Route::post('/tabel/buscen/addkategori', 'addKategori')->name('addkategori');
 });
 
 Route::redirect('/', '/profile');

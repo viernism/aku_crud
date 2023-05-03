@@ -10,45 +10,14 @@
                             <h2>Table <b> Health</b></h2>
                         </div>
                         <div class="col-6">
-                            <a href="#addHealthModal" class="btn btn-success" data-bs-toggle="modal"><i
-                                    class="bi bi-plus-circle"></i><span>Add New Data</span></a>
-                            <a href="#deleteSelectedHealthModal" class="btn btn-danger" data-bs-toggle="modal"><i
-                                    class="bi bi-trash"></i><span>Delete</span></a>
+                            <a href="#addHealthModal" class="btn btn-success" data-bs-toggle="modal">Add New Data</a>
+                            <a href="#deleteSelectedHealthModal" class="btn btn-danger" data-bs-toggle="modal">Delete</a>
                             <a href="/tabel/health/exportexcel" class="btn btn-info">Export</a>
                             <!-- Button trigger modal -->
                             <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                                 class="btn btn-warning">Import</a>
-                            <!-- Modal -->
-                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <form action="{{ route('health.importexcel') }}" method="post"
-                                            enctype="multipart/form-data">
-                                            @csrf
-                                            <div class="modal-body">
-                                                <div class="mb-3">
-                                                    <label for="formFile" class="form-label">Insert File</label>
-                                                    <input class="form-control" type="file" id="formFile"
-                                                        name="upexcel"><br>
-                                                    <p>Caution: only .XLSX files allowed</p>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-warning"
-                                                    data-bs-dismiss="modal">Import</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+
+                            <a href="#addKategoriModal" class="btn btn-secondary" data-bs-toggle="modal">Add Kategori</a>
                         </div>
                     </div>
                 </div>
@@ -65,7 +34,7 @@
                         </div>
                         <div class="col-md-3">
                             <span>Filter by AM:</span>
-                            <select id="filter-am" name="filter-am" class="form-select">
+                            <select class="form-select" id="filter-am" name="filter-am">
                                 <option value="" {{ request()->input('filter-am') == '' ? 'selected' : '' }}>All AMs
                                 </option>
                                 @foreach ($ams as $am)
@@ -128,7 +97,7 @@
                                 <td>{{ $health->TEL_HERO }}</td>
                                 <td>
                                     <a href="#" class="edit" data-bs-toggle="modal"
-                                        data-bs-target="#editHealthModal-{{ $health->id }}" data-health-id="{{ $health->id }}">
+                                        data-bs-target="#editHealthModal-{{$health->id}}" data-health-id="{{ $health->id }}">
                                         <i class="ri-pencil-line" data-bs-toggle="tooltip" title="Edit"></i>
                                     </a>
                                     <a href="#" class="delete" data-bs-toggle="modal"
@@ -166,11 +135,67 @@
             </div>
         </div>
     </div>
+        <!-- Modal import -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content text-white">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <form action="{{ route('health.importexcel') }}" method="post"
+                    enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Insert File</label>
+                            <input class="form-control" type="file" id="formFile"
+                                name="upexcel"><br>
+                            <p>Caution: only .XLSX files allowed</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-warning"
+                            data-bs-dismiss="modal">Import</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{-- modal add kategori --}}
+    <div class="modal fade" id="addKategoriModal" tabindex="-1" role="dialog" aria-labelledby="addKategoriModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content text-white">
+                <form method="POST" action="{{ route('health.addkategori') }}">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addKategoriModalLabel">Add Kategori</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="Kategori" class="form-label">Nama Kategori</label>
+                            <input type="text" class="form-control" id="Kategori" name="Kategori" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success">Add health</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <!-- Add Modal HTML -->
-    <div class="modal fade" id="addHealthModal" id="staticBackdrop" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="addHealthModalLabel"
+    <div class="modal fade" id="addHealthModal" tabindex="-1" role="dialog" aria-labelledby="addHealthModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div class="modal-content text-white">
                 <form method="POST" action="{{ route('health.store') }}">
                     @csrf
                     <div class="modal-header">
@@ -183,7 +208,7 @@
                             <input type="text" class="form-control" id="nama" name="nama" required>
                         </div>
                         <div class="mb-3 ">
-                            <label for="kategori" class="form-label">Kategori</label><br>
+                            <label for="kategori" class="form-label select-label">Kategori</label>
                             <select name="kategori" class="form-select">
                                 @foreach ($kategoris as $kategori)
                                     <option value="{{ $kategori->Kategori }}">{{ $kategori->Kategori }}</option>
@@ -237,10 +262,10 @@
     </div>
     <!-- Edit Modal HTML -->
     @foreach ($healths as $health)
-    <div class="modal fade" id="editHealthModal-{{ $health->id }}" id="staticBackdrop" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="editHealthModalLabel"
+    <div class="modal fade modal-dialog-scrollable" id="editHealthModal-{{ $health->id }}" id="staticBackdrop" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="editHealthModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div class="modal-content text-white">
                 <form method="POST" action="{{ url('/tabel/health/edit/'.$health->id) }}">
                     @csrf
                     <div class="modal-header">
@@ -253,7 +278,7 @@
                             <input type="text" class="form-control" id="edit-name" name="NAMA" value="{{ $health->NAMA }}" required>
                         </div>
                         <div class="mb-3">
-                            <label for="edit-kategori" class="form-label">Kategori</label><br>
+                            <label for="edit-kategori" class="form-label select-label">Kategori</label><br>
                             <select name="KATEGORI" class="form-select" id="edit-kategori">
                                 @foreach ($kategoris as $kategori)
                                     <option @selected($kategori->Kategori == $health->KATEGORI) value="{{ $kategori->Kategori }}">{{ $kategori->Kategori }}</option>
@@ -310,7 +335,7 @@
     <div class="modal fade" id="deleteHealthModal" tabindex="-1" aria-labelledby="deleteHealthModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content ">
+            <div class="modal-content text-white">
                 <div class="modal-header">
                     <h4 class="modal-title" id="deleteHealthModalLabel">Delete Health</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

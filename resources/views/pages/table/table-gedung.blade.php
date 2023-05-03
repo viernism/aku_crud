@@ -10,45 +10,14 @@
                             <h2>Table <b> Gedung</b></h2>
                         </div>
                         <div class="col-6">
-                            <a href="#addGedungModal" class="btn btn-success" data-bs-toggle="modal"><i
-                                    class="bi bi-plus-circle"></i><span>Add New Data</span></a>
-                            <a href="#deleteSelectedGedungModal" class="btn btn-danger" data-bs-toggle="modal"><i
-                                    class="bi bi-trash"></i><span>Delete</span></a>
+                            <a href="#addGedungModal" class="btn btn-success" data-bs-toggle="modal">Add New Data</a>
+                            <a href="#deleteSelectedGedungModal" class="btn btn-danger" data-bs-toggle="modal">Delete</a>
                             <a href="/tabel/gedung/exportexcel" class="btn btn-info">Export</a>
                             <!-- Button trigger modal -->
                             <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                                 class="btn btn-warning">Import</a>
-                            <!-- Modal -->
-                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <form action="{{ route('gedung.importexcel') }}" method="post"
-                                            enctype="multipart/form-data">
-                                            @csrf
-                                            <div class="modal-body">
-                                                <div class="mb-3">
-                                                    <label for="formFile" class="form-label">Insert File</label>
-                                                    <input class="form-control" type="file" id="formFile"
-                                                        name="upexcel"><br>
-                                                    <p>Caution: only .XLSX files allowed</p>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-warning"
-                                                    data-bs-dismiss="modal">Import</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+
+                            <a href="#addKategoriModal" class="btn btn-secondary" data-bs-toggle="modal">Add Kategori</a>
                         </div>
                     </div>
                 </div>
@@ -65,7 +34,7 @@
                         </div>
                         <div class="col-md-3">
                             <span>Filter by AM:</span>
-                            <select id="filter-am" name="filter-am" class="form-select">
+                            <select class="form-select" id="filter-am" name="filter-am">
                                 <option value="" {{ request()->input('filter-am') == '' ? 'selected' : '' }}>All AMs
                                 </option>
                                 @foreach ($ams as $am)
@@ -128,7 +97,7 @@
                                 <td>{{ $gedung->TEL_HERO }}</td>
                                 <td>
                                     <a href="#" class="edit" data-bs-toggle="modal"
-                                        data-bs-target="#editGedungModal-{{ $gedung->id }}" data-gedung-id="{{ $gedung->id }}">
+                                        data-bs-target="#editGedungModal-{{$gedung->id}}" data-gedung-id="{{ $gedung->id }}">
                                         <i class="ri-pencil-line" data-bs-toggle="tooltip" title="Edit"></i>
                                     </a>
                                     <a href="#" class="delete" data-bs-toggle="modal"
@@ -166,15 +135,71 @@
             </div>
         </div>
     </div>
-    <!-- Add Modal HTML -->
-    <div class="modal fade modal-dialog-scrollable" id="addGedungModal" id="staticBackdrop" data-bs-backdrop="static"
-        tabindex="-1" role="dialog" aria-labelledby="addGedungModalLabel" aria-hidden="true">
+        <!-- Modal import -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content text-white">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <form action="{{ route('gedung.importexcel') }}" method="post"
+                    enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Insert File</label>
+                            <input class="form-control" type="file" id="formFile"
+                                name="upexcel"><br>
+                            <p>Caution: only .XLSX files allowed</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-warning"
+                            data-bs-dismiss="modal">Import</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{-- modal add kategori --}}
+    <div class="modal fade" id="addKategoriModal" tabindex="-1" role="dialog" aria-labelledby="addKategoriModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div class="modal-content text-white">
+                <form method="POST" action="{{ route('gedung.addkategori') }}">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addKategoriModalLabel">Add Kategori</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="Kategori" class="form-label">Nama Kategori</label>
+                            <input type="text" class="form-control" id="Kategori" name="Kategori" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success">Add gedung</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Add Modal HTML -->
+    <div class="modal fade" id="addGedungModal" tabindex="-1" role="dialog" aria-labelledby="addGedungModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content text-white">
                 <form method="POST" action="{{ route('gedung.store') }}">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addGedungModalLabel">Add Gedung</h5>
+                        <h5 class="modal-title" id="addGedungModalLabel">Add gedung</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -182,8 +207,8 @@
                             <label for="nama" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="nama" name="nama" required>
                         </div>
-                        <div class="mb-3">
-                            <label for="kategori" class="form-label">Kategori</label><br>
+                        <div class="mb-3 ">
+                            <label for="kategori" class="form-label select-label">Kategori</label>
                             <select name="kategori" class="form-select">
                                 @foreach ($kategoris as $kategori)
                                     <option value="{{ $kategori->Kategori }}">{{ $kategori->Kategori }}</option>
@@ -204,7 +229,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="tel_cust" class="form-label">Tel. Cust</label>
-                            <input type="text" class="form-control" id="tel_cust" name="tel_cust" required>
+                            <input type="number" class="form-control" id="tel_cust" name="tel_cust" required>
                         </div>
                         <div class="mb-3">
                             <label for="am" class="form-label">AM</label>
@@ -212,7 +237,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="tel_am" class="form-label">Tel. AM</label>
-                            <input type="text" class="form-control" id="tel_am" name="tel_am" required>
+                            <input type="number" class="form-control" id="tel_am" name="tel_am" required>
                         </div>
                         <div class="mb-3">
                             <label for="sto" class="form-label">STO</label>
@@ -224,12 +249,12 @@
                         </div>
                         <div class="mb-3">
                             <label for="tel_hero" class="form-label">Tel. Hero</label>
-                            <input type="text" class="form-control" id="tel_hero" name="tel_hero" required>
+                            <input type="number" class="form-control" id="tel_hero" name="tel_hero" required>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-success">Add Gedung</button>
+                        <button type="submit" class="btn btn-success">Add gedung</button>
                     </div>
                 </form>
             </div>
@@ -240,7 +265,7 @@
     <div class="modal fade modal-dialog-scrollable" id="editGedungModal-{{ $gedung->id }}" id="staticBackdrop" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="editGedungModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div class="modal-content text-white">
                 <form method="POST" action="{{ url('/tabel/gedung/edit/'.$gedung->id) }}">
                     @csrf
                     <div class="modal-header">
@@ -253,7 +278,7 @@
                             <input type="text" class="form-control" id="edit-name" name="NAMA" value="{{ $gedung->NAMA }}" required>
                         </div>
                         <div class="mb-3">
-                            <label for="edit-kategori" class="form-label">Kategori</label><br>
+                            <label for="edit-kategori" class="form-label select-label">Kategori</label><br>
                             <select name="KATEGORI" class="form-select" id="edit-kategori">
                                 @foreach ($kategoris as $kategori)
                                     <option @selected($kategori->Kategori == $gedung->KATEGORI) value="{{ $kategori->Kategori }}">{{ $kategori->Kategori }}</option>
@@ -274,7 +299,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="edit-telcust" class="form-label">Tel. Cust</label>
-                            <input type="text" class="form-control" id="edit-telcust" name="TEL_CUST" value="{{ $gedung->TEL_CUST }}" required>
+                            <input type="number" class="form-control" id="edit-telcust" name="TEL_CUST" value="{{ $gedung->TEL_CUST }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-am" class="form-label">AM</label>
@@ -282,7 +307,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="edit-telam" class="form-label">Tel. AM</label>
-                            <input type="text" class="form-control" id="edit-telam" name="TEL_AM" value="{{ $gedung->TEL_AM }}" required>
+                            <input type="number" class="form-control" id="edit-telam" name="TEL_AM" value="{{ $gedung->TEL_AM }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-sto" class="form-label">STO</label>
@@ -294,7 +319,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="edit-telhero" class="form-label">Tel. Hero</label>
-                            <input type="text" class="form-control" id="edit-telhero" name="TEL_HERO" value="{{ $gedung->TEL_HERO }}" required>
+                            <input type="number" class="form-control" id="edit-telhero" name="TEL_HERO" value="{{ $gedung->TEL_HERO }}" required>
                         </div>
                     </div>
                     <div class="modal-footer">

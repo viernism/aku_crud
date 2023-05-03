@@ -123,6 +123,17 @@ class TourismController extends Controller
         Tourism::whereIn('id', $ids)->delete();
     }
 
+    public function addKategori(Request $request){
+        $validatedKategori=$request->validate([
+            'Kategori'=>'required'
+        ]);
+
+        KategoriTourism::create([
+            'Kategori'=>$validatedKategori['Kategori']
+        ]);
+
+        return redirect()->back()->with('success', 'Kategori successfully added');
+    }
 
     public function exportexcel(){
         return Excel::download(new TourismExport,'datatourism.xlsx');
