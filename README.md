@@ -75,7 +75,7 @@ nothing, we just can't explain it because its an inside jokes. it took 12 years 
 7. Don't forget to run this command, so the profile picture upload and other things can work.
 
     ```bash
-    php artisan 
+    php artisan storage:link
     ```
 
 ## F A Q
