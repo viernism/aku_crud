@@ -68,8 +68,15 @@ nothing, we just can't explain it because its an inside jokes. it took 12 years 
 6. Run this following command to migrate all needed table.
    
    ```bash
-   php artisan migrate
+   php artisan migrate --seed
    ```
+
+
+7. Don't forget to run this command, so the profile picture upload and other things can work.
+
+    ```bash
+    php artisan 
+    ```
 
 ## F A Q
 
