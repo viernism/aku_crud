@@ -191,6 +191,13 @@ class GedungController extends Controller
                             }
                         }
 
+                        //check to prevent duplicated row
+                        $existingGedung = Gedung::where('NAMA', $gedung['NAMA'])->first();
+                        if ($existingGedung) {
+                        // Skip this row since the gedung already exists
+                        continue;
+                        }
+
                         // Add the row data to the collection
                         $gedungs->push($gedung);
 
@@ -219,95 +226,5 @@ class GedungController extends Controller
             } catch (\Exception $e) {
                 return redirect()->back()->with('error', $e->getMessage());
             }
-        }
     }
-//     public function importexcel(Request $request)
-//     {
-//         $request->validate([
-//             'upexcel' => 'required|mimes:xlsx',
-//         ]);
-
-//         $file = $request->file('upexcel');
-
-//         try {
-//             $import = Excel::toCollection(null, $file)[0];
-
-//             // Store the Excel file in the storage
-//             $filename = $file->getClientOriginalName();
-//             $file->storeAs('excel', $filename);
-
-//             $gedungs = new Collection();
-//             $kategoris = new Collection();
-
-//             // Get the headers
-//             $headers = $import->shift()->toArray();
-
-//             foreach ($import as $row) {
-//                 if (!empty($row[0])) {
-//                     $gedung = [
-//                         'NAMA' => $row[0],
-//                         'KATEGORI' => $row[1],
-//                         'ALAMAT' => $row[2],
-//                         'KOORDINAT' => $row[3],
-//                         'TEL_CUST' => $row[4],
-//                         'PIC_CUST' => $row[5],
-//                         'AM' => $row[6],
-//                         'TEL_AM' => $row[7],
-//                         'STO' => $row[8],
-//                         'HERO' => $row[9],
-//                         'TEL_HERO' => $row[10],
-//                     ];
-
-//                     $gedungs->push($gedung);
-
-//                     $kategori = [
-//                         'Kategori' => $row[1],
-//                     ];
-
-//                     $kategoris->push($kategori);
-//                 }
-//             }
-
-//             // dd($gedungs, $kategoris);
-
-//             Gedung::insert($gedungs->toArray());
-//             KategoriGedung::upsert($kategoris->toArray(), ['KATEGORI']);
-
-
-//             return redirect()->back()->with('success', 'Imported successfully.');
-//         } catch (\Exception $e) {
-//             return redirect()->back()->with('error', $e->getMessage());
-//         }
-//     }
-// }
-    // public function importExcel(Request $request)
-    // {
-    //     $this->validate($request, [
-    //         'upexcel' => 'required|mimes:xlsx',
-    //     ]);
-
-    //     $file = $request->file('upexcel');
-
-    //     Excel::import(new GedungImport, $file);
-
-    //     return redirect()->back()->with('success', 'Excel file imported successfully.');
-    // }
-
-
-    // public function importexcel(Request $request){
-    //     if ($request->hasFile('upexcel')) {
-    //         $data=$request->file('upexcel');
-    //         $data = $request->validate([
-    //             'upexcel' => 'required|mimes:xlsx',
-    //         ]);
-
-    //         $namafile=$data;
-    //         $path=$data->move('submitteddata',$namafile);
-    //         Excel::import(new GedungImport,\public_path('/submitteddata/'.$namafile));
-    //         return redirect()->back();
-    //     }
-    //     else {
-    //         # code...
-    //     }
-    // }
-// }
+}

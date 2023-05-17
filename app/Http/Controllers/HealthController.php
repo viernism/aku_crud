@@ -188,6 +188,13 @@ class HealthController extends Controller
                             }
                         }
 
+                        //check to prevent duplicated row
+                        $existingHealth = Health::where('NAMA', $health['NAMA'])->first();
+                        if ($existingHealth) {
+                        // Skip this row since the gedung already exists
+                        continue;
+                        }
+
                         // Add the row data to the collection
                         $healths->push($health);
 

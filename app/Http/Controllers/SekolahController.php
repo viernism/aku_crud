@@ -204,6 +204,13 @@ class SekolahController extends Controller
                             }
                         }
 
+                        //check to prevent duplicated row
+                        $existingSekolah = Sekolah::where('NAMA', $sekolah['NAMA'])->first();
+                        if ($existingSekolah) {
+                        // Skip this row since the gedung already exists
+                        continue;
+                        }
+
                         // Add the row data to the collection
                         $sekolahs->push($sekolah);
 
@@ -213,7 +220,7 @@ class SekolahController extends Controller
                         ];
 
                         // Check if the category already exists in the database
-                        $existingLEVEL = LEVELSekolah::where('LEVEL', $level['LEVEL'])->first();
+                        $existingLEVEL = LevelSekolah::where('LEVEL', $level['LEVEL'])->first();
                         if ($existingLEVEL) {
                             // Use the existing category ID
                             $sekolah['LEVEL'] = $existingLEVEL->id;
@@ -225,7 +232,7 @@ class SekolahController extends Controller
                 }
 
                 // Insert the data into the database
-                LEVELSekolah::insert($levels->toArray()); // Insert new categories first
+                LevelSekolah::insert($levels->toArray()); // Insert new categories first
                 Sekolah::insert($sekolahs->toArray());
 
                 return redirect()->back()->with('success', 'Imported successfully.');
