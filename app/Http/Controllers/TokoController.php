@@ -188,6 +188,13 @@ class TokoController extends Controller
                             }
                         }
 
+                        //check to prevent duplicated row
+                        $existingToko = Toko::where('NAMA', $toko['NAMA'])->first();
+                        if ($existingToko) {
+                        // Skip this row since the gedung already exists
+                        continue;
+                        }
+
                         // Add the row data to the collection
                         $tokos->push($toko);
 

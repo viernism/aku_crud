@@ -187,6 +187,13 @@ class TourismController extends Controller
                             }
                         }
 
+                        //check to prevent duplicated row
+                        $existingTourism = Tourism::where('NAMA', $tourism['NAMA'])->first();
+                        if ($existingTourism) {
+                        // Skip this row since the gedung already exists
+                        continue;
+                        }
+
                         // Add the row data to the collection
                         $tourisms->push($tourism);
 
@@ -204,6 +211,8 @@ class TourismController extends Controller
                             // Add the category to the collection
                             $kategoris->push($kategori);
                         }
+
+                        
                     }
                 }
 

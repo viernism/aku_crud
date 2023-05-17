@@ -187,6 +187,13 @@ class OfficeController extends Controller
                             }
                         }
 
+                        //check to prevent duplicated row
+                        $existingOffice = Office::where('NAMA', $office['NAMA'])->first();
+                        if ($existingOffice) {
+                        // Skip this row since the gedung already exists
+                        continue;
+                        }
+
                         // Add the row data to the collection
                         $offices->push($office);
 

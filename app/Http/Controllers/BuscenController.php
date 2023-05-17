@@ -190,6 +190,13 @@ class BuscenController extends Controller
                             }
                         }
 
+                        //check to prevent duplicated row
+                        $existingBuscen = Buscen::where('NAMA', $buscen['NAMA'])->first();
+                        if ($existingBuscen) {
+                        // Skip this row since the gedung already exists
+                        continue;
+                        }
+                        
                         // Add the row data to the collection
                         $buscens->push($buscen);
 

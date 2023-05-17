@@ -187,6 +187,13 @@ class KulinerController extends Controller
                             }
                         }
 
+                        //check to prevent duplicated row
+                        $existingKuliner = Kuliner::where('NAMA', $kuliner['NAMA'])->first();
+                        if ($existingKuliner) {
+                        // Skip this row since the gedung already exists
+                        continue;
+                        }
+
                         // Add the row data to the collection
                         $kuliners->push($kuliner);
 
