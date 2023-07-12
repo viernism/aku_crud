@@ -188,30 +188,32 @@ class TokoController extends Controller
                             }
                         }
 
-                        //check to prevent duplicated row
-                        $existingToko = Toko::where('NAMA', $toko['NAMA'])->first();
-                        if ($existingToko) {
-                        // Skip this row since the gedung already exists
-                        continue;
-                        }
-
-                        // Add the row data to the collection
-                        $tokos->push($toko);
-
                         // Extract the category from the row data
                         $kategori = [
                             'Kategori' => isset($toko['KATEGORI']) ? $toko['KATEGORI'] : '',
                         ];
 
-                        // Check if the category already exists in the database
-                        $existingKategori = KategoriToko::where('Kategori', $kategori['Kategori'])->first();
-                        if ($existingKategori) {
-                            // Use the existing category ID
-                            $toko['KATEGORI'] = $existingKategori->id;
+                        // Check similar category already exists in the database
+                        $similarKategori = KategoriToko::where('Kategori','like','%'.$kategori['Kategori'].'%')->get();
+
+                        if ($similarKategori->isNotEmpty()) {
+                            // Use the existing detected similar category
+                            $toko['KATEGORI'] = $similarKategori->first()->Kategori;
                         } else {
                             // Add the category to the collection
                             $kategoris->push($kategori);
                         }
+
+                        //check to prevent duplicated row also update 
+                        $existingToko = Toko::where('NAMA', $toko['NAMA'])->first();
+                        if ($existingToko) {
+                            //update existing data
+                            $existingToko->update($toko);
+                        }
+                        else {
+                            $tokos->push($toko);
+                        }
+
                     }
                 }
 

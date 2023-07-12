@@ -435,4 +435,5 @@ $(document).ready(function () {
 
 // when you only learned laravel for 2 weeks and need to get on a project coz school xd
 
-//pov u dont have understatement about js at all
+//pov u dont have understatement about js at all -rhnn
+

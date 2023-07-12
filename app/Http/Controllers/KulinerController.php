@@ -187,30 +187,32 @@ class KulinerController extends Controller
                             }
                         }
 
-                        //check to prevent duplicated row
-                        $existingKuliner = Kuliner::where('NAMA', $kuliner['NAMA'])->first();
-                        if ($existingKuliner) {
-                        // Skip this row since the gedung already exists
-                        continue;
-                        }
-
-                        // Add the row data to the collection
-                        $kuliners->push($kuliner);
-
                         // Extract the category from the row data
                         $kategori = [
                             'Kategori' => isset($kuliner['KATEGORI']) ? $kuliner['KATEGORI'] : '',
                         ];
 
-                        // Check if the category already exists in the database
-                        $existingKategori = KategoriKuliner::where('Kategori', $kategori['Kategori'])->first();
-                        if ($existingKategori) {
-                            // Use the existing category ID
-                            $kuliner['KATEGORI'] = $existingKategori->id;
+                        // Check similar category already exists in the database
+                        $similarKategori = KategoriKuliner::where('Kategori','like','%'.$kategori['Kategori'].'%')->get();
+
+                        if ($similarKategori->isNotEmpty()) {
+                            // Use the existing detected similar category
+                            $kuliner['KATEGORI'] = $similarKategori->first()->Kategori;
                         } else {
                             // Add the category to the collection
                             $kategoris->push($kategori);
                         }
+
+                        //check to prevent duplicated row also update 
+                        $existingKuliner = Kuliner::where('NAMA', $kuliner['NAMA'])->first();
+                        if ($existingKuliner) {
+                            //update existing data
+                            $existingKuliner->update($kuliner);
+                        }
+                        else {
+                            $kuliners->push($kuliner);
+                        }
+
                     }
                 }
 

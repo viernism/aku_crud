@@ -67,22 +67,29 @@ class GedungController extends Controller
             'tel_hero' => 'nullable',
         ]);
 
-        //  Create a new data in the db
-        Gedung::create ([
-            'NAMA' => $validatedData['nama'],
-            'KATEGORI' => $validatedData['kategori'],
-            'ALAMAT' => $validatedData['alamat'],
-            'KOORDINAT' => $validatedData['koordinat'],
-            'TEL_CUST' => $validatedData['tel_cust'],
-            'PIC_CUST' => $validatedData['pic_cust'],
-            'AM' => $validatedData['am'],
-            'TEL_AM' => $validatedData['tel_am'],
-            'STO' => $validatedData['sto'],
-            'HERO' => $validatedData['hero'],
-            'TEL_HERO' => $validatedData['tel_hero'],
-        ]);
+        //validate data, if available, itll not added
+        $existingGedung = Gedung::where('NAMA', $validatedData['nama'])->first();
+        if (!$existingGedung) {
+            //  Create a new data in the db
+            Gedung::create ([
+                'NAMA' => $validatedData['nama'],
+                'KATEGORI' => $validatedData['kategori'],
+                'ALAMAT' => $validatedData['alamat'],
+                'KOORDINAT' => $validatedData['koordinat'],
+                'TEL_CUST' => $validatedData['tel_cust'],
+                'PIC_CUST' => $validatedData['pic_cust'],
+                'AM' => $validatedData['am'],
+                'TEL_AM' => $validatedData['tel_am'],
+                'STO' => $validatedData['sto'],
+                'HERO' => $validatedData['hero'],
+                'TEL_HERO' => $validatedData['tel_hero'],
+            ]);
 
-        return redirect('/tabel/gedung')->with('success', 'Gedung added successfully.');
+            return redirect()->back()->with('success', 'Data added successfully.');
+        }
+        else {
+            return redirect()->back()->with('fail','Data is already existed in database.');  
+        }
     }
 
     public function update(Request $request, $gedungId)
@@ -191,30 +198,32 @@ class GedungController extends Controller
                             }
                         }
 
-                        //check to prevent duplicated row
-                        $existingGedung = Gedung::where('NAMA', $gedung['NAMA'])->first();
-                        if ($existingGedung) {
-                        // Skip this row since the gedung already exists
-                        continue;
-                        }
-
-                        // Add the row data to the collection
-                        $gedungs->push($gedung);
-
                         // Extract the category from the row data
                         $kategori = [
                             'Kategori' => isset($gedung['KATEGORI']) ? $gedung['KATEGORI'] : '',
                         ];
 
-                        // Check if the category already exists in the database
-                        $existingKategori = KategoriGedung::where('Kategori', $kategori['Kategori'])->first();
-                        if ($existingKategori) {
-                            // Use the existing category ID
-                            $gedung['KATEGORI'] = $existingKategori->id;
+                        // Check similar category already exists in the database
+                        $similarKategori = KategoriGedung::where('Kategori','like','%'.$kategori['Kategori'].'%')->get();
+
+                        if ($similarKategori->isNotEmpty()) {
+                            // Use the existing detected similar category
+                            $gedung['KATEGORI'] = $similarKategori->first()->Kategori;
                         } else {
                             // Add the category to the collection
                             $kategoris->push($kategori);
                         }
+
+                        //check to prevent duplicated row also update 
+                        $existingGedung = Gedung::where('NAMA', $gedung['NAMA'])->first();
+                        if ($existingGedung) {
+                            //update existing data
+                            $existingGedung->update($gedung);
+                        }
+                        else {
+                            $gedungs->push($gedung);
+                        }
+
                     }
                 }
 

@@ -190,30 +190,32 @@ class BuscenController extends Controller
                             }
                         }
 
-                        //check to prevent duplicated row
-                        $existingBuscen = Buscen::where('NAMA', $buscen['NAMA'])->first();
-                        if ($existingBuscen) {
-                        // Skip this row since the gedung already exists
-                        continue;
-                        }
-                        
-                        // Add the row data to the collection
-                        $buscens->push($buscen);
-
                         // Extract the category from the row data
                         $kategori = [
                             'Kategori' => isset($buscen['KATEGORI']) ? $buscen['KATEGORI'] : '',
                         ];
 
-                        // Check if the category already exists in the database
-                        $existingKategori = KategoriBuscen::where('Kategori', $kategori['Kategori'])->first();
-                        if ($existingKategori) {
-                            // Use the existing category ID
-                            $buscen['KATEGORI'] = $existingKategori->id;
+                        // Check similar category already exists in the database
+                        $similarKategori = KategoriBuscen::where('Kategori','like','%'.$kategori['Kategori'].'%')->get();
+
+                        if ($similarKategori->isNotEmpty()) {
+                            // Use the existing detected similar category
+                            $buscen['KATEGORI'] = $similarKategori->first()->Kategori;
                         } else {
                             // Add the category to the collection
                             $kategoris->push($kategori);
                         }
+
+                        //check to prevent duplicated row also update 
+                        $existingBuscen = Buscen::where('NAMA', $buscen['NAMA'])->first();
+                        if ($existingBuscen) {
+                            //update existing data
+                            $existingBuscen->update($buscen);
+                        }
+                        else {
+                            $buscens->push($buscen);
+                        }
+
                     }
                 }
 

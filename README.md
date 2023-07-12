@@ -104,7 +104,7 @@ nothing, we just can't explain it because its an inside jokes. it took 12 years 
     <br>A: Well, you can organize it yourself if you want to, by separating the database for each function, like auth database, tables database and etc. But, since i'm a bit lazy to do that, so i just let it like this. -rhnn
 
 3. Q: Why i cant add more tables from the page?
-    <br>A: Because it's only a basic CRUD app and have several hard things to do without changing the backend and things by yourself. I mean like, it has a lot of junkie tables relation, laravel-excel method and etc. - rhnn
+    <br>A: Because it's only a basic CRUD app and have several hard things to do without changing the backend and things by yourself. I mean like, it has a lot of junkie tables relation, laravel-excel method and etc. Also it's because we use SQL databases not NoSQL like MongoDB. - rhnn
 
 4.  Q: Why don't you actually uses the email to verify the user
     <br>A: because it costs money -viernism

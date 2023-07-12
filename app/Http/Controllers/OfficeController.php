@@ -187,30 +187,32 @@ class OfficeController extends Controller
                             }
                         }
 
-                        //check to prevent duplicated row
-                        $existingOffice = Office::where('NAMA', $office['NAMA'])->first();
-                        if ($existingOffice) {
-                        // Skip this row since the gedung already exists
-                        continue;
-                        }
-
-                        // Add the row data to the collection
-                        $offices->push($office);
-
                         // Extract the category from the row data
                         $kategori = [
                             'Kategori' => isset($office['KATEGORI']) ? $office['KATEGORI'] : '',
                         ];
 
-                        // Check if the category already exists in the database
-                        $existingKategori = KategoriOffice::where('Kategori', $kategori['Kategori'])->first();
-                        if ($existingKategori) {
-                            // Use the existing category ID
-                            $office['KATEGORI'] = $existingKategori->id;
+                        // Check similar category already exists in the database
+                        $similarKategori = KategoriOffice::where('Kategori','like','%'.$kategori['Kategori'].'%')->get();
+
+                        if ($similarKategori->isNotEmpty()) {
+                            // Use the existing detected similar category
+                            $office['KATEGORI'] = $similarKategori->first()->Kategori;
                         } else {
                             // Add the category to the collection
                             $kategoris->push($kategori);
                         }
+
+                        //check to prevent duplicated row also update 
+                        $existingOffice = Office::where('NAMA', $office['NAMA'])->first();
+                        if ($existingOffice) {
+                            //update existing data
+                            $existingOffice->update($office);
+                        }
+                        else {
+                            $offices->push($office);
+                        }
+
                     }
                 }
 

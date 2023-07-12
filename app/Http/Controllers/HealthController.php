@@ -188,30 +188,32 @@ class HealthController extends Controller
                             }
                         }
 
-                        //check to prevent duplicated row
-                        $existingHealth = Health::where('NAMA', $health['NAMA'])->first();
-                        if ($existingHealth) {
-                        // Skip this row since the gedung already exists
-                        continue;
-                        }
-
-                        // Add the row data to the collection
-                        $healths->push($health);
-
                         // Extract the category from the row data
                         $kategori = [
                             'Kategori' => isset($health['KATEGORI']) ? $health['KATEGORI'] : '',
                         ];
 
-                        // Check if the category already exists in the database
-                        $existingKategori = KategoriHealth::where('Kategori', $kategori['Kategori'])->first();
-                        if ($existingKategori) {
-                            // Use the existing category ID
-                            $health['KATEGORI'] = $existingKategori->id;
+                        // Check similar category already exists in the database
+                        $similarKategori = KategoriHealth::where('Kategori','like','%'.$kategori['Kategori'].'%')->get();
+
+                        if ($similarKategori->isNotEmpty()) {
+                            // Use the existing detected similar category
+                            $health['KATEGORI'] = $similarKategori->first()->Kategori;
                         } else {
                             // Add the category to the collection
                             $kategoris->push($kategori);
                         }
+
+                        //check to prevent duplicated row also update 
+                        $existingHealth = Health::where('NAMA', $health['NAMA'])->first();
+                        if ($existingHealth) {
+                            //update existing data
+                            $existingHealth->update($health);
+                        }
+                        else {
+                            $healths->push($health);
+                        }
+
                     }
                 }
 
