@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class KategoriTourism extends Model
 {
     use HasFactory;
-    protected $table = 'kategoritourism';
+    protected $table = 'KategoriTourism';
     protected $primarykey='id';
     protected $uniquekey='Kategori';
     protected $fillable = [

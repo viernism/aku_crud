@@ -12,7 +12,7 @@
                         <div class="col-6">
                             <a href="#addGedungModal" class="btn btn-success" data-bs-toggle="modal">Add New Data</a>
                             <a href="#deleteSelectedGedungModal" class="btn btn-danger" data-bs-toggle="modal">Delete</a>
-                            <a href="/tabel/gedung/exportexcel" class="btn btn-info">Export</a>
+                            <a href="{{route('gedung.exportexcel')}}" class="btn btn-info">Export</a>
                             <!-- Button trigger modal -->
                             <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                                 class="btn btn-warning">Import</a>

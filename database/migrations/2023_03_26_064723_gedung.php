@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->text('NAMA');
             $table->string('KATEGORI');
-            $table->foreign('KATEGORI')->references('Kategori')->on('kategorigedung');
+            $table->foreign('KATEGORI')->references('Kategori')->on('KategoriGedung');
             $table->text('ALAMAT')->nullable();
             $table->text('KOORDINAT')->nullable();
             $table->string('TEL_CUST')->nullable();

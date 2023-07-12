@@ -12,10 +12,9 @@
                         <div class="col-6">
                             <a href="#addKulinerModal" class="btn btn-success" data-bs-toggle="modal">Add New Data</a>
                             <a href="#deleteSelectedKulinerModal" class="btn btn-danger" data-bs-toggle="modal">Delete</a>
-                            <a href="/tabel/kuliner/exportexcel" class="btn btn-info">Export</a>
+                            <a href="{{route('kuliner.exportexcel')}}" class="btn btn-info">Export</a>
                             <!-- Button trigger modal -->
-                            <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                                class="btn btn-warning">Import</a>
+                            <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-warning">Import</a>
 
                             <a href="#addKategoriModal" class="btn btn-secondary" data-bs-toggle="modal">Add Kategori</a>
                         </div>

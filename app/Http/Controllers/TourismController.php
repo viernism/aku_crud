@@ -187,32 +187,32 @@ class TourismController extends Controller
                             }
                         }
 
-                        //check to prevent duplicated row
-                        $existingTourism = Tourism::where('NAMA', $tourism['NAMA'])->first();
-                        if ($existingTourism) {
-                        // Skip this row since the gedung already exists
-                        continue;
-                        }
-
-                        // Add the row data to the collection
-                        $tourisms->push($tourism);
-
                         // Extract the category from the row data
                         $kategori = [
                             'Kategori' => isset($tourism['KATEGORI']) ? $tourism['KATEGORI'] : '',
                         ];
 
-                        // Check if the category already exists in the database
-                        $existingKategori = KategoriTourism::where('Kategori', $kategori['Kategori'])->first();
-                        if ($existingKategori) {
-                            // Use the existing category ID
-                            $tourism['KATEGORI'] = $existingKategori->id;
+                        // Check similar category already exists in the database
+                        $similarKategori = KategoriTourism::where('Kategori','like','%'.$kategori['Kategori'].'%')->get();
+
+                        if ($similarKategori->isNotEmpty()) {
+                            // Use the existing detected similar category
+                            $tourism['KATEGORI'] = $similarKategori->first()->Kategori;
                         } else {
                             // Add the category to the collection
                             $kategoris->push($kategori);
                         }
 
-                        
+                        //check to prevent duplicated row also update 
+                        $existingTourism = Tourism::where('NAMA', $tourism['NAMA'])->first();
+                        if ($existingTourism) {
+                            //update existing data
+                            $existingTourism->update($tourism);
+                        }
+                        else {
+                            $tourisms->push($tourism);
+                        }
+
                     }
                 }
 

@@ -12,7 +12,7 @@
                         <div class="col-6">
                             <a href="#addTokoModal" class="btn btn-success" data-bs-toggle="modal">Add New Data</a>
                             <a href="#deleteSelectedTokoModal" class="btn btn-danger" data-bs-toggle="modal">Delete</a>
-                            <a href="/tabel/toko/exportexcel" class="btn btn-info">Export</a>
+                            <a href="{{route('toko.exportexcel')}}" class="btn btn-info">Export</a>
                             <!-- Button trigger modal -->
                             <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                                 class="btn btn-warning">Import</a>

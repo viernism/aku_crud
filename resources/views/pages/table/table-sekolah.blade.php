@@ -12,7 +12,7 @@
                         <div class="col-6">
                             <a href="#addSekolahModal" class="btn btn-success" data-bs-toggle="modal">Add New Data</a>
                             <a href="#deleteSelectedSekolahModal" class="btn btn-danger" data-bs-toggle="modal">Delete</a>
-                            <a href="/tabel/sekolah/exportexcel" class="btn btn-info">Export</a>
+                            <a href="{{route('sekolah.exportexcel')}}" class="btn btn-info">Export</a>
                             <!-- Button trigger modal -->
                             <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                                 class="btn btn-warning">Import</a>
@@ -61,6 +61,7 @@
                                     <label class="form-check-label" for="selectAll"></label>
                                 </div>
                             </th>
+                            <th>Details</th>
                             <th>Nama</th>
                             <th>Level</th>
                             <th>Alamat</th>
@@ -85,9 +86,16 @@
                                         <label class="form-check-label" for="checkbox1"></label>
                                     </div>
                                 </td>
+                                <td></td>
                                 <td>{{ $sekolah->NAMA }}</td>
                                 <td>{{ $sekolah->LEVEL }}</td>
-                                <td>{{ $sekolah->ALAMAT }}</td>
+                                <td>
+                                    @if (strlen($sekolah->ALAMAT)>25)
+                                        {{substr($sekolah->ALAMAT,0,50)}}
+                                    @else
+                                        {{$sekolah->ALAMAT}}
+                                    @endif
+                                </td>
                                 <td>{{ $sekolah->KOORDINAT }}</td>
                                 <td>{{ $sekolah->PIC_CUST }}</td>
                                 <td>{{ $sekolah->TEL_CUST }}</td>
@@ -208,8 +216,8 @@
                             <input type="text" class="form-control" id="nama" name="nama" required>
                         </div>
                         <div class="mb-3 ">
-                            <label for="level" class="form-label select-label">Level</label>
-                            <select name="level" class="form-select">
+                            <label for="LEVEL" class="form-label select-label">Level</label>
+                            <select name="LEVEL" class="form-select">
                                 @foreach ($levels as $level)
                                     <option value="{{ $level->LEVEL }}">{{ $level->LEVEL }}</option>
                                 @endforeach
@@ -279,7 +287,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="edit-level" class="form-label select-label">Level</label><br>
-                            <select name="KATEGORI" class="form-select" id="edit-level">
+                            <select name="LEVEL" class="form-select" id="edit-level">
                                 @foreach ($levels as $level)
                                     <option @selected($level->LEVEL == $sekolah->LEVEL) value="{{ $level->LEVEL }}">{{ $level->LEVEL }}</option>
                                 @endforeach

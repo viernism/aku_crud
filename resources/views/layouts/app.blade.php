@@ -10,12 +10,10 @@
     <!-- Local CSS -->
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     <!-- Bootstrap CSS CDN  -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <!-- Remix Icons CDN -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    {{-- Select2 CSS --}}
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
     <title>{{ $title ?? 'app-name' }}</title>
 </head>
 
@@ -41,31 +39,16 @@
                         class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
                 </a>
                 <ul class="sidebar-dropdown-menu">
-                    {{-- <li class="sidebar-dropdown-menu-item alert-button">
-                        <a href="/profile">
-                            <i class="ri-user-line sidebar-menu-item-icon"></i> User Profile </a>
-                    </li> --}}
                     <li class="sidebar-dropdown-menu-item">
                         <a href="/admin/users-list">
                             <i class="ri-settings-2-line sidebar-menu-item-icon"></i> User Management
                         </a>
                     </li>
-
-                    <li class="sidebar-dropdown-menu-item">
-                        <a href="/admin/rolepermission">
-                            <i class="ri-admin-line sidebar-menu-item-icon"></i> Role Management
-                        </a>
-                    </li>
-
-                    {{-- <li class="sidebar-dropdown-menu-item">
-                        <a href="/permission-list">
-                            <i class="ri-shield-keyhole-line sidebar-menu-item-icon"></i> Permission Management
-                        </a>
-                    </li> --}}
                 </ul>
             </li>
             @endrole
             <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Pages</li>
+            @can('CRUD')
             <li class="sidebar-menu-item has-dropdown">
                 <a href="#">
                     <i class="ri-table-fill sidebar-menu-item-icon"></i>
@@ -108,6 +91,7 @@
 
                 </ul>
             </li>
+            @endcan
         </ul>
         <!-- my profile -->
         <div class="sidebar-footer d-flex justify-content-center align-items-center p-3 ">
@@ -124,7 +108,6 @@
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
                     <li><a class="dropdown-item" href="/profile">Profile</a></li>
                     <li>
                         <hr class="dropdown-divider">
@@ -142,9 +125,9 @@
 
     <!-- content -->
     <div class="py-4 ms-5">
-        <div class="container">
+        
             @yield('content')
-        </div>
+        
     </div>
 
     <!-- JS Area -->
@@ -156,7 +139,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.js" integrity="sha512-LjPH94gotDTvKhoxqvR5xR2Nur8vO5RKelQmG52jlZo7SwI5WLYwDInPn1n8H9tR0zYqTqfNxWszUEy93cHHwg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Bootstrap JS CDN  -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     <!-- Local JS -->
     <script src="{{ asset('js/app.js') }}"></script>
 

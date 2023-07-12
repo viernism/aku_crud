@@ -28,6 +28,7 @@
                                 </div>
                             </th>
                             <th>ID</th>
+                            <th>Picture</th>
                             <th>Name</th>
                             <th>Username</th>
                             <th>Email</th>
@@ -47,6 +48,13 @@
                                     </div>
                                 </td>
                                 <td>{{$user->id}}</td>
+                                <td>
+                                    @if ($user->photo)
+                                    <img src="{{$user->photo}}" alt="" width="75" height="75" style="border-radius: 5px">
+                                    @else
+                                    <img src="https://i.pinimg.com/564x/11/fa/5c/11fa5ca25a562adefabd37cdfd037136.jpg" alt="" width="75" height="75" style="border-radius: 5px">
+                                    @endif
+                                </td>
                                 <td>{{ $user->name }} </td>
                                 <td>{{ $user->username }}</td>
                                 <td>{{ $user->email }}</td>

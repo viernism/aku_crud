@@ -42,7 +42,8 @@ class UserProfileController extends Controller
 
     public function EditProfile(EditProfileRequest $request){
         $user=$request->only(['email','name','username','phone','bio']);
-        auth()->user()->update($user);
+        // auth()->user()->update($user);
+        Auth::user()->update($user);
         return redirect()->back();
     }
 }

@@ -68,26 +68,29 @@ class SekolahController extends Controller
             'tel_hero' => 'required',
         ]);
 
-        //  Create a new data in the db
-        Sekolah::create ([
-            'NAMA' => $validatedData['nama'],
-            'LEVEL' => $validatedData['LEVEL'],
-            'ALAMAT' => $validatedData['alamat'],
-            'KOORDINAT' => $validatedData['koordinat'],
-            'TEL_CUST' => $validatedData['tel_cust'],
-            'PIC_CUST' => $validatedData['pic_cust'],
-            'AM' => $validatedData['am'],
-            'TEL_AM' => $validatedData['tel_am'],
-            'STO' => $validatedData['sto'],
-            'HERO' => $validatedData['hero'],
-            'TEL_HERO' => $validatedData['tel_hero'],
-        ]);
+        //validate data. if available, it will not added
 
-        // $enumValues = Sekolah::getEnumValues('LEVEL');
-
-        return redirect('/tabel/sekolah')->with('success', 'sekolah added successfully.');
-
-        // ->with(['enumValues' => $enumValues])
+        $existingSekolah= Sekolah::where('NAMA',$validatedData['nama'])->first();
+        if (!$existingSekolah) {
+            //  Create a new data in the db
+            Sekolah::create ([
+                'NAMA' => $validatedData['nama'],
+                'LEVEL' => $validatedData['LEVEL'],
+                'ALAMAT' => $validatedData['alamat'],
+                'KOORDINAT' => $validatedData['koordinat'],
+                'TEL_CUST' => $validatedData['tel_cust'],
+                'PIC_CUST' => $validatedData['pic_cust'],
+                'AM' => $validatedData['am'],
+                'TEL_AM' => $validatedData['tel_am'],
+                'STO' => $validatedData['sto'],
+                'HERO' => $validatedData['hero'],
+                'TEL_HERO' => $validatedData['tel_hero'],
+            ]);
+            return redirect()->back()->with('success','Data added successfuly.');
+        } 
+        else {
+            return redirect()->back()->with('fail','Data is already existed in database.');
+        }
     }
 
     public function update(Request $request, $sekolahId)
@@ -204,30 +207,31 @@ class SekolahController extends Controller
                             }
                         }
 
-                        //check to prevent duplicated row
-                        $existingSekolah = Sekolah::where('NAMA', $sekolah['NAMA'])->first();
-                        if ($existingSekolah) {
-                        // Skip this row since the gedung already exists
-                        continue;
-                        }
-
-                        // Add the row data to the collection
-                        $sekolahs->push($sekolah);
-
                         // Extract the category from the row data
                         $level = [
                             'LEVEL' => isset($sekolah['LEVEL']) ? $sekolah['LEVEL'] : '',
                         ];
 
-                        // Check if the category already exists in the database
-                        $existingLEVEL = LevelSekolah::where('LEVEL', $level['LEVEL'])->first();
-                        if ($existingLEVEL) {
-                            // Use the existing category ID
-                            $sekolah['LEVEL'] = $existingLEVEL->id;
+                        //searchin for similar level
+                        $similarLevel=LevelSekolah::where('LEVEL','LIKE','%'.$sekolah['LEVEL']. '%')->get();
+
+                        if ($similarLevel->isNotEmpty()) {
+                            //Use the existing detected similar level
+                            $sekolah['LEVEL']=$similarLevel->first()->LEVEL;
                         } else {
-                            // Add the category to the collection
+                            //add level to collection
                             $levels->push($level);
                         }
+
+                        //check to prevent duplicated row also updating the row
+                        $existingSekolah = Sekolah::where('NAMA', $sekolah['NAMA'])->first();
+                        if ($existingSekolah) {
+                            //update existing data
+                            $existingSekolah->update($sekolah);
+                        }
+                        else {
+                            $sekolahs->push($sekolah);
+                        }                        
                     }
                 }
 

@@ -72,6 +72,13 @@
     --bs-highlight-bg: #fff3cd;
 }
 
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
  /* icons styles */
 
 .ri-arrow-left-s-line {
@@ -656,4 +663,3 @@ table.table .avatar {
       transform: scale(1);
     }
   }
-

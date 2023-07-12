@@ -69,4 +69,5 @@ class AdminController extends Controller
         // Redirect the user back to the admin panel with a sucess message
         return redirect()->back()->with('success', 'User deleted successfully.');
     } // ok this stupid delete method took me an hour to figure out... well same with the rest...
+
 }
