@@ -23,7 +23,7 @@ class CustomLoginController extends Controller
         $user=$request->only(['email','password']);
 
         if (Auth::attempt($user)) {
-            return redirect('home');
+            return redirect('/')->with('success','You are logged in successfuly');
         }
 
         throw ValidationException::withMessages([

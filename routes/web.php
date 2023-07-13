@@ -34,13 +34,6 @@ Route::middleware(['guest'])->group(function () {
 
 
 Route::middleware(['auth', 'revalidate'])->group(function () {
-    Route::get('/home', function () {
-        return view('pages.home');
-    });
-
-    Route::get('/dashboard', function () {
-        return view('pages.dashboard');
-    });
 
     // Profile Routes
     Route::get('/profile', [UserProfileController::class, 'index']);

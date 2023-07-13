@@ -54,15 +54,15 @@ class OfficeController extends Controller
         $validatedData = $request->validate([
             'nama' => 'required',
             'kategori' => 'required',
-            'alamat' => 'required',
-            'koordinat' => 'required',
-            'tel_cust' => 'required',
-            'pic_cust' => 'required',
-            'am' => 'required',
-            'tel_am' => 'required',
-            'sto' => 'required',
-            'hero' => 'required',
-            'tel_hero' => 'required',
+            'alamat' => 'nullable',
+            'koordinat' => 'nullable',
+            'tel_cust' => 'nullable',
+            'pic_cust' => 'nullable',
+            'am' => 'nullable',
+            'tel_am' => 'nullable',
+            'sto' => 'nullable',
+            'hero' => 'nullable',
+            'tel_hero' => 'nullable',
         ]);
 
         //  Create a new data in the db
@@ -80,7 +80,7 @@ class OfficeController extends Controller
             'TEL_HERO' => $validatedData['tel_hero'],
         ]);
 
-        return redirect('/tabel/office')->with('success', 'Office added successfully.');
+        return redirect('/tabel/office')->with('success', 'Data added successfully.');
     }
 
     public function update(Request $request, $officeId){
@@ -101,19 +101,19 @@ class OfficeController extends Controller
             $office->kategorioffice()->associate($kategorioffice);
             $office->update();
 
-            return redirect()->back()->with('success', 'Office updated successfully.');
+            return redirect()->back()->with('success', 'Data updated successfully.');
            }
     }
 
     public function destroy( $officeId){
         $office = Office::find($officeId);
         if (!$office) {
-            return redirect()->back()->with('error', 'Office not found.');
+            return redirect()->back()->with('error', 'Data not found.');
         }
 
         $office->delete();
 
-        return redirect()->back()->with('success', 'Office deleted successfully.');
+        return redirect()->back()->with('success', 'Data deleted successfully.');
     }
 
     public function deleteSelected(Request $request)
@@ -220,7 +220,7 @@ class OfficeController extends Controller
                 KategoriOffice::insert($kategoris->toArray()); // Insert new categories first
                 Office::insert($offices->toArray());
 
-                return redirect()->back()->with('success', 'Imported successfully.');
+                return redirect()->back()->with('success', 'Data Imported successfully.');
             } catch (\Exception $e) {
                 return redirect()->back()->with('error', $e->getMessage());
             }
