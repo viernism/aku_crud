@@ -152,9 +152,9 @@ $(document).ready(function () {
                 success: function () {
                     location.reload();
                 },
-                error: function (xhr) {
-                    alert(xhr.responseText);
-                }
+                // error: function (xhr) {
+                //     alert(xhr.responseText);
+                // }
             });
         } else {
             alert('Please select at least one item to delete.');
@@ -194,13 +194,12 @@ $(document).ready(function () {
     });
 
     $('#deleteSelected').click(function () {
-        deleteSelectedItems('/admin/rolepermission/deleteSelected');
+        deleteSelectedItems('/tabel/tourism/deleteSelected');
     });
 
-    $('#deleteSelectedP').click(function () {
-        deleteSelectedItems('/admin/permission/deleteSelected');
+    $('#deleteSelected').click(function () {
+        deleteSelectedItems('/admin/users-list/deleteSelected');
     });
-
 
 })
 

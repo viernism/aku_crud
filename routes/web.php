@@ -67,6 +67,8 @@ Route::middleware(['auth','revalidate','role:Administrator'])->prefix('/admin')-
         Route::delete('/users-list/delete/{user}', 'destroy')->name('admin.users.destroy');
 
         Route::delete('/users-list/delete/{id}', 'destroy')->name('admin.users.destroy');
+
+        Route::delete('/user-list/deleteSeleted','deleteSelected');
     });
 });
 

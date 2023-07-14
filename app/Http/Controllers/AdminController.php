@@ -70,4 +70,8 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'User deleted successfully.');
     } // ok this stupid delete method took me an hour to figure out... well same with the rest...
 
+    public function deleteSelected(Request $request){
+        $ids=$request->input('id');
+        User::whereIn('id',$ids)->delete();
+    }
 }
