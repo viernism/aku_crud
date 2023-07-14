@@ -1,7 +1,19 @@
 @extends('layouts.app', ['title' => 'Table Sekolah'])
 
 @section('content')
-    <div class="container">
+    <div >
+        {{-- get message --}}
+        @if (Session::has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <span><strong>Success!</strong> {{Session::get('success')}} </span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @elseif (Session::has('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <span><strong>Fail!</strong> {{Session::get('error')}} </span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <div class="table-responsive">
             <div class="table-wrapper">
                 <div class="table-title">
@@ -61,7 +73,7 @@
                                     <label class="form-check-label" for="selectAll"></label>
                                 </div>
                             </th>
-                            <th>Details</th>
+                            
                             <th>Nama</th>
                             <th>Level</th>
                             <th>Alamat</th>
@@ -86,7 +98,7 @@
                                         <label class="form-check-label" for="checkbox1"></label>
                                     </div>
                                 </td>
-                                <td></td>
+                                
                                 <td>{{ $sekolah->NAMA }}</td>
                                 <td>{{ $sekolah->LEVEL }}</td>
                                 <td>

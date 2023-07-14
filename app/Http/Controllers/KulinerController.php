@@ -53,15 +53,15 @@ class KulinerController extends Controller
         $validatedData = $request->validate([
             'nama' => 'required',
             'kategori' => 'required',
-            'alamat' => 'required',
-            'koordinat' => 'required',
-            'tel_cust' => 'required',
-            'pic_cust' => 'required',
-            'am' => 'required',
-            'tel_am' => 'required',
-            'sto' => 'required',
-            'hero' => 'required',
-            'tel_hero' => 'required',
+            'alamat' => 'nullable',
+            'koordinat' => 'nullable',
+            'tel_cust' => 'nullable',
+            'pic_cust' => 'nullable',
+            'am' => 'nullable',
+            'tel_am' => 'nullable',
+            'sto' => 'nullable',
+            'hero' => 'nullable',
+            'tel_hero' => 'nullable',
         ]);
 
         //  Create a new data in the db
@@ -79,7 +79,7 @@ class KulinerController extends Controller
             'TEL_HERO' => $validatedData['tel_hero'],
         ]);
 
-        return redirect('/tabel/kuliner')->with('success', 'Kuliner facility added successfully.');
+        return redirect('/tabel/kuliner')->with('success', 'Data added successfully.');
     }
 
     public function addKategori(Request $request){
@@ -113,19 +113,19 @@ class KulinerController extends Controller
             $kuliner->kategorikuliner()->associate($kategorikuliner);
             $kuliner->update();
 
-            return redirect()->back()->with('success', 'Kuliner updated successfully.');
+            return redirect()->back()->with('success', 'Data updated successfully.');
            }
     }
 
     public function destroy( $kulinerId){
         $kuliner = Kuliner::find($kulinerId);
         if (!$kuliner) {
-            return redirect()->back()->with('error', 'Kuliner not found.');
+            return redirect()->back()->with('error', 'Data not found.');
         }
 
         $kuliner->delete();
 
-        return redirect()->back()->with('success', 'Kuliner deleted successfully.');
+        return redirect()->back()->with('success', 'Data deleted successfully.');
     }
 
     public function deleteSelected(Request $request)
@@ -220,7 +220,7 @@ class KulinerController extends Controller
                 KategoriKuliner::insert($kategoris->toArray()); // Insert new categories first
                 Kuliner::insert($kuliners->toArray());
 
-                return redirect()->back()->with('success', 'Imported successfully.');
+                return redirect()->back()->with('success', 'Data Imported successfully.');
             } catch (\Exception $e) {
                 return redirect()->back()->with('error', $e->getMessage());
             }

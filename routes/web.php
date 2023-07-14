@@ -34,13 +34,6 @@ Route::middleware(['guest'])->group(function () {
 
 
 Route::middleware(['auth', 'revalidate'])->group(function () {
-    Route::get('/home', function () {
-        return view('pages.home');
-    });
-
-    Route::get('/dashboard', function () {
-        return view('pages.dashboard');
-    });
 
     // Profile Routes
     Route::get('/profile', [UserProfileController::class, 'index']);
@@ -74,6 +67,8 @@ Route::middleware(['auth','revalidate','role:Administrator'])->prefix('/admin')-
         Route::delete('/users-list/delete/{user}', 'destroy')->name('admin.users.destroy');
 
         Route::delete('/users-list/delete/{id}', 'destroy')->name('admin.users.destroy');
+
+        Route::delete('/user-list/deleteSeleted','deleteSelected');
     });
 });
 

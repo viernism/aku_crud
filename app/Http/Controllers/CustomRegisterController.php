@@ -24,6 +24,6 @@ class CustomRegisterController extends Controller
         $user=User::create($attributes);
         $user->assignRole('AM');
 
-        return redirect('/home');
+        return redirect('/')->with('success','You are registered');
     }
 }

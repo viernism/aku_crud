@@ -27,10 +27,6 @@
             </div>
         </div>
         <ul class="sidebar-menu p-3 m-0 mb-0">
-            <li class="sidebar-menu-item">
-                <a href="/dashboard">
-                    <i class="ri-dashboard-fill sidebar-menu-item-icon"></i> Dashboard </a>
-            </li>
             @role('Administrator')
             <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Admin Menu</li>
             <li class="sidebar-menu-item has-dropdown">
@@ -101,7 +97,7 @@
                     @if (Auth::user()->photo)
                     <img  src="{{ asset(Auth::user()->photo)}}" alt="profile_image" width="30" height="30" class="rounded-circle">
                     @else
-                    <img  src="https://i.pinimg.com/564x/11/fa/5c/11fa5ca25a562adefabd37cdfd037136.jpg" alt="profile_image" width="30" height="30" class="rounded-circle">
+                    <img  src="{{ asset('img/defpfp/OIP.jpeg') }}" alt="profile_image" width="30" height="30" class="rounded-circle">
                     @endif
                     <div class="sidebar-logo p-2">
                         <div class="text text-white h5 mb-0">{{ Auth::user()->username }}</div>
@@ -125,9 +121,9 @@
 
     <!-- content -->
     <div class="py-4 ms-5">
-        
+        <div class="container">
             @yield('content')
-        
+        </div>
     </div>
 
     <!-- JS Area -->

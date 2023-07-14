@@ -1,7 +1,19 @@
 @extends('layouts.app', ['title' => 'Table Buscen'])
 
 @section('content')
-    <div class="container">
+    <div>
+        {{-- get message --}}
+        @if (Session::has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <span><strong>Success!</strong> {{Session::get('success')}} </span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @elseif (Session::has('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <span><strong>Fail!</strong> {{Session::get('error')}} </span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <div class="table-responsive">
             <div class="table-wrapper">
                 <div class="table-title">

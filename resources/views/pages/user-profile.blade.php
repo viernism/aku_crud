@@ -2,6 +2,17 @@
 
 @section('content')
     <div class="container-fluid px-2 px-md-4">
+        @if (Session::has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <span><strong>Success!</strong> {{Session::get('success')}} </span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @elseif (Session::has('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <span><strong>Fail!</strong> {{Session::get('error')}} </span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <div class="card card-body mx-3 mx-md-4 mt-n5">
             <div class="row gx-4 mb-2">
                 <div class="col-auto">
@@ -10,9 +21,9 @@
                         @csrf
                         <div class="avatar avatar-xl position-relative">
                             @if (Auth::user()->photo)
-                            <img  src="{{ asset(Auth::user()->photo)}}" alt="profile_image" class="w-100 img-border-radius shadow-sm">
+                            <img  src="{{ asset(Auth::user()->photo)}}" alt="profile_image" class="w-101 shadow-sm" style="border-radius: 5px">
                             @else
-                            <img  src="https://i.pinimg.com/564x/11/fa/5c/11fa5ca25a562adefabd37cdfd037136.jpg" alt="profile_image" class="w-100 img-border-radius shadow-sm">
+                            <img  src="{{ asset('img/defpfp/OIP.jpeg') }}" alt="profile_image" class="w-101 shadow-sm" style="border-radius: 5px">
                             @endif
                             <div class="text-avatar">
                                 <label for="profile_image" class="cursor-pointer"><i class="fa-solid fa-image"></i></label>
@@ -80,7 +91,7 @@
                 </div>
                 <div class="modal-body">
                     <!-- Add your form fields here -->
-                    <div class="card card-plain h-100">
+                    <div class="card card-plain h-100 text-white">
                         <div class="card-header pb-0 p-3">
                             <div class="row">
                                 <div class="col-md-8 d-flex align-items-center">
@@ -88,7 +99,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body p-3">
+                        <div class="card-body p-3 ">
                             <form action="{{ route('edit.profile') }}" method="post">
                                 @csrf
                                 @method('PUT')

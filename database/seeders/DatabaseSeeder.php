@@ -12,6 +12,10 @@ use App\Models\KategoriToko;
 use App\Models\KategoriTourism;
 use App\Models\KategoriOffice;
 use App\Models\LevelSekolah;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -159,5 +163,35 @@ class DatabaseSeeder extends Seeder
         LevelSekolah::create([
             'LEVEL'=>'SMA/MA/SMK/MAK'
         ]);
+
+        $user=User::create([
+            'name'=>'Admin',
+            'username'=>'Admin',
+            'email'=>'admin@crud.test',
+            'password'=>Hash::make("4dM1nistrat0r")
+        ]);
+
+        Permission::create([
+            'name'=>'CRUD',
+            'guard_name'=>'web'
+        ]);
+
+        Role::create([
+            'name'=>'Administrator',
+            'guard_name'=>'web'
+        ]);
+
+        Role::create([
+            'name'=>'AM',
+            'guard_name'=>'web'
+        ]);
+
+        $role=Role::first();
+        $role->givePermissionTo('CRUD');
+
+        $role=Role::find(2);
+        $role->givePermissionTo('CRUD');
+
+        $user->assignRole('Administrator');
     }
 }

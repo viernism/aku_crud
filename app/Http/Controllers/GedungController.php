@@ -112,7 +112,7 @@ class GedungController extends Controller
         $gedung->kategorigedung()->associate($kategorigedung);
         $gedung->update();
 
-        return redirect()->back()->with('success', 'Gedung updated successfully.');
+        return redirect()->back()->with('success', 'Data updated successfully.');
        }
     }
 
@@ -120,12 +120,12 @@ class GedungController extends Controller
     {
         $gedung = Gedung::find($gedungId);
         if (!$gedung) {
-            return redirect()->back()->with('error', 'Gedung not found.');
+            return redirect()->back()->with('error', 'Data not found.');
         }
 
         $gedung->delete();
 
-        return redirect()->back()->with('success', 'Gedung deleted successfully.');
+        return redirect()->back()->with('success', 'Data deleted successfully.');
     }
 
     public function deleteSelected(Request $request)
@@ -231,7 +231,7 @@ class GedungController extends Controller
                 KategoriGedung::insert($kategoris->toArray()); // Insert new categories first
                 Gedung::insert($gedungs->toArray());
 
-                return redirect()->back()->with('success', 'Imported successfully.');
+                return redirect()->back()->with('success', 'Data Imported successfully.');
             } catch (\Exception $e) {
                 return redirect()->back()->with('error', $e->getMessage());
             }

@@ -54,15 +54,15 @@ class BuscenController extends Controller
         $validatedData = $request->validate([
             'nama' => 'required',
             'kategori' => 'required',
-            'alamat' => 'required',
-            'koordinat' => 'required',
-            'tel_cust' => 'required',
-            'pic_cust' => 'required',
-            'am' => 'required',
-            'tel_am' => 'required',
-            'sto' => 'required',
-            'hero' => 'required',
-            'tel_hero' => 'required',
+            'alamat' => 'nullable',
+            'koordinat' => 'nullable',
+            'tel_cust' => 'nullable',
+            'pic_cust' => 'nullable',
+            'am' => 'nullable',
+            'tel_am' => 'nullable',
+            'sto' => 'nullable',
+            'hero' => 'nullable',
+            'tel_hero' => 'nullable',
         ]);
 
         //  Create a new data in the db
@@ -80,7 +80,7 @@ class BuscenController extends Controller
             'TEL_HERO' => $validatedData['tel_hero'],
         ]);
 
-        return redirect('/tabel/buscen')->with('success', 'Buscen facility added successfully.');
+        return redirect('/tabel/buscen')->with('success', 'Data added successfully.');
     }
 
     public function update(Request $request, $buscenId)
@@ -103,7 +103,7 @@ class BuscenController extends Controller
             $buscen->kategoribuscen()->associate($kategoribuscen);
             $buscen->update();
 
-            return redirect()->back()->with('success', 'Buscen updated successfully.');
+            return redirect()->back()->with('success', 'Data updated successfully.');
         }
     }
 
@@ -111,12 +111,12 @@ class BuscenController extends Controller
     {
         $buscen = Buscen::find($buscenId);
         if (!$buscen) {
-            return redirect()->back()->with('error', 'Buscen not found.');
+            return redirect()->back()->with('error', 'Data not found.');
         }
 
         $buscen->delete();
 
-        return redirect()->back()->with('success', 'Buscen deleted successfully.');
+        return redirect()->back()->with('success', 'Data deleted successfully.');
     }
 
     public function deleteSelected(Request $request)
@@ -223,7 +223,7 @@ class BuscenController extends Controller
                 KategoriBuscen::insert($kategoris->toArray()); // Insert new categories first
                 Buscen::insert($buscens->toArray());
 
-                return redirect()->back()->with('success', 'Imported successfully.');
+                return redirect()->back()->with('success', 'Data Imported successfully.');
             } catch (\Exception $e) {
                 return redirect()->back()->with('error', $e->getMessage());
             }

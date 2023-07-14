@@ -78,6 +78,45 @@ nothing, we just can't explain it because its an inside jokes. it took 12 years 
     php artisan storage:link
     ```
 
-8. And, you can log in as an Administrator using this default account:
-- email    : admin@crud.test
-- password : 4dM1nistrat0r
+## F A Q
+
+1.  Q: Why is the methods so inconsistent?
+    <br>A: 🤓
+    
+2.  Q: Why is the code so messy?
+    <br>A: 🤓
+
+3.  Q: Why is the database so ass?
+    <br>A: 🤓
+
+4.  Q: ...
+    <br>A: 🤓
+
+5. Q: Why this isnt working?
+    <br>A: Br0, dont be lazy. we make it open so you can fork it and fix it. I'm not a king, I'm not a God, I am -rhnn
+
+### okay serious answer
+
+1. Q: Why is the code so messy?
+    <br>A: heck yeah, we are newbie and managing code is hard -rhnn
+
+2. Q: Why is the database is so unorganized?
+    <br>A: Well, you can organize it yourself if you want to, by separating the database for each function, like auth database, tables database and etc. But, since i'm a bit lazy to do that, so i just let it like this. -rhnn
+
+3. Q: Why i cant add more tables from the page?
+    <br>A: Because it's only a basic CRUD app and have several hard things to do without changing the backend and things by yourself. I mean like, it has a lot of junkie tables relation, laravel-excel method and etc. Also it's because we use SQL databases not NoSQL like MongoDB. - rhnn
+
+4.  Q: Why don't you actually uses the email to verify the user
+    <br>A: because it costs money -viernism
+
+5.  Q: Why is the Javascript so messy
+    <br>A: hey i dont even know how i actually finish this project -viernism
+
+6.  Q:Roti O Stasiun Lempuyangan
+    <br>A: 😋😋😋 -both of us
+
+7.  Q: what does libir stands for?
+    <br>A: I PUT NEW FORGIS ON THE JEEP
+
+
+(this is rly rude im really sorry...)

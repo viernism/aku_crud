@@ -54,15 +54,15 @@ class HealthController extends Controller
         $validatedData = $request->validate([
             'nama' => 'required',
             'kategori' => 'required',
-            'alamat' => 'required',
-            'koordinat' => 'required',
-            'tel_cust' => 'required',
-            'pic_cust' => 'required',
-            'am' => 'required',
-            'tel_am' => 'required',
-            'sto' => 'required',
-            'hero' => 'required',
-            'tel_hero' => 'required',
+            'alamat' => 'nullable',
+            'koordinat' => 'nullable',
+            'tel_cust' => 'nullable',
+            'pic_cust' => 'nullable',
+            'am' => 'nullable',
+            'tel_am' => 'nullable',
+            'sto' => 'nullable',
+            'hero' => 'nullable',
+            'tel_hero' => 'nullable',
         ]);
 
         //  Create a new data in the db
@@ -80,7 +80,7 @@ class HealthController extends Controller
             'TEL_HERO' => $validatedData['tel_hero'],
         ]);
 
-        return redirect('/tabel/health')->with('success', 'Health facility added successfully.');
+        return redirect('/tabel/health')->with('success', 'Data added successfully.');
     }
 
     public function update(Request $request, $healthId)
@@ -103,19 +103,19 @@ class HealthController extends Controller
             $health->kategorihealth()->associate($kategorihealth);
             $health->update();
 
-            return redirect()->back()->with('success', 'Health updated successfully.');
+            return redirect()->back()->with('success', 'Data updated successfully.');
            }
     }
 
     public function destroy( $healthId){
         $health = Health::find($healthId);
         if (!$health) {
-            return redirect()->back()->with('error', 'Health not found.');
+            return redirect()->back()->with('error', 'Data not found.');
         }
 
         $health->delete();
 
-        return redirect()->back()->with('success', 'Health deleted successfully.');
+        return redirect()->back()->with('success', 'Data deleted successfully.');
     }
 
     public function deleteSelected(Request $request)
@@ -221,7 +221,7 @@ class HealthController extends Controller
                 KategoriHealth::insert($kategoris->toArray()); // Insert new categories first
                 Health::insert($healths->toArray());
 
-                return redirect()->back()->with('success', 'Imported successfully.');
+                return redirect()->back()->with('success', 'Data Imported successfully.');
             } catch (\Exception $e) {
                 return redirect()->back()->with('error', $e->getMessage());
             }
