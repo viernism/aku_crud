@@ -23,19 +23,12 @@
                         </div>
                         <div class="col-6">
                             <a href="#" class="btn btn-success" data-bs-toggle="modal"data-bs-target="#addUserModal" id="addUserBtn">Add New Users</a>
-                            <a href="#deleteSelectedUserModal" class="btn btn-danger" data-bs-toggle="modal">Delete</a>
                         </div>
                     </div>
                 </div>
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="selectAll">
-                                    <label class="form-check-label" for="selectAll"></label>
-                                </div>
-                            </th>
                             <th>ID</th>
                             <th>Picture</th>
                             <th>Name</th>
@@ -49,13 +42,6 @@
                     <tbody id="table-body">
                         @foreach ($users as $user)
                             <tr>
-                                <td>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="selectAll"
-                                            onchange="updateCheckboxes()" value="{{ $user->id }}">
-                                        <label class="form-check-label" for="checkbox1"></label>
-                                    </div>
-                                </td>
                                 <td>{{$user->id}}</td>
                                 <td>
                                     @if ($user->photo)
@@ -229,29 +215,6 @@
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Delete Selected Modal HTML -->
-    <div class="modal fade" id="deleteSelectedUserModal" tabindex="-1"
-        aria-labelledby="deleteSelectedUserModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content text-white">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="deleteSelectedUserModalLabel">Delete Gedung</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to delete these records?</p>
-                    <p class="text-warning"><small>This action cannot be undone.</small></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" id="deleteSelected" class="btn btn-danger">
-                        <i class="bi bi-trash"></i> Delete selected
-                    </button>
-                </div>
             </div>
         </div>
     </div>
