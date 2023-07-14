@@ -197,10 +197,6 @@ $(document).ready(function () {
         deleteSelectedItems('/tabel/tourism/deleteSelected');
     });
 
-    $('#deleteSelected').click(function () {
-        deleteSelectedItems('/admin/users-list/deleteSelected');
-    });
-
 })
 
 $(document).ready(function () {
@@ -213,13 +209,13 @@ $(document).ready(function () {
     // });
 
     // // Update the action attribute of the edit user form when the modal is shown
-    // $('#editUserModal').on('show.bs.modal', function (event) {
-    //     var button = $(event.relatedTarget);
-    //     var userId = button.data('user-id');
-    //     var form = $(this).find('form');
-    //     var action = form.attr('action').replace(':userId', userId);
-    //     form.attr('action', action);
-    // });
+    $('#editUserModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var userId = button.data('user-id');
+        var form = $(this).find('form');
+        var action = form.attr('action').replace(':userId', userId);
+        form.attr('action', action);
+    });
 
     // Update the action attribute of the delete user form when the modal is shown
     $('#deleteUserModal').on('show.bs.modal', function (event) {
@@ -323,24 +319,6 @@ $(document).ready(function () {
         var action = form.attr('action').replace(':tourismId', tourismId);
         form.attr('action', action);
         form.find('#tourismId').val(tourismId);
-    });
-
-    $('#editRoleModal, #deleteRoleModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var roleId = button.data('role-id');
-        var form = $(this).find('form');
-        var action = form.attr('action').replace(':roleId', roleId);
-        form.attr('action', action);
-        form.find('#roleId').val(roleId);
-    });
-
-    $('#editPermissionModal, #deletePermissionModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var permissionId = button.data('permission-id');
-        var form = $(this).find('form');
-        var action = form.attr('action').replace(':permissionId', permissionId);
-        form.attr('action', action);
-        form.find('#permissionId').val(permissionId);
     });
 
     // user pagination length function
