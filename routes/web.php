@@ -72,8 +72,8 @@ Route::middleware(['auth','revalidate','role:Administrator'])->prefix('/admin')-
     });
 });
 
-Route::prefix('/tabel')->group(function(){
-    Route::controller(GedungController::class)->middleware(['auth','revalidate','can:CRUD'])->prefix('gedung')->name('gedung.')->group(function () {
+Route::middleware(['auth','revalidate','can:CRUD'])->prefix('/tabel')->group(function(){
+    Route::controller(GedungController::class)->prefix('gedung')->name('gedung.')->group(function () {
         // table gedung routes
         Route::get('/', 'index');
     
@@ -92,7 +92,7 @@ Route::prefix('/tabel')->group(function(){
         Route::post('/addkategori', 'addKategori')->name('addkategori');
     });
     
-    Route::controller(SekolahController::class)->middleware(['auth','revalidate','can:CRUD'])->prefix('sekolah')->name('sekolah.')->group(function () {
+    Route::controller(SekolahController::class)->prefix('sekolah')->name('sekolah.')->group(function () {
         // table sekolah routes
         Route::get('/', 'index');
     
@@ -111,7 +111,7 @@ Route::prefix('/tabel')->group(function(){
         Route::post('/addlevel', 'addLevel')->name('addlevel');
     });
     
-    Route::controller(HealthController::class)->middleware(['auth','revalidate','can:CRUD'])->prefix('health')->name('health.')->group(function () {
+    Route::controller(HealthController::class)->prefix('health')->name('health.')->group(function () {
         // table health routes
         Route::get('/', 'index');
     
@@ -130,7 +130,7 @@ Route::prefix('/tabel')->group(function(){
         Route::post('/addkategori', 'addKategori')->name('addkategori');
     });
     
-    Route::controller(KulinerController::class)->middleware(['auth','revalidate','can:CRUD'])->prefix('kuliner')->name('kuliner.')->group(function () {
+    Route::controller(KulinerController::class)->prefix('kuliner')->name('kuliner.')->group(function () {
         // table kuliner routes
         Route::get('/', 'index');
     
@@ -151,7 +151,7 @@ Route::prefix('/tabel')->group(function(){
         Route::post('/addkategori', 'addKategori')->name('addkategori');
     });
     
-    Route::controller(TokoController::class)->middleware(['auth','revalidate','can:CRUD'])->prefix('toko')->name('toko.')->group(function () {
+    Route::controller(TokoController::class)->prefix('toko')->name('toko.')->group(function () {
         // table toko routes
         Route::get('/', 'index');
     
@@ -170,7 +170,7 @@ Route::prefix('/tabel')->group(function(){
         Route::post('/addkategori', 'addKategori')->name('addkategori');
     });
     
-    Route::controller(OfficeController::class)->middleware(['auth','revalidate','can:CRUD'])->prefix('office')->name('office.')->group(function () {
+    Route::controller(OfficeController::class)->prefix('office')->name('office.')->group(function () {
         // table office routes
         Route::get('/', 'index');
     
@@ -189,7 +189,7 @@ Route::prefix('/tabel')->group(function(){
         Route::post('/addkategori', 'addKategori')->name('addkategori');
     });
     
-    Route::controller(TourismController::class)->middleware(['auth','revalidate','can:CRUD'])->prefix('tourism')->name('tourism.')->group(function () {
+    Route::controller(TourismController::class)->prefix('tourism')->name('tourism.')->group(function () {
         // table tourism routes
         Route::get('/', 'index');
     
@@ -208,7 +208,7 @@ Route::prefix('/tabel')->group(function(){
         Route::post('/addkategori', 'addKategori')->name('addkategori');
     });
     
-    Route::controller(BuscenController::class)->middleware(['auth','revalidate','can:CRUD'])->prefix('buscen')->name('buscen.')->group(function () {
+    Route::controller(BuscenController::class)->prefix('buscen')->name('buscen.')->group(function () {
         // table buscen routes
         Route::get('/', 'index');
     

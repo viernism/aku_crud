@@ -78,6 +78,15 @@ nothing, we just can't explain it because its an inside jokes. it took 12 years 
     php artisan storage:link
     ```
 
-8. And, you can log in as an Administrator using this default account:
-- email    : admin@crud.test
-- password : 4dM1nistrat0r
+8. And, you can log in using several default accounts below:
+
+    
+        **Admin User**
+        ---
+        - email     : admin@crud.test
+        - password  : 4dM1nistrat0r
+
+        **Basic User**
+        ---
+        - email     : testuser@crud.test
+        - password  : !mT35tUs3R

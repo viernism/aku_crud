@@ -24,166 +24,96 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        KategoriBuscen::create([
-            'Kategori'=>'Business Center'
+        KategoriBuscen::insert([
+            ['Kategori'=>'Business Center']
         ]);
 
-        KategoriGedung::create([
-            'Kategori'=>'JKS'
+        KategoriGedung::insert([
+            ['Kategori'=>'JKS'],
+            ['Kategori'=>'DBS'],
+            ['Kategori'=>'DES']
         ]);
 
-        KategoriGedung::create([
-            'Kategori'=>'DBS'
+        KategoriHealth::insert([
+            ['Kategori'=>'Apotek'],
+            ['Kategori'=>'Klinik'],
+            ['Kategori'=>'Puskesmas'],
+            ['Kategori'=>'Rumah Sakit'],
         ]);
 
-        KategoriGedung::create([
-            'Kategori'=>'DES'
+        KategoriKuliner::insert([
+            ['Kategori'=>'Kafe'],
+            ['Kategori'=>'Resto'],
+            ['Kategori'=>'Warung'],
+            ['Kategori'=>'Pujasera'],
         ]);
 
-        KategoriHealth::create([
-            'Kategori'=>'Puskesmas'
+        KategoriOffice::insert([
+            ['Kategori'=>'Mining'],
+            ['Kategori'=>'Energy'],
+            ['Kategori'=>'Banking'],
+            ['Kategori'=>'Finance'],
+            ['Kategori'=>'Property'],
+            ['Kategori'=>'Logistic'],
+            ['Kategori'=>'Transport'],
+            ['Kategori'=>'Professional'],
         ]);
 
-        KategoriHealth::create([
-            'Kategori'=>'Klinik'
+        KategoriToko::insert([
+            ['Kategori'=>'Mall'],
+            ['Kategori'=>'Fashion'],
+            ['Kategori'=>'Aksesoris'],
+            ['Kategori'=>'Minimarket'],
+            ['Kategori'=>'Supermarket'],
+            ['Kategori'=>'Sport & Music'],
+            ['Kategori'=>'Electronic & Gadget'],
         ]);
 
-        KategoriHealth::create([
-            'Kategori'=>'Rumah Sakit'
+        KategoriTourism::insert([
+            ['Kategori'=>'Hotel'],
+            ['Kategori'=>'Travel'],
+            ['Kategori'=>'Kos-kosan'],
+            ['Kategori'=>'Stay House'],
         ]);
 
-        KategoriHealth::create([
-            'Kategori'=>'Apotek'
+        LevelSekolah::insert([
+            ['LEVEL'=>'TK'],
+            ['LEVEL'=>'SD/MI'],
+            ['LEVEL'=>'SMP/MTs'],
+            ['LEVEL'=>'SMA/MA/SMK/MAK']
         ]);
 
-        KategoriKuliner::create([
-            'Kategori'=>'Pujasera'
+        $user=User::insert([
+            [
+                'name'=>'Admin',
+                'username'=>'Admin',
+                'email'=>'admin@crud.test',
+                'password'=>Hash::make("4dM1nistrat0r")
+            ],
+            [
+                'name'=>'test user',
+                'username'=>'testuser',
+                'email'=>'testuser@crud.test',
+                'password'=>Hash::make("!mT35tUs3R")
+            ]
         ]);
 
-        KategoriKuliner::create([
-            'Kategori'=>'Warung'
+        Permission::insert([
+            [
+                'name'=>'CRUD',
+                'guard_name'=>'web'
+            ]
         ]);
 
-        KategoriKuliner::create([
-            'Kategori'=>'Kafe'
-        ]);
-
-        KategoriKuliner::create([
-            'Kategori'=>'Resto'
-        ]);
-
-        KategoriOffice::create([
-            'Kategori'=>'Professional'
-        ]);
-
-        KategoriOffice::create([
-            'Kategori'=>'Property'
-        ]);
-
-        KategoriOffice::create([
-            'Kategori'=>'Banking'
-        ]);
-
-        KategoriOffice::create([
-            'Kategori'=>'Finance'
-        ]);
-
-        KategoriOffice::create([
-            'Kategori'=>'Logistic'
-        ]);
-
-        KategoriOffice::create([
-            'Kategori'=>'Mining'
-        ]);
-
-        KategoriOffice::create([
-            'Kategori'=>'Energy'
-        ]);
-
-        KategoriOffice::create([
-            'Kategori'=>'Transport'
-        ]);
-
-        KategoriToko::create([
-            'Kategori'=>'Sport & Music'
-        ]);
-
-        KategoriToko::create([
-            'Kategori'=>'Supermarket'
-        ]);
-
-        KategoriToko::create([
-            'Kategori'=>'Minimarket'
-        ]);
-
-        KategoriToko::create([
-            'Kategori'=>'Aksesoris'
-        ]);
-
-        KategoriToko::create([
-            'Kategori'=>'Fashion'
-        ]);
-
-        KategoriToko::create([
-            'Kategori'=>'Electronic & Gadget'
-        ]);
-
-        KategoriToko::create([
-            'Kategori'=>'Mall'
-        ]);
-
-        KategoriTourism::create([
-            'Kategori'=>'Hotel'
-        ]);
-
-        KategoriTourism::create([
-            'Kategori'=>'Travel'
-        ]);
-
-        KategoriTourism::create([
-            'Kategori'=>'Stay House'
-        ]);
-
-        KategoriTourism::create([
-            'Kategori'=>'Kos-kosan'
-        ]);
-
-        LevelSekolah::create([
-            'LEVEL'=>'TK'
-        ]);
-
-        LevelSekolah::create([
-            'LEVEL'=>'SD/MI'
-        ]);
-
-        LevelSekolah::create([
-            'LEVEL'=>'SMP/MTs'
-        ]);
-
-        LevelSekolah::create([
-            'LEVEL'=>'SMA/MA/SMK/MAK'
-        ]);
-
-        $user=User::create([
-            'name'=>'Admin',
-            'username'=>'Admin',
-            'email'=>'admin@crud.test',
-            'password'=>Hash::make("4dM1nistrat0r")
-        ]);
-
-        Permission::create([
-            'name'=>'CRUD',
-            'guard_name'=>'web'
-        ]);
-
-        Role::create([
-            'name'=>'Administrator',
-            'guard_name'=>'web'
-        ]);
-
-        Role::create([
-            'name'=>'AM',
-            'guard_name'=>'web'
+        Role::insert([
+            [
+                'name'=>'Administrator',
+                'guard_name'=>'web'
+            ],
+            [
+                'name'=>'AM',
+                'guard_name'=>'web'
+            ]
         ]);
 
         $role=Role::first();
@@ -192,6 +122,10 @@ class DatabaseSeeder extends Seeder
         $role=Role::find(2);
         $role->givePermissionTo('CRUD');
 
+        $user=User::first();
         $user->assignRole('Administrator');
+
+        $user=User::find(2);
+        $user->assignRole('AM');
     }
 }
